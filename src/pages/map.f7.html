@@ -1,0 +1,578 @@
+<template>
+	<div class="page white" data-name="map">
+		<div class="navbar navbar-transparent">
+			<div class="navbar-inner" @click="closeStep" style="overflow: visible;">
+				<div class="fab fab-left-top">
+					<a href="#" class="link back sheet-close bg-white">
+						<i class="material-icons">close</i>
+					</a>
+				</div>
+				<div class="title">
+					
+				</div>
+				<div class="right">
+					{{#if hasDelete}}
+					<button data-id="{{addrID}}" style="box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.07);" @click="deleteAddr" class="col tn button color-white text-color-black bg-white button-raised button-round">Удалить адрес</button>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+		
+        <div class="map_parent">
+            <div class="map-container">
+                <div id="__map">
+                
+                </div>
+                <div id="addr_map_marker" class="animated"></div>
+                <div id="addr_map_marker_circle" class="animated"></div>
+				<div class="row no-gutters vh-100 loader-screen">
+					<div class="col align-self-center text-align-center">
+						<div class="">
+							<div class="btn-loader">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div class=""></div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+		
+		<div class="custom-modal-backdrop" @click="closeStep"></div>
+		
+		<div class="fab fab-right-top">
+			<a href="#" class="bg-white">
+				<i class="material-icons" @click="getGpsLocation" style="color: #000;">my_location</i>
+			</a>
+		</div>
+		<div class="page-content">
+		
+		</div>
+		<div class="sheet-modal demo-sheet-swipe-to-step" style="height:auto">
+			<div class="sheet-modal-inner js_bc">
+				<div class="swipe-handler"></div>
+				<div class="sheet-modal-swipe-step">
+					<div class="list no-hairlines m_0" >
+						<ul >
+							<div class="button bffr" @click="showInput"></div>
+							<li class="item-content item-input lfs" >
+								<div class="item-inner">
+									<div class="item-title item-floating-label" style="transition-duration:.3s!important;font-size:15px!important;color:#000;font-weight:900;">Укажите адрес доставки</div>
+									<div class="item-input-wrap">
+										<textarea style="padding-right:28px;" id="t_add" class="resizable tcto" placeholder="Удица, дом"></textarea>
+										<span class="input-clear-button"></span>
+									</div>
+								</div>
+							</li>
+						</ul>
+						<div class="au_test"><div class="au_testau_test"></div><div class="au_testau_test"></div><div class="au_testau_test"></div></div>
+						<div style="position:relative;">
+							<div class="au_testd animated fadeIn hinge" style="background:#fff;position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:9;color:#a7a6a6;font-weight:100;">Адрес не определен</div>
+							<ul class="row p_8 fadeIn animated hinge" style="margin-top:-7px;background:transparent;">
+								<li class=" item-input col lfs">
+									<div class="plr_8">
+										<div class="item-title item-floating-label">Кв/оф</div>
+										<div class="item-input-wrap">
+											<input placeholder="Кв/оф" type="text" class="a_kv" id="o_kv" value="" >
+										</div>
+									</div>
+								</li>
+								<li class="item-input col lfs">
+									<div class="plr_8">
+										<div class="item-title item-floating-label">Этаж</div>
+										<div class="item-input-wrap">
+											<input placeholder="Этаж" type="tel" class="a_flo" id="o_flo" value="" >
+										</div>
+									</div>
+								</li>
+								<li class="item-input col lfs">
+									<div class="plr_8">
+										<div class="item-title item-floating-label">Подъезд</div>
+										<div class="item-input-wrap">
+											<input placeholder="Подъезд" type="text" class="a_par" id="o_par" value="" >
+										</div>
+									</div>
+								</li>
+								<li class="item-input col lfs">
+									<div class="plr_8">
+										<div class="item-title item-floating-label">Домофон</div>
+										<div class="item-input-wrap">
+											<input placeholder="Домофон" type="text" class="a_dof" id="o_dof" value="" >
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div style="height:85px;"></div>
+				</div>
+				<div class="list no-hairlines" style="opacity:0;height:600px;z-index: -1;"></div>
+			</div>
+		</div>
+
+    
+	</div>
+</template>
+<script>
+export default {
+	data: function () 
+		{
+			return {
+				arUser: app.data.arUser,
+				temp: true,
+				addrID: this.$route.params.id,
+				hasDelete: this.$route.params.id > 0,
+			};
+		},
+	methods: {
+		saveAddr: function () 
+		{
+            $$(".js_bc").addClass("loading");
+			
+            var tmpAddressData = JSON.parse(localStorage.getItem('tmpAddressData'));
+			tmpAddressData.kv  = $$("#o_kv").val();
+			tmpAddressData.dof = $$("#o_dof").val();
+			tmpAddressData.par = $$("#o_par").val();
+			tmpAddressData.flo = $$("#o_flo").val();
+			
+			app.request({
+				url: app.data.baseUrl + 'set_addr.php',
+				method: 'POST',
+				dataType: 'json',
+				async: false,
+				data: {
+					act: "save",
+					data: tmpAddressData
+				},
+				success: function (data) {
+					if(data.STATUS == "OK" || data.STATUS == "SESS")
+					{
+						tmpAddressData.ID = data.ADDR_ID;
+						//if(data.STATUS == "SESS") 
+							app.data.curAddr = tmpAddressData;
+						app.request.getJSON(app.data.baseUrl + 'get_user.php', { app:'' }, function (data)
+						{
+							app.data.arUser = data;
+							//if(data.STATUS == "SESS") 
+								app.data.arUser.addr.active = tmpAddressData;
+							
+							$$(".a_kv").val(tmpAddressData.kv);
+                            $$(".a_dof").val(tmpAddressData.dof);
+                            $$(".a_par").val(tmpAddressData.par);
+                            $$(".a_flo").val(tmpAddressData.flo);
+							
+							$$(".js_bc").removeClass("loading");
+							app.views.main.router.back();
+						});
+						localStorage.setItem('addressData', JSON.stringify(tmpAddressData));
+						
+						app.notifAddr = app.notification.create({
+							icon: '<i class="material-icons color-green">location_on</i>',
+							title: 'Адрес доставки сохранен',
+							subtitle: 'Доставить на адрес:',
+							closeTimeout: 3000,
+							text: tmpAddressData.addr,
+							closeButton: true,
+							swipeToClose: true,
+						});
+						app.notifAddr.open();
+					}else{
+						$$(".js_bc").removeClass("loading");
+						app.dialog.alert("По указанному адресу доставка не производится.",'Адрес доставки');
+					}
+				}
+			});
+            
+		},
+		deleteAddr: function(e){
+			var addrId = parseInt($$(e.target).data("id"));
+			app.dialog.confirm("Вы уверены, что хотите удалить адрес доставки?", function(){
+				app.request({
+					url: app.data.baseUrl + 'set_addr.php',
+					method: 'POST',
+					dataType: 'json',
+					async: false,
+					data: {
+						act: "del",
+						ID: addrId
+					},
+					success: function (data) {
+						if(data.STATUS == "OK")
+						{
+							app.request.getJSON(app.data.baseUrl + 'get_user.php', { app:'' }, function (data)
+							{
+								app.data.arUser = data;
+								$$(".js_bc").removeClass("loading");
+								app.notifAddr = app.notification.create({
+									icon: '<i class="f7-icons color-white">location_fill</i>',
+									title: 'Адрес доставки удален',
+									closeTimeout: 2000,
+									closeButton: true,
+									swipeToClose: true,
+								});
+								app.notifAddr.open();
+								app.views.main.router.back();
+							});
+						}else{
+							$$(".js_bc").removeClass("loading");
+							app.dialog.alert("Произошла ошибка");
+						}
+					}
+				});
+			})
+		},
+		getGpsLocation: function(){
+		
+			var self = this;
+			
+			$$(".js_bc").addClass("loading");
+			$$("#t_add").val("Определяем...");
+			
+			plugin.google.maps.LocationService.getMyLocation({}, function(location) {
+				
+				var geocodeResult = app.methods.geocode(parseFloat(location.latLng.lat).toFixed(6), parseFloat(location.latLng.lng).toFixed(6));
+				if(typeof(geocodeResult.lat) != undefined){
+					app.data.curAddr = geocodeResult;
+					app.data.arUser.addr.active = geocodeResult;
+					app.data.arUser.isloc = true;
+					localStorage.setItem('addressData', JSON.stringify(geocodeResult));
+					
+					self.setAddressData(geocodeResult);
+					$$(".au_testd").hide();
+					
+					var mapDiv = document.getElementById("__map");
+					var mapObj = plugin.google.maps.Map.getMap(mapDiv);
+					mapObj.animateCamera({
+						zoom: 18,
+						target: {
+							lat:parseFloat(location.latLng.lat).toFixed(6), 
+							lng:parseFloat(location.latLng.lng).toFixed(6)
+						},
+						duration: 1000,
+					});
+				}
+				$$(".js_bc").removeClass("loading");
+				
+			}, function(error){ 
+				console.log(error);
+				$$(".js_bc").removeClass("loading");
+				self.setAddrByLS();
+			});
+		},
+		showInput: function () {
+			var self = this;
+			$$(".tgbs").removeClass('show');
+			self.sheetSwipeToStep.stepOpen();
+			$$(".custom-modal-backdrop").addClass('backdrop-in');
+			setTimeout(() => {$$("#t_add").focus();app.input.focus("#t_add");}, 150);
+			
+			$$(".map-container").addClass("_sheet_open");
+		},
+		closeStep: function () {
+			var self = this;
+			$$("#t_add").blur();
+			app.input.blur("#t_add");
+			$$(".custom-modal-backdrop").removeClass('backdrop-in');
+			setTimeout(() => {
+					self.sheetSwipeToStep.stepClose();
+					$$(".tgbs").addClass('show');
+				}, 150
+			);
+			$$(".map-container").removeClass("_sheet_open");
+		},
+		showSaveAddr: function()
+		{
+			var self = this;
+			$$('body').append('<div class="toast toast-bottom toast-horizontal-left tgbs slideInUp animated"><div class="js_bc"><div class="toast-text" id="tgbsb" ><div class="js_bc"><button class="button b_r8 popover-close js_bsa disabled button-large button-raised button-fill"><div class="bc_t fadeIn animated">Сохранить адрес</div><div class="bc_l"><div class="laoderhorizontal"><div></div><div></div><div></div><div></div></div></div></button></div></div></div></div>');
+			$$(".tgbs").addClass('show');
+			$$("button.js_bsa").click(function(){
+				self.saveAddr();
+			});
+		},
+		setAddrByLS: function()
+		{
+			var self = this;
+			var addressData = JSON.parse(localStorage.getItem('tmpAddressData'));
+			self.setAddressData(addressData);
+			$$(".custom-modal-backdrop").removeClass('backdrop-in');
+		},
+		setActBut: function(fl){
+			if(fl)
+			{
+				$$(".tgbs").addClass('show');
+				$$(".au_testd").hide();
+				$$(".js_bsa").removeClass("disabled");
+			}else{
+				$$(".tgbs").removeClass('show');
+				$$(".au_testd").show();
+				$$(".js_bsa").addClass("disabled");
+			}
+		},
+        setAddressData: function(addressData){
+			var self = this;
+            if(addressData.addr != "" && addressData.addr != null){
+                $$("#t_add").val(addressData.addr);
+                $$("#t_add").parents(".item-input").addClass("item-input-with-value");
+                if(addressData.house != null && addressData.house != "")
+                    $$(".au_testd").hide();
+				else
+                    $$(".au_testd").show();
+					
+				setTimeout(function(){
+					$$("#t_add").trigger("change");
+					self.setActBut(true);
+				}, 100);
+            }
+			$$(".sheet-modal .item-input input").each(function(){
+				var input = $$(this);
+				if(input.val() != ""){
+					input.addClass("input-with-value");
+					input.parents(".item-input").addClass("item-input-with-value");
+				}else{
+					input.removeClass("input-with-value");
+					input.removeClass(".item-input").addClass("item-input-with-value");
+				}
+			})
+        }
+	},
+	on: {
+		pageAfterIn: function (e, page) 
+		{
+			var self = this;
+            var addrId = parseInt(page.route.params.id), isNew = false;
+            if(addrId == 0) isNew = true;
+            
+			var locProcess = false;
+			
+            var mapObj,
+                cameraPosition,
+                addressData = {},
+                curAddrData = {},
+                addrComponent;
+            
+            addressData = JSON.parse(localStorage.getItem('addressData'));
+            if(!isNew){
+                if(addrId > 0){
+				
+					for (var i = 0; i < app.data.arUser.addr.list.length; i++) {
+						if(app.data.arUser.addr.list[i].ID == addrId){
+							addressData = app.data.arUser.addr.list[i];
+							
+                            $$(".a_kv").val(addressData.kv);
+                            $$(".a_dof").val(addressData.dof);
+                            $$(".a_par").val(addressData.par);
+                            $$(".a_flo").val(addressData.flo);
+                            self.setAddressData(addressData);
+							
+							$$(".au_testd").hide();
+							localStorage.setItem('tmpAddressData', JSON.stringify(addressData));
+						}
+					}
+                }
+            }else if(addressData != null){
+				self.setAddressData(addressData);
+				localStorage.setItem('tmpAddressData', JSON.stringify(addressData));
+				$$(".au_testd").hide();
+			}
+            
+            var mapParams = {
+                camera:{
+                    'target': {lat:55.752623, lng:37.619827},
+                    'zoom': 12
+                },
+                preferences: {building: true}
+            }
+            if(addressData != null && addressData.lat){
+                mapParams = {
+                    camera:{
+                        'target': {lat:parseFloat(addressData.lat).toFixed(6), lng:parseFloat(addressData.lon).toFixed(6)},
+                        'zoom': 18
+                    },
+                    preferences: {building: true}
+                };
+            }
+			
+            if(typeof(plugin) == "object"){
+				var mapDiv = document.getElementById("__map");
+				var mapTimetId;
+				mapObj = plugin.google.maps.Map.getMap(mapDiv, mapParams);
+				mapObj.one(plugin.google.maps.event.MAP_READY, onMapInit);
+				mapObj.on(plugin.google.maps.event.MAP_DRAG_START, function () {
+					$$("#t_add").val("Определяем...");
+					//$$(".map-container").addClass("_gmaps_drag");
+					clearTimeout(mapTimetId);
+				})
+				mapObj.on(plugin.google.maps.event.MAP_DRAG_END, function () {
+					mapTimetId = setTimeout(function(){
+						var cameraPosition = mapObj.getCameraPosition();
+						var geocodeResult = app.methods.geocode(cameraPosition.target.lat.toFixed(6), cameraPosition.target.lng.toFixed(6));
+						geocodeResult.ID = addrId;
+						//$$(".map-container").removeClass("_gmaps_drag");
+						localStorage.setItem('tmpAddressData', JSON.stringify(geocodeResult));
+						self.setAddressData(geocodeResult);
+					}, 1000);
+				});
+            }else{
+				
+				onMapInit();
+			}
+			
+			
+            function onMapInit(){
+                console.log("MAP_READY");
+				$$("#__map").parents().addClass("_gmaps_inited");
+				$$(".map-container .loader-screen").animate(
+					{opacity: 0}, 
+					{duration: 1000, complete: function (elements) {elements.remove()}}
+				)
+                $$(".map-container").touchstart(function () {
+                    $$(".map-container").addClass("_gmaps_drag");
+                    //$$("#addr_map_marker_circle").removeClass("bounceOut");
+                });
+                $$(".map-container").touchend(function () {
+                    $$(".map-container").removeClass("_gmaps_drag");
+                    //$$("#addr_map_marker_circle").addClass("bounceOut");
+                });
+            }
+			
+			self.sheetSwipeToStep = self.$app.sheet.create({
+				el: '.demo-sheet-swipe-to-step',
+				swipeToClose: false,
+				swipeToStep: true,
+				backdrop: false,
+				on: {
+					close: function (sheet) {
+						console.log("close");
+					},
+					opened: function (sheet) {
+						console.log("opened");
+					},
+					sheetStepOpen: function (sheet) {
+						
+					},
+					stepOpen: function (sheet) {
+						$$(".custom-modal-backdrop").addClass('backdrop-in');
+						$$(".tgbs").removeClass('show');
+						console.log("stepOpen");
+						setTimeout(() => {$$("#t_add").focus();app.input.focus("#t_add");}, 150);
+						
+						$$(".map-container").addClass("_sheet_open");
+					},
+					stepClose: function (sheet) {
+						self.setAddrByLS();
+						$$(".custom-modal-backdrop").removeClass('backdrop-in');
+						$$(".tgbs").addClass('show');
+						self.autocompleteDropdownAjax.close();
+						$$("#t_add").blur();
+						
+						$$(".map-container").removeClass("_sheet_open");
+					},
+					sheetStepProgress: function (app) {
+						// $$(".map-container").addClass("_sheet_drag");
+					},
+				}
+			});
+			
+			self.autocompleteDropdownAjax = app.autocomplete.create({
+				inputEl: '#t_add',
+				openIn: 'dropdown',
+				preloader: true,
+				expandInput: true,
+				updateInputValueOnSelect: true,
+				valueProperty: 'name', 
+				textProperty: 'text', 
+				limit: 20, 
+				dropdownContainerEl:'.au_test',
+				dropdownPlaceholderText: 'Например: Ленина 43"',
+				source: function (query, render) {
+					var autocomplete = this;
+					var results = [];
+					
+					if (query.length === 0) {
+						render(results);
+						return;
+					}
+					
+					autocomplete.preloaderShow();
+					app.request({
+						url: app.data.baseUrl + 'au.php',
+						method: 'GET',
+						dataType: 'json',
+						data: {
+							query: query,
+						},
+						success: function (data) {
+							for (var i = 0; i < data.length; i++) 
+							{
+								results.push(data[i]);
+							}
+							autocomplete.preloaderHide();
+							render(results);
+						}
+					});
+				},
+				on: {
+					change: function (value) {
+						if(value[0] && value[0].house == null){
+							setTimeout(function(){
+								app.autocomplete.open("#t_add");
+								
+								var input = document.getElementById("t_add");
+								input.value = input.value + " ";
+								input.focus();
+								input.selectionStart = input.value.length;
+							}, 200);
+						}else if(value[0] && value[0].house){
+							self.closeStep();
+							self.setActBut(true);
+							locProcess = true;
+							
+							var geocodeResult = app.methods.geocode(value[0].lat, value[0].lon);
+                            geocodeResult.ID = self.addrID;
+							localStorage.setItem('tmpAddressData', JSON.stringify(geocodeResult));
+							$$("#addr_hidden").hide();
+							
+							if(typeof(plugin) == "object"){
+								mapObj.animateCamera({
+									target: {lat:value[0].lat, lng:value[0].lon},
+									duration: 1000,
+								}, function(){
+									setTimeout(function(){
+										locProcess = false;
+									}, 200)
+								});
+							}
+						}
+					}
+				}
+			});
+		
+			var self = this;
+			self.showSaveAddr();
+			self.sheetSwipeToStep.open();
+			//self.setActBut(true);
+		},
+		pageBeforeOut: function () {
+			
+			$$("._gmaps_inited").removeClass("_gmaps_inited");
+			if(typeof(plugin) == "object"){
+				var mapDiv = document.getElementById("__map");
+				var mapObj = plugin.google.maps.Map.getMap(mapDiv);
+				mapObj.remove();
+			}
+		
+			var self = this;
+			self.$app.sheet.close();
+			$$(".tgbs").removeClass('show');
+			$$(".tgbs").remove();
+		},
+		pageBeforeRemove: function () {
+			var self = this;
+			if (self.sheetSwipeToStep) self.sheetSwipeToStep.destroy();
+			self.autocompleteDropdownAjax.destroy();
+		},
+	}
+}
+</script>

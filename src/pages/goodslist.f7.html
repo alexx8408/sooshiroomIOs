@@ -1,0 +1,164 @@
+	<template>
+		<div class="page light" data-name="catalog" >
+			<div class="navbar">
+				<div class="navbar-bg"></div>
+				<div class="navbar-inner sliding">
+					<div class="left">
+						<a class="link back icon-only" href="#"><i class="icon f7-icons">arrow_left</i></a>
+					</div>
+					<div class="title">
+						<span class="pr_pn">{{js 'return app.data.scatsItems[this.$route.params.id].scatsName'}}</span>
+					</div>
+					<div class="right">
+						<a href="/search/" class="link icon-only" >
+							<i class="icon f7-icons">search</i>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="toolbar toolbar-bottom ftbd js_bc hide" >
+				<div class="toolbar-inner">
+					<a class="bb button button-large button-raised button-fill bg-orange b_r8" data-transition="f7-cover-v" href="/cart/">
+						<div class="bc_t fadeIn animated">
+							<span>В корзине</span>
+							<span class="js_cg cg_s">0</span>
+							<span class="js_cp"></span>
+						</div>
+						<div class="bc_l">
+							<div class="laoderhorizontal">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+			<div class="page-content" style="padding-bottom: 80px;">
+				
+				<div class="block">
+					<div class="row">
+					{{#if flag}}
+						{{#each items}}
+						<div class="col-50 medium-33 large-25 fadeIn animated">
+							<div class="animated fadeIn card shadow-sm border-0 gl_item_{{this}} {{js 'app.data.currentGoods[this].goodYitStr'}} gl_item {{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].goodFL:1' }}" >
+								<div class="button bffr" onclick="app.methods.showGood({{this}})"></div>
+								<div class="card-content">
+									<div class="row pr_gc pt_4">
+										<div class="col">
+											<button class="ml_4 button bf color-pink width-auto elevation-1 fav fav_{{this}} {{js '(app.data.favGoods[this] !== undefined)?app.data.favGoods[this].status:1' }}" onclick="app.methods.setFavorit({{this}})" >
+												<i class="f7-icons md-18 f2">heart_fill</i>
+											</button>
+										</div>
+									</div>
+									<figure class="product-image {{js 'app.data.currentGoods[this].bg'}}">
+										<div class="row pr_gc ml_4" style="bottom:4px;">
+											<div class="col" style="display:flex;">
+												<img class="gll gll_9" src="static/9.svg">
+												<img class="gll gll_10" src="static/10.svg">
+												<img class="gll gll_11" src="static/11.svg">
+												<img class="gll gll_12" src="static/12.svg">
+											</div>
+										</div>
+										<img src="https://sooshiroom.com{{js 'app.data.currentGoods[this].goodPicM'}}" alt="" class="animated bh_r fadeIn hinge pdelay imf bg_cr">
+										<img src="static/1.png" alt="" style="width:100%;height:auto;">
+									</figure>
+									<div class="ttcnc" style="padding:0 10px 10px 10px;" >
+										<div class="tcnc" ><div class="tcn">{{js 'app.data.currentGoods[this].goodName'}}</div></div>
+										<div class="glgg">											
+											<h6 class="text-yellow font-weight-normal no-margin glgg1">{{js 'app.data.currentGoods[this].goodPrice'}}р</h6>
+											<p style="color:#a6a3a3 !important;" class="text-secondary small no-margin glgg2">{{js 'app.data.currentGoods[this].weight'}} гр.</p>
+										</div>
+										<div class="glg">
+											<button onclick="app.methods.addCart({{this}})" class="gl_item_b button button-fill bg-pink button-fab button-round"><i class="f7-icons md-18">cart_fill</i></button>
+											<div class="gl_item_st lil">
+												<div style="margin-bottom:1px;text-align:center;font-size:11px;color:#a6a3a3" class="isum isum_{{this}}" data-id="{{this}}">{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].cartPrice:app.data.currentGoods[this].goodPrice+" р."' }}</div>
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<button class="b_r8 button no-padding bg-pink c1{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }} js_cbc_{{this}}" onclick="app.methods.minus({{this}})" type="button"><i style="font-size: 18px;" class="f7-icons">minus</i></button>
+													</div>
+													<input style="width:23px !important;padding:4px 0;" class="b_mq_{{this}} form-control text-align-center width-35" readonly type="text" value="{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }}">
+													<input class="b_mqh_{{this}}" readonly type="hidden" value="{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].ID:1' }}">
+													<div class="input-group-append">
+														<button class="b_r8 button no-padding bg-pink c2{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }} js_cbcc_{{this}}" onclick="app.methods.plus({{this}})" type="button"><i style="font-size: 18px;" class="f7-icons">plus</i></button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+						{{/each}}
+					{{else}}
+						<div class="col-50 medium-33 large-25">
+							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
+							</div>
+						</div>	
+						<div class="col-50 medium-33 large-25">
+							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
+							</div>
+						</div>	
+						<div class="col-50 medium-33 large-25" style="margin-top: 12px;">
+							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
+							</div>
+						</div>	
+						<div class="col-50 medium-33 large-25" style="margin-top: 12px;">
+							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
+							</div>
+						</div>	
+					{{/if}}	
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</template>
+	<script>
+	export default {
+		data: function () 
+		{
+			return {
+				items: app.data.scatsItems[this.$route.params.id].goods,
+				cart: app.data.cart,
+				fav: app.data.fav,
+				flag: false,
+				htmls: [],
+			};
+		},
+		on: 
+		{
+			pageBeforeOut: function(e, page) 
+			{
+				
+			},
+			pageBeforeIn: function(e, page) 
+			{
+				
+			},
+			pageAfterIn: function(e, page) 
+			{
+				var self = this; 
+				if(app.data.cart)
+				{
+					$$(".js_bc").removeClass("loading hide");
+					app.methods.refreshCart(); 
+				}else{
+					$$(".in_cart").removeClass("in_cart");
+					$$(".js_bc").addClass("hide");
+				}
+				self.$setState(
+				{
+					flag:true,
+				});
+			},
+			pageInit: function(e, page)
+			{
+							
+			},
+		}
+	}
+</script>

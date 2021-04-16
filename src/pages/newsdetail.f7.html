@@ -1,0 +1,54 @@
+	<template>
+		<div class="page light ">
+			<div class="navbar navbar-transparent">
+				<div class="navbar-bg"></div>
+				<div class="navbar-inner sliding">
+					<div class="left">
+						<a class="link back icon-only" href="#"><i class="icon f7-icons">arrow_left</i></a>
+					</div>
+					<div class="title sliding pr_pn">{{js 'return app.data.sliderItems[this.$route.params.id].slideName'}}</div>
+					<div class="right"></div>
+				</div>
+			</div>
+
+			<div class="page-content">
+				<div class="block">
+				<div class="card mb-4 border-0 shadow-sm">
+					<div class="card-content card-content-padding">
+						<img src="{{js 'return app.data.sliderItems[this.$route.params.id].picDetail'}}" width="1500" height="1000" class="lazy lazy-fade-in demo-lazy info_img"/>
+					</div>
+				</div>
+				<div class="card mb-4 border-0 shadow-sm">
+					<div class="card-content card-content-padding">
+						<p  class="pr_ptext">{{js 'return app.data.sliderItems[this.$route.params.id].slideText'}}</p>
+					</div>
+				</div>
+				</div>
+			</div>
+
+	</div>
+</template>	
+<script>
+	export default {
+		data: function () {
+			return {
+				newsItems: app.data.sliderItems,
+				newsIMG: '',
+			};
+		},
+		on: {
+			pageBeforeOut: function(e, page) 
+			{
+				
+			},
+			pageInit: function(e, page) 
+			{
+				
+			},
+			pageAfterIn: function(e, page)
+			{
+				
+			},
+		}
+	}
+</script>

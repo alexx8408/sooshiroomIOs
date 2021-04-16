@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>492378262200-93h49f22aasqqauv38o4gfeuli3s7qvh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.492378262200-93h49f22aasqqauv38o4gfeuli3s7qvh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC3Gtl51rAIuMytoaKGWivcVM72N5Y3ldY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>492378262200</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.sooshiroom.ios.SooshiRoom</string>
+	<key>PROJECT_ID</key>
+	<string>sooshiroom-cd45a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sooshiroom-cd45a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:492378262200:ios:df8ca2a0386517f6</string>
+	<key>DATABASE_URL</key>
+	<string>https://sooshiroom-cd45a.firebaseio.com</string>
+</dict>
+</plist>

@@ -1,0 +1,148 @@
+<template>
+	<div class="page white" data-name="chatlist" >
+		<div class="white navbar navbar-large">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner">
+				<div class="left">
+					<a class="link back" href="#"><i class="icon icon-back"></i></a>
+				</div>
+				<div class="title sliding">
+					Сообщения
+				</div>
+				<div class="title-large">
+					<div class="title-large-text">
+						Сообщения
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="row no-gutters vh-100 loader-screen">
+				<div class="col align-self-center text-align-center">
+					<div class="">
+						<div class="btn-loader">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div class=""></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="list messlist btdt fadeIn animated hinge hide">
+				<ul>
+					{{#if messages.fl}}
+					{{#each messages.sunbs}}
+					<li>
+						<a href="/chat/{{href}}/?u={{uID}}" class="item-link item-content">
+							<div class="item-media">
+								<figure style="background: #111111;" class="avatar avatar-50"><span class="new-notification"></span><img src="static/logo_lil.svg" alt=""></figure>
+							</div>
+							<div class="item-inner p_8 ml_4">
+								<div class="item-title">
+									<div class="item-header">{{mID}}</div>
+									{{title}} {{#if status}}<span class="badge color-pink animated bounceIn">{{count}}</span>{{/if}}
+									<div class="item-footer" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" >{{mess}}</div>
+								</div>
+								<div class="item-after">{{date}}</div>
+							</div>
+						</a>
+					</li>
+					{{/each}}
+					{{else}}
+					<div class="block">
+						<div class="list no-margin">
+							<ul class="no-border fcdc">
+								<li class="item-content item-input no-padding-horizontal">
+									<div class="item-inner no-padding-horizontal">
+										<div class="item-title item-floating-label">У вас нет активных переписок</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<br>    
+					</div>
+					{{/if}}
+				</ul>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	export default {
+		data: function () 
+		{
+			return {
+				messages:[],
+				arSID:app.data.messages.arSID,
+			};
+		},
+		methods: {
+			refreshChats: function()
+			{
+				var self = window.chatListComponent;
+				app.request.getJSON(app.data.baseUrl + 'get_messlist.php', { s:'list' }, function (data){
+					if(data.fll){
+						$$('.js_mfc').html(data.count);
+						app.data.messages.count = data.count;
+						app.data.messages.fl = data.fll;
+						$$('body').addClass("is_mfo");
+					}else{
+						$$('.js_mfc').html('0');
+						app.data.messages.count = data.count;
+						app.data.messages.fl = data.fll;
+						$$('body').removeClass("is_mfo");
+					}
+					self.$setState({
+						messages:data,
+					});
+					$$(".loader-screen").hide();
+					$$(".btdt").removeClass("hide");
+				});
+			}
+		},
+		on: {
+			pageBeforeOut: function(e, page) 
+			{
+
+			},
+			pageInit: function(e, page) 
+			{
+				
+			},
+			pageAfterIn: function(e, page)
+			{
+				var self = this; 
+				if(!app.data.arUser.user)
+				{
+					app.views.main.router.navigate('/login/', { transition: 'f7-flip' });
+				}else{
+					app.request.getJSON(app.data.baseUrl + 'get_messlist.php', { s:'list' }, function (data)
+					{
+						if(data.fll)
+						{
+							$$('.js_mfc').html(data.count);
+							app.data.messages.count = data.count;
+							app.data.messages.fl = data.fll;
+							$$('body').addClass("is_mfo");
+						}else{
+							$$('.js_mfc').html('0');
+							app.data.messages.count = data.count;
+							app.data.messages.fl = data.fll;
+							$$('body').removeClass("is_mfo");
+						}
+						self.$setState(
+						{
+							messages:data,
+						});
+						
+						$$(".loader-screen").hide();
+						$$(".btdt").removeClass("hide");
+						window.chatListComponent = self;
+					});
+
+				}
+			},
+		}
+	}
+</script>

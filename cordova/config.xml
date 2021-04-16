@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.sooshiroom.ios.SooshiRoom" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>SooshiRoom</name>
+    <description>
+        СушиRoom - Доставка блюд японской кухни. Бесплатная доставка осуществляется с 10:00 до 23:00. Работает накопительная система скидок и программа лояльности.
+    </description>
+    <author email="dev@sooshiroom.com" href="https://sooshiroom.com/">
+        Sushi Room
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <access origin="https://codepush.appcenter.ms" />
+    <access origin="https://codepush.blob.core.windows.net" />
+    <access origin="https://codepushupdates.azureedge.net" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <preference name="CodePushDeploymentKey" value="KxXRi4q0xbXJx9U-aJT4Euym8LrjrXshMNVeT" />
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        <preference name="scheme" value="app" />
+        <preference name="hostname" value="localhost" />
+        <preference name="StatusBarOverlaysWebView" value="true" />
+        <splash src="res/screens/ios/default@2x~iphone~anyany.png" />
+        <splash src="res/screens/ios/default@2x~iphone~comany.png" />
+        <splash src="res/screens/ios/default@2x~iphone~comcom.png" />
+        <splash src="res/screens/ios/default@3x~iphone~anyany.png" />
+        <splash src="res/screens/ios/default@3x~iphone~anycom.png" />
+        <splash src="res/screens/ios/default@3x~iphone~comany.png" />
+        <splash src="res/screens/ios/default@2x~ipad~anyany.png" />
+        <splash src="res/screens/ios/default@2x~ipad~comany.png" />
+        <icon height="180" src="res/icons/ios/icon-60-3x.png" width="180" />
+        <icon height="60" src="res/icons/ios/icon-60.png" width="60" />
+        <icon height="120" src="res/icons/ios/icon-60-2x.png" width="120" />
+        <icon height="76" src="res/icons/ios/icon-76.png" width="76" />
+        <icon height="152" src="res/icons/ios/icon-76-2x.png" width="152" />
+        <icon height="40" src="res/icons/ios/icon-40.png" width="40" />
+        <icon height="80" src="res/icons/ios/icon-40-2x.png" width="80" />
+        <icon height="57" src="res/icons/ios/icon-57.png" width="57" />
+        <icon height="114" src="res/icons/ios/icon-57-2x.png" width="114" />
+        <icon height="72" src="res/icons/ios/icon-72.png" width="72" />
+        <icon height="144" src="res/icons/ios/icon-72-2x.png" width="144" />
+        <icon height="29" src="res/icons/ios/icon-small.png" width="29" />
+        <icon height="58" src="res/icons/ios/icon-small-2x.png" width="58" />
+        <icon height="50" src="res/icons/ios/icon-50.png" width="50" />
+        <icon height="100" src="res/icons/ios/icon-50-2x.png" width="100" />
+    </platform>
+    <preference name="Orientation" value="portrait" />
+    <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyAijYH_Gif5QFXLBj3Ig_06zrUAsTjBisQ" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
+    <plugin name="cordova-plugin-keyboard" spec="^1.2.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="^6.0.0" />
+    <plugin name="cordova-plugin-device" spec="^2.0.3" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.4" />
+    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
+    <plugin name="cordova-plugin-googlemaps" spec="^2.7.1">
+        <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />
+        <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
+    </plugin>
+    <plugin name="cordova-android-play-services-gradle-release" spec="^4.0.0">
+        <variable name="PLAY-SERVICES-ADS" value="18.0.0" />
+        <variable name="PLAY-SERVICES-ADS-IDENTIFIER" value="17.0.0" />
+        <variable name="PLAY-SERVICES-ADS-LITE" value="18.0.0" />
+        <variable name="PLAY-SERVICES-AFS-NATIVE" value="17.0.0" />
+        <variable name="PLAY-SERVICES-ANALYTICS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-ANALYTICS-IMPL" value="17.0.0" />
+        <variable name="PLAY-SERVICES-APPINVITE" value="18.0.0" />
+        <variable name="PLAY-SERVICES-AUDIENCE" value="17.0.0" />
+        <variable name="PLAY-SERVICES-AUTH" value="17.0.0" />
+        <variable name="PLAY-SERVICES-AUTH-API-PHONE" value="17.0.0" />
+        <variable name="PLAY-SERVICES-AWARENESS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-BASE" value="17.0.0" />
+        <variable name="PLAY-SERVICES-BASEMENT" value="17.0.0" />
+        <variable name="PLAY-SERVICES-CAST" value="17.0.0" />
+        <variable name="PLAY-SERVICES-CAST-FRAMEWORK" value="17.0.0" />
+        <variable name="PLAY-SERVICES-CLEARCUT" value="17.0.0" />
+        <variable name="PLAY-SERVICES-CRONET" value="17.0.0" />
+        <variable name="PLAY-SERVICES-DRIVE" value="17.0.0" />
+        <variable name="PLAY-SERVICES-FIDO" value="18.0.0" />
+        <variable name="PLAY-SERVICES-FITNESS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-FLAGS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-GAMES" value="18.0.0" />
+        <variable name="PLAY-SERVICES-GASS" value="18.0.0" />
+        <variable name="PLAY-SERVICES-GCM" value="17.0.0" />
+        <variable name="PLAY-SERVICES-IDENTITY" value="17.0.0" />
+        <variable name="PLAY-SERVICES-IID" value="17.0.0" />
+        <variable name="PLAY-SERVICES-INSTANTAPPS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-LOCATION" value="17.0.0" />
+        <variable name="PLAY-SERVICES-MEASUREMENT" value="17.0.0" />
+        <variable name="PLAY-SERVICES-MEASUREMENT-API" value="17.0.0" />
+        <variable name="PLAY-SERVICES-MEASUREMENT-IMPL" value="17.0.0" />
+        <variable name="PLAY-SERVICES-MEASUREMENT-SDK" value="17.0.0" />
+        <variable name="PLAY-SERVICES-MEASUREMENT-SDK-API" value="17.0.0" />
+        <variable name="PLAY-SERVICES-NEARBY" value="17.0.0" />
+        <variable name="PLAY-SERVICES-OSS-LICENSES" value="17.0.0" />
+        <variable name="PLAY-SERVICES-PANORAMA" value="17.0.0" />
+        <variable name="PLAY-SERVICES-PHENOTYPE" value="17.0.0" />
+        <variable name="PLAY-SERVICES-PLACES" value="17.0.0" />
+        <variable name="PLAY-SERVICES-PLACES-PLACEREPORT" value="17.0.0" />
+        <variable name="PLAY-SERVICES-PLUS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-SAFETYNET" value="17.0.0" />
+        <variable name="PLAY-SERVICES-STATS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-TAGMANAGER" value="17.0.0" />
+        <variable name="PLAY-SERVICES-TAGMANAGER-API" value="17.0.0" />
+        <variable name="PLAY-SERVICES-TAGMANAGER-V4-IMPL" value="17.0.0" />
+        <variable name="PLAY-SERVICES-TASKS" value="17.0.0" />
+        <variable name="PLAY-SERVICES-VISION" value="18.0.0" />
+        <variable name="PLAY-SERVICES-VISION-COMMON" value="18.0.0" />
+        <variable name="PLAY-SERVICES-VISION-IMAGE-LABEL" value="18.0.0" />
+        <variable name="PLAY-SERVICES-WALLET" value="17.0.0" />
+        <variable name="PLAY-SERVICES-WEARABLE" value="17.0.0" />
+    </plugin>
+    <plugin name="cordova-plugin-code-push" spec="^2.0.0" />
+</widget>

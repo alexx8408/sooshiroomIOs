@@ -1,0 +1,169 @@
+<template>
+	<div class="page white" data-name="personal">
+		<div class="white navbar navbar-large">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner">
+				<div class="left">
+					<a class="link back" href="#"><i class="icon icon-back"></i></a>
+				</div>
+				<div class="title sliding">
+					Личные данные
+				</div>
+				<div class="right">
+					<a class="link" data-transition="f7-flip" {{#if user}}onclick="app.methods.logout()"{{else}}href="/login/"{{/if}}>
+					<button class="col tn button color-white text-color-black bg-white button-raised button-round">{{#if user}}Выйти{{else}}Войти{{/if}}</button>
+					</a>
+				</div>
+				<div class="title-large">
+					<div class="title-large-text">
+						Личные данные
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="toolbar toolbar-bottom ftb js_save">
+			<div class="toolbar-inner">
+				<a class="bb button button-large button-raised button-fill color-green" @click="saveData()" href="#">Сохранить изменения</a> 
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="row no-gutters vh-100 loader-screen">
+				<div class="col align-self-center text-align-center">
+					<div class="">
+						<div class="btn-loader">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div class=""></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="block">
+				{{#if user}}
+				<div class="block-title" style="color:#000;">
+					Контактная информация
+				</div>
+				<div class="card mb-4 border-0 shadow">
+					<div class="card-content card-content-padding">
+						<div class="row" @click="openConfirm()" >
+							
+								<span class="button button-fill button-large color-green padding-horizontal width-auto">
+									<i class="material-icons" style="color:#fff;" >settings_phone</i>
+								</span>
+								<div class="col text-align-center">
+									<p class="text-secondary small no-margin">Номер телефона</p>
+									<h6 class="text-dark no-margin">{{js 'return app.data.arUser.phone'}}</h6>
+								</div>
+							
+						</div>
+					</div>
+				</div>
+				<div class="list no-hairlines-md">
+					<ul>
+						<li class="item-content item-input item-input-with-info item-input-with-value">
+							<div class="item-inner">
+								<div class="item-title item-floating-label">Имя</div>
+								<div class="item-input-wrap">
+									<input placeholder="Ваше Имя" type="text" id="n_user" value="{{js 'return app.data.arUser.name'}}" required validate>
+									<span class="input-clear-button"></span>
+									<div class="item-input-info"></div>
+								</div>
+							</div>
+						</li>
+						<li class="item-content item-input item-input-with-info item-input-with-value">
+							<div class="item-inner">
+								<div class="item-title item-floating-label">E-mail</div>
+								<div class="item-input-wrap">
+									<input placeholder="Ваш e-mail" id="n_email" type="email" value="{{js 'return app.data.arUser.mail'}}"  validate>
+									<span class="input-clear-button"></span>
+									<div class="item-input-info"></div>
+								</div>
+							</div>
+						</li>
+						<li class="item-content item-input item-input-with-info item-input-with-value">
+							<div class="item-inner">
+								<div class="item-title item-label">День рождения</div>
+								<div class="item-input-wrap">
+									<input type="date" id="n_date" placeholder="Выберите дату..." value="{{js 'return app.data.arUser.birsday'}}">
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				
+				{{else}}
+				<div class="block-title">
+					Пожалуйста авторизуйтесь
+				</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	export default {
+		data: function () {
+			return {
+				arUser:app.data.arUser,
+				user:app.data.arUser.user,
+			}
+		},
+		methods: {
+			saveData: function()
+			{
+				var self = this; 
+				if (self.notificationWithButton) self.notificationWithButton.destroy();
+				if($$(".item-input-with-error-message").length === 0)
+				{
+					app.request.getJSON(app.data.baseUrl + 'set_user.php', { n:$$('#n_user').val(),e:$$('#n_email').val(),b:$$('#n_date').val() }, function (data)
+					{
+						if(data.status)
+						{
+							var i = '<i class="material-icons color-green">verified_user</i>'
+						}else{
+							var i = '<i class="material-icons color-red">error</i>'
+						}
+						self.notificationWithButton = self.$app.notification.create({
+							icon: i,
+							title: data.title,
+							subtitle: 'Сохранение данных',
+							text: data.text,
+							closeButton: true,
+						});
+						self.notificationWithButton.open();
+					})
+				}
+			},
+			openConfirm: function () 
+			{
+				var text = 'При смене аккаунта корзина и личные данные будут удалены';
+				var title = 'Сменить аккаунт?';
+				app.methods.logout(text, title);
+			},
+		},
+		on: {
+			pageBeforeOut: function(e, page) 
+			{
+
+			},
+			pageInit: function(e, page) 
+			{
+				console.log(page);
+			},
+			pageBeforeRemove: function () {
+				var self = this;
+				if (self.notificationWithButton) 
+					self.notificationWithButton.destroy();
+			},
+			pageAfterIn: function(e, page)
+			{
+				$$(".loader-screen").hide();
+				$$("#u_code").on("change",function(){
+					$$(".loader-screen").hide();
+					$$(".js_save").removeClass("hide");
+				});
+			},
+		}
+	}
+</script>

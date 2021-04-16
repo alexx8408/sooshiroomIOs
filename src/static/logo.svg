@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="141" height="43" viewBox="0 0 141 43">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff760f;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: #00a84a;
+      }
+
+      .cls-4 {
+        fill: #ff1520;
+      }
+    </style>
+  </defs>
+  <path id="Фигура_14" data-name="Фигура 14" class="cls-1" d="M8,35l6,7h4l-6-7h4l2-2V25l-2-2H1V42H4V35H8ZM4,32H15V26H4v6ZM17,42h2l-6-7H12l6,7H17Zm5-17M16,35l2-2v1l-1,1H16Zm2-10-2-2h1l1,1v1Z"/>
+  <path id="Фигура_15" data-name="Фигура 15" class="cls-1" d="M22,25l2-2H40l2,2V40l-2,2H24l-2-2V25Zm3,1H39V39H25V26ZM22,40l2,2H23l-1-1V40Zm0-15V24l1-1h1ZM40,42c0.117-.219,2-2,2-2v1l-1,1H40Zm2-17V24l-1-1H40Z"/>
+  <path id="Фигура_15_копия" data-name="Фигура 15 копия" class="cls-1" d="M47,25l2-2H65l2,2V40l-2,2H49l-2-2V25Zm3,1H64V39H50V26ZM47,40l2,2H48l-1-1V40Zm0-15V24l1-1h1ZM65,42l2-2v1l-1,1H65Zm0-19,2,2V24l-1-1H65Z"/>
+  <path id="Фигура_16" data-name="Фигура 16" class="cls-1" d="M82,40l8-11V42h3V23H90L82,35,75,23H72V42h3V30Z"/>
+  <path id="и" class="cls-1" d="M75,1h3V13L90,1h3V18H90V6L78,18H75V1Z"/>
+  <path id="ш" class="cls-1" d="M56,1h3V15h8V1h3V17l-1,1H46l-1-1V1h3V15h8V1Z"/>
+  <path id="Фигура_17" data-name="Фигура 17" class="cls-1" d="M22,10l2,2H36v3H22v3H38l1-1V1H36V9H25V1H22v9Zm0,0,2,2H23l-1-1V10Z"/>
+  <path id="Фигура_18" data-name="Фигура 18" class="cls-1" d="M17,2V6H14V4H4V15H14V12h3v5l-1,1H2L1,17V2L2,1H16l1,1"/>
+  <path id="Фигура_8" data-name="Фигура 8" class="cls-2" d="M115,19l2-2V3l-2-2H101L99,3V17l2,2h14Z"/>
+  <path id="Фигура_8_копия" data-name="Фигура 8 копия" class="cls-2" d="M115,42l2-2V26l-2-2H101l-2,2V40l2,2h14Z"/>
+  <path id="Фигура_8_копия_2" data-name="Фигура 8 копия 2" class="cls-2" d="M138,42l2-2V26l-2-2H124l-2,2V40l2,2h14Z"/>
+  <path id="Фигура_11" data-name="Фигура 11" class="cls-3" d="M105,28h6l2,2v6l-2,2h-6l-2-2V30Zm6,10,2-2v1l-1,1S111.156,38.031,111,38Zm-6,0-2-2v1l1,1h1Zm-2-8,2-2h-1l-1,1v1h0Zm8-2s2.039,2.1,2,2a8.5,8.5,0,0,1,0-1l-1-1h-1Z"/>
+  <path id="Фигура_10" data-name="Фигура 10" class="cls-4" d="M126,30l2-2h6l2,2v6l-2,2h-6l-2-2V30Zm2-2-2,2V29l1-1h1Zm6,0,2,2V29l-1-1h-1Zm2,8-2,2h1l1-1V36Zm-8,2-2-2v1l1,1h1Z"/>
+  <path id="Фигура_12" data-name="Фигура 12" class="cls-1" d="M111,5l2,2v6l-2,2h-6l-2-2V7l2-2h6Zm-8,2V6l1-1h1Zm0,6,2,2h-1l-1-1V13h0Zm8,2s2.086-1.992,2-2a3.892,3.892,0,0,0,0,1l-1,1h-1Zm2-8-2-2h1l1,1V7Z"/>
+  <path id="Фигура_13" data-name="Фигура 13" class="cls-1" d="M107-7"/>
+</svg>

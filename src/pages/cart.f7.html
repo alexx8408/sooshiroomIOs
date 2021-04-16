@@ -1,0 +1,257 @@
+<template>
+	<div class="page white" data-name="cart" >
+		<div class="white navbar navbar-large">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner">
+				<div class="left">
+					<a class="link back" href="#"><i class="icon icon-back"></i></a>
+				</div>
+				<div class="title sliding">
+					Корзина <span class="pballsdd">Баллы - <span class="pballsc">564</span></span>
+				</div>
+				{{#if lCart}}
+				<div class="right">
+					<a class="link icon-only js_cc" @click="clearCart()" ><i class="icon material-icons md-only color-red">delete</i></a>
+				</div>
+				{{/if}}
+				<div class="title-large">
+					<div class="title-large-text">
+						Корзина <span class="pballsdd">Баллы - <span class="pballsc">564</span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{#if lCart}}
+		<div class="toolbar toolbar-bottom ftb js_bc">
+			<div class="toolbar-inner">
+				<a class="bb button button-large button-raised button-round button-fill color-pink" href="/order/">
+					<div class="bc_t">
+						<span class="js_cp cg_s">{{sum}}</span> <span>Заказать</span><i class="material-icons">arrow_forward</i>
+					</div>
+					<div class="bc_l">
+						<div class="laoderhorizontal" style="width:50px;">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+		{{/if}}
+		<div class="page-content" style="margin-top:0;margin-bottom:100px;">
+			{{#if lCart}}
+			<div class="list fcl animated fadeIn" style="padding:0px;margin-bottom:0;">
+				<ul style="background: transparent;">
+					{{#each items}}
+					{{#if isGift}}
+					<li class="{{#if @last}}l_hild{{/if}} p_0 ci_{{ID}}" data-id="{{ID}}" >
+						<div class="row width-100 item-content p_0" >
+							<div class="col-auto align-self-center">
+								<button onclick="app.methods.removeCart({{ID}},{{pID}})" class="button color-red no-padding js_cd" data-id="{{ID}}" data-pid="{{pID}}" ><i style="margin-left:8px;" class="material-icons">remove_circle</i></button>
+							</div>
+							<div class="col-auto align-self-center" >
+								<figure class="product-image h-auto">
+									<img class="b_r" src="{{js 'return app.data.baseUrlSite'}}{{img}}">
+								</figure>
+							</div>
+							<div class="col" style="height:79px;">
+								<div style="height:36px;display: flex;align-items: center;"><a class="text-dark cn" >{{name}}</a></div>
+								{{#if propf}}
+								<div style="height: 12px;line-height: 10px;"><a class="text-secondary small text-mute no-margin" >Соус: {{propv}}</a></div>
+								{{/if}}
+								{{#if topsFL}}
+								<div style="line-height: 10px;"><a class="text-secondary small text-mute no-margin" >Добавка к {{topsName}}</a></div>
+								{{/if}}
+								<h6 class="text-green font-weight-normal no-margin">{{price}} руб.{{#if topsFL}}{{else}}<sup class="isum isum_{{pID}}" data-id="{{pID}}" >{{cartPrice}}</sup></h5>{{/if}}
+							</div>
+							{{#if topsFL}}
+							{{else}}
+							<div class="col-auto align-self-center" style="margin:0px 4px 4px 4px">
+								<div class="input-group input-group-sm">
+									<div class="input-group-prepend">
+										<button class="button button-large  no-padding color-grey" onclick="app.methods.minus({{pID}})" type="button"><i style="font-size: 40px;" class="f7-icons c1{{q}} js_cbc_{{pID}}">minus_circle_fill</i></button>
+									</div>
+									<input class="b_mq_{{pID}} form-control text-align-center width-35" type="text" value="{{q}}" style="height: 46px;width: 24px !important;" readonly>
+									<div class="input-group-append">
+										<button class="button button-large no-padding color-grey" onclick="app.methods.plus({{pID}})" type="button"><i style="font-size: 40px;" class="f7-icons c2{{q}} js_cbcc_{{pID}}">plus_circle_fill</i></button>
+									</div>
+								</div>
+							</div>
+							{{/if}}
+						</div>
+					</li>
+					{{/if}}
+					{{/each}}
+				</ul>
+			</div>
+			<div class="block" style="margin-top:0;margin-bottom:10px;">
+				<div class="block-title js_gtt" style="color:#000;">Выберите подарок</div>
+				<div class="row">
+					{{#each gifts}}
+					<div class="col fadeIn animated" style="height:154px;">
+						<div  @click="toggleGift({{ID}})" class="card gcf_ gcf_{{ID}}" data-id="{{ID}}" data-price="{{price}}" >
+							<div class="fadeIn animated" style="height:111px;">
+							<img src="{{js 'return app.data.baseUrlSite'}}{{img}}" style="padding: 0px 10px"/>
+							</div>
+							<p class="text-secondary small" style="justify-content: center;margin-top: -21px !important;margin-bottom: 3px;padding: 0 6px;line-height: 12px;height: 24px;display: flex;align-items: center;">{{name}}</p>
+							<p class="text-secondary small" style="padding-bottom: 5px;">от {{priceF}}</p>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			{{#if isGift}}
+			<div class="block" style="margin: 10px 0;">
+				<div @click="showGCart()" style="height: 40px;display: flex;align-items: center;background: #ececec;border-radius: 8px;"><i class="icon f7-icons color-red" style="padding-left: 13px;padding-right: 6px;">gift_fill</i> {{js 'return app.data.arGifts.giftName'}} +</div>
+			</div>
+			{{/if}}
+			<div style="margin-bottom: 60px;">
+				<div class="card no-margin-bottom">
+					<div class="card-content card-content-padding border-top-dashed">
+						<div class="row">
+							<div class="col">
+								<p class="text-secondary no-margin-top margin-bottom-half small">Сумма корзины</p>
+								<h5 class="no-margin js_cp">{{sum}}</h5>
+							</div>
+							<div class="col text-align-center">
+								<p class="text-secondary no-margin-top margin-bottom-half small">Доставка</p>
+								<h5 class="no-margin">0 руб</h5>
+							</div>
+							<div class="col text-align-right">
+								<p class="text-secondary no-margin-top margin-bottom-half small">Итого</p>
+								<h5 class="no-margin js_cp">{{sum}}</h5>
+							</div>
+						</div>
+					</div>
+				</div>					
+			</div>
+			{{else}}
+			<div class="block">
+				<h4>Корзина пуста</h4>
+			</div>
+			{{/if}}
+		</div>
+	</div>
+</template>
+<script>
+	export default {
+		data: function() {
+			return {
+				items: app.data.cartGoods,
+				sum: app.data.cartSum,
+				cartSumN: app.data.cartSumN,
+				count: app.data.cartCount,
+				lCart: app.data.cart,
+				isGift:app.data.arGifts.giftFl,
+				gifts: app.data.arGifts.gifts,
+				isBalls: false,
+				balls: 0,
+			};
+		},
+		methods: {
+			showGCart: function() 
+			{
+				var self = this;
+				self.sheetGift = self.$f7.sheet.create({
+					content: '\
+					<div class="sheet-modal demo-sheet-swipe-to-close" style="height:auto">\
+						<div class="sheet-modal-inner">\
+							<div class="swipe-handler"></div>\
+							<div class="page-content">\
+								<img style="width:100%;padding-top:16px;"  src="' + app.data.baseUrlSite + app.data.arGifts.giftIMG + '">\
+							<\/div>\
+						<\/div>\
+					<\/div>\
+				   ',
+					swipeToClose: true,
+					backdrop: true,
+				});
+				self.sheetGift.open();
+			},
+			toggleGift: function(id) 
+			{
+				if($$('.gcf_'+id).hasClass('active') && !app.data.cartGoods[id])
+				{
+					if($$('.gcf_.selected').data('id'))
+					{
+						app.request.getJSON(app.data.baseUrlAjax+'?act=del', { product_id: app.data.cartGoods[$$('.gcf_.selected').data('id')].ID }, function (data)
+						{
+							$$('.gcf_.selected').removeClass('selected');
+							app.request.getJSON(app.data.baseUrlAjax+'?act=AddToCard', { product_id: id }, function (data)
+							{
+								if(data.mqh)
+								{
+									$$('.gcf_'+id).addClass('selected');
+									app.data.selectedGiftDID = data.mqh;
+									app.data.selectedGift = id;
+									app.methods.refreshCart();
+								}				
+							});
+						});	
+					}
+					else{
+						app.request.getJSON(app.data.baseUrlAjax+'?act=AddToCard', { product_id: id }, function (data)
+						{
+							if(data.mqh)
+							{
+								$$('.gcf_'+id).addClass('selected');
+								app.data.selectedGiftDID = data.mqh;
+								app.data.selectedGift = id;
+								app.methods.refreshCart();
+							}				
+						});
+					}
+				}else{
+					return false;
+				}
+			},
+			clearCart: function() 
+			{
+				var self = this;
+				app.dialog.confirm('Удалить все товары из корзины', 'Очистить корзину', function () {
+					app.request.getJSON(app.data.baseUrlAjax, { act: 'ccart' }, function (data)
+					{
+						if(data.s)
+						{
+							self.$setState(
+							{
+								lCart: false,
+							});
+							$$(".gl_item").removeClass("in_cart");
+							app.methods.refreshCart(); 
+						}
+					});
+				});
+			},
+		},
+		on: {
+			 pageBeforeRemove: function () {
+				var self = this;
+				if (self.sheetGift) self.sheetGift.destroy();
+			},
+			pageInit: function() 
+			{
+				
+			},
+			pageAfterIn: function(e, page) 
+			{
+				var self = this;
+				if(!app.data.cart)
+				{
+					self.$setState(
+					{
+						lCart: false,
+					});
+				}
+				app.request.getJSON(app.data.baseUrlSite + '/ajax/get_ballsjs.php', { act: 'cart' }, function (data)
+				{
+					self.balls = data.balls;
+					$$(".pballsc").html(self.balls);
+					app.methods.refreshCart();
+				});
+			}
+		}
+	}
+</script>

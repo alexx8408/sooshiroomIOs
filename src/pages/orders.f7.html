@@ -1,0 +1,306 @@
+<template>
+	<div class="page white" data-name="orders" >
+		<div class="navbar white">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner">
+				<div class="left">
+					<a class="link back" href="#"><i class="icon icon-back"></i></a>
+				</div>
+				<div class="title sliding">
+					Мои заказы
+				</div>
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="row no-gutters vh-100 loader-screen">
+				<div class="col align-self-center text-align-center">
+					<div class="">
+						<div class="btn-loader">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div class=""></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="">
+				<div class="btdt fadeIn animated hinge hide">
+					<div class="">
+						<div class="segmented segmented-strong">
+							<a class="button tab-link tab-link-active" href="#tab-current">Текущие заказы</a> 
+							<a class="button tab-link" href="#tab-history">История заказов</a>
+							<span class="segmented-highlight"></span>
+						</div>
+					</div>
+					<div class="tabs">
+						<div class="tab tab-active" id="tab-current">
+							{{#if orderc}}
+							<div class="list accordion-list">
+								<ul>
+									{{#each current}}
+									<li class="accordion-item" id="ord_{{ID}}" >
+										<a href="#" class="item-link item-content">
+											<div class="item-inner">
+												<div class="item-title">
+													<div class="item-header"><span class="badge bg-green">{{this.status_txt}}</span> Заказ №{{ID}}</div>
+													<div class="item-footer">{{date}}</div>
+												 </div>
+												<div class="item-after text-dark">{{price}}р</div>
+											</div>
+										</a>
+										<div class="accordion-item-content">
+											<div class="block">
+												<h4>Доставка по адресу</h4>
+												<span class="text-secondary">{{props.ADDRESS.VALUE}}</span>
+												
+												<h4>Время доставки</h4>
+												<span class="text-secondary">{{update}}</span>
+												
+												<h4>Получатель</h4>
+												<span class="text-secondary">{{uname}} {{uphone}}</span>
+												
+												<h4>Состав заказа</h4>
+											</div>
+											<div class="list media-list">
+												<ul style="padding: 0 16px;">
+													{{#each goods}}
+														{{#if this.fl }}
+															<li onclick="app.methods.showGood({{this.ID}})" class="gl_item gl_{{js 'app.data.currentGoods[this.ID].goodYit'}}" >
+																<div class="item-link item-content">
+																	<div class="item-media"> 
+																		<figure class="avatar avatar-60">
+																			<img src="{{js 'app.data.baseUrlSite'}}{{js 'app.data.currentGoods[this.ID].goodPicM'}}" alt="">
+																		</figure>
+																	</div>
+																	<div class="item-inner">
+																		<div class="item-title-row p_0">
+																			<div class="item-title">{{js 'app.data.currentGoods[this.ID].goodName'}}</div>
+																			<div class="item-after">{{P}}р</div>
+																		</div>
+																		<div class="item-subtitle">{{Q}} x {{js 'app.data.currentGoods[this.ID].goodPrice'}}</div>
+																		<div class="item-text">
+																			
+																		</div>
+																	</div>
+																</div>
+															</li>
+														{{else}}
+															<li class="gl_item" style="opacity: 0.7;background: #e8e8e8;">
+																<div class="item-link item-content">
+																	<div class="item-media"> 
+																		<figure class="avatar avatar-60">
+																			<img src="static/logo_lil.svg" alt="" style="background-color: #5a5a5a;">
+																		</figure>
+																	</div>
+																	<div class="item-inner">
+																		<div class="item-title-row p_0">
+																			<div class="item-title">{{this.goodName}}</div>
+																			<div class="item-after">{{this.P}}р</div>
+																		</div>
+																		<div class="item-subtitle" style="color: #f20000 !important;font-size: 17px !important;font-weight: 700;">Товар не доступен</div>
+																	</div>
+																</div>
+															</li>
+														{{/if}}
+														
+													{{/each}}
+												</ul>
+											</div>
+											<p class="row" style="margin-bottom: 40px;">
+												<button class="col button button-raised color-red"  @click="cancelOrder({{ID}})" ><i style="margin-right: 8px;" class="f7-icons" >cart_fill_badge_minus</i> Отменить заказ</button>
+												<button class="col button button-raised button-fill" @click="setChat({{ID}})" ><i style="margin-right: 8px;"  class="f7-icons" >chat_bubble_text_fill</i> Задать вопрос</button>
+											</p>
+										</div>
+									</li>
+									{{/each}}
+								</ul>
+							</div>
+							{{else}} 
+							<div class="block">
+								<h4 class="text-center">У вас нет текущих заказов</h4>
+							</div>
+							{{/if}}
+						</div>
+						<div class="tab" id="tab-history">
+							{{#if orderh}}
+							<div class="list accordion-list">
+								<ul>
+									{{#each history}}
+									<li class="accordion-item" id="ord_{{ID}}" >
+											<a href="#" class="item-link item-content">
+												<div class="item-inner">
+													<div class="item-title" >
+														<div class="item-header" style="font-size: 16px;"><span  style="padding: 5px 11px;" class="badge bg-pink">{{#if this.cancel }}отменен{{else}}завершен{{/if}}</span> Заказ №{{ID}}</div>
+														<div class="item-footer" style="padding-top:5px;">{{date}}</div>
+													 </div>
+													<div class="item-after text-dark">{{price}}р</div>
+												</div>
+											</a>
+											<div class="accordion-item-content">
+												<div class="block">
+													<h4>Доставка по адресу</h4>
+													<span class="text-secondary">{{props.ADDRESS.VALUE}}</span>
+													
+													<h4>Время доставки</h4>
+													<span class="text-secondary">{{update}}</span>
+													
+													<h4>Получатель</h4>
+													<span class="text-secondary">{{uname}} {{uphone}}</span>
+													
+													<h4>Состав заказа</h4>
+												</div>
+												<div class="list media-list">
+													<ul style="padding: 0 16px;">
+														{{#each goods}}
+															{{#if this.fl }}
+																<li onclick="app.methods.showGood({{this.ID}})" class="gl_item gl_{{js 'app.data.currentGoods[this.ID].goodYit'}}" >
+																	<div class="item-link item-content">
+																		<div class="item-media"> 
+																			<figure class="avatar avatar-60">
+																				<img src="{{js 'app.data.baseUrlSite'}}{{js 'app.data.currentGoods[this.ID].goodPicM'}}" alt="">
+																			</figure>
+																		</div>
+																		<div class="item-inner">
+																			<div class="item-title-row p_0">
+																				<div class="item-title">{{js 'app.data.currentGoods[this.ID].goodName'}}</div>
+																				<div class="item-after">{{P}}р</div>
+																			</div>
+																			<div class="item-subtitle">{{Q}} x {{js 'app.data.currentGoods[this.ID].goodPrice'}}</div>
+																			<div class="item-text">
+																				
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															{{else}}
+																<li class="gl_item" style="opacity: 0.7;background: #e8e8e8;">
+																	<div class="item-link item-content">
+																		<div class="item-media"> 
+																			<figure class="avatar avatar-60">
+																				<img src="static/logo_lil.svg" alt="" style="background-color: #5a5a5a;">
+																			</figure>
+																		</div>
+																		<div class="item-inner">
+																			<div class="item-title-row p_0">
+																				<div class="item-title">{{this.goodName}}</div>
+																				<div class="item-after">{{this.P}}р</div>
+																			</div>
+																			<div class="item-subtitle" style="color: #f20000 !important;font-size: 17px !important;font-weight: 700;">Товар не доступен</div>
+																		</div>
+																	</div>
+																</li>
+															{{/if}}
+														{{/each}}
+													</ul>
+												</div>
+												<a style="margin-bottom: 40px;" {{#if fl}}@click="replayOrder({{ID}})"{{else}}{{/if}} class="{{#if fl}}{{else}}disabled{{/if}} button button-large button-raised button-fill color-pink" href="#"><i class="f7-icons" >arrow_clockwise</i> Повторить заказ {{price}}р</a>
+											</div>
+										</li>
+									{{/each}}
+								</ul>
+							</div>
+							{{else}}
+							<div class="block">
+								<h4 class="text-center">У вас нет заказов</h4>
+							</div>
+							{{/if}}
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+export default {
+	data: function () 
+	{
+		return {
+			current:[] ,
+			history:[] ,
+			currentGoods:app.data.currentGoods ,
+			orderh:false ,
+			orderc:false ,
+		};
+	},
+	 methods: {
+		replayOrder: function(id) 
+		{
+			app.dialog.confirm('Dсе товары из корзины будут удалены. Продолжить?', function () {
+				app.request.getJSON(app.data.baseUrlAjax, { act: 'ccart' }, function (data){
+					app.request.get(app.data.baseUrlSite + '/personal/orders/?COPY_ORDER=Y&ID=' + id, function (data){
+						$$(".gl_item").removeClass("in_cart");
+						app.methods.refreshCart();
+						app.views.main.router.back();
+						setTimeout(function(){
+							app.views.main.router.navigate('/cart/');
+						}, 300);
+					})
+				});
+			});
+		},
+		cancelOrder: function(id) 
+		{
+			var self = this; 
+			app.dialog.prompt("По какой причине Вы хотите отменить заказ?", "Отмена заказа", function(value){
+				app.request.json(app.data.baseUrl + 'set_order.php?CANCEL_ORDER=Y&ID=' + id, {description: value}, function (json){
+					if(json.STATUS == "OK"){
+						self.refreshOrders();
+					}else{
+						app.dialog.alert(json.TEXT,'Ошибка!');
+					}
+				})
+			});
+		},
+		setChat: function(id) 
+		{
+			app.request.getJSON(app.data.baseUrl + 'set_messlist.php', { n:'Заказ №' + id,s:'d' }, function (data){
+				if(data.fl){
+					app.views.main.router.navigate('/chat/'+data.id+'/?id='+data.admin);
+				}else{
+					app.dialog.alert('Плохое соединение','Заказ');
+				}
+			});
+		},
+		refreshOrders: function()
+		{
+			var self = this; 
+			app.request.getJSON(app.data.baseUrl + 'get_orders.php', { p:'' }, function (data)
+			{
+				self.orders = data.orders;
+				self.order = data.order;
+				self.$setState(
+				{
+					orderh:data.orderh,
+					orderc:data.orderc,
+					current:data.current ,
+					history:data.history ,
+				});
+				$$(".loader-screen").hide();
+				$$(".btdt").removeClass("hide");
+			});
+		}
+	},
+	on: {
+		pageBeforeOut: function(e, page) 
+		{
+
+		},
+		pageInit: function(e, page) 
+		{
+			
+		},
+		pageAfterIn: function(e, page)
+		{
+			var self = this; 
+			self.refreshOrders();
+			if (page.route.query.id > 0)
+			{
+				setTimeout(() => { app.accordion.open("#ord_"+page.route.query.id)}, 500);
+			}
+		},
+	}
+}
+</script>

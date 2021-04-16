@@ -1,0 +1,611 @@
+	<template>
+		<div class="page white" data-name="order" >
+			<div class="white navbar navbar-large">
+				<div class="navbar-bg"></div>
+				<div class="navbar-inner">
+					<div class="left">
+						<a class="link back" href="#"><i class="icon icon-back"></i></a>
+					</div>
+					<div class="title sliding">
+						Оформить заказ
+					</div>
+					<div class="title-large">
+						<div class="title-large-text">
+							Оформить заказ
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="toolbar toolbar-bottom ftb js_bc" >
+				<div class="toolbar-inner">
+					<a class="bb button button-large button-raised button-fill color-green" @click="setOrder()" >
+						<div class="bc_t fadeIn animated">
+							Оформить заказ
+						</div>
+						<div class="bc_l">
+							<div class="laoderhorizontal" style="width:50px;">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="page-content">
+				<div class="row no-gutters vh-100 loader-screen">
+					<div class="col align-self-center text-align-center">
+						<div class="">
+							<div class="btn-loader">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div class=""></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="">
+					<div class="btdt fadeIn animated hinge hide">						
+						<div class="block-title" style="color:#000;">
+							Контактная информация
+						</div>
+						<div class="list no-hairlines-md">
+							<ul>
+								<li class="item-content item-input item-input-with-info {{#if arUser.name}}item-input-with-value{{else}}item-input-with-error-message item-input-invalid{{/if}}">
+									<div class="item-inner">
+										<div class="item-title item-floating-label">Имя</div>
+										<div class="item-input-wrap">
+											<input class="{{#if arUser.name}}{{else}}input-invalid{{/if}}" placeholder="Ваше Имя" type="text" id="o_user" value="{{#if arUser.isloc}}{{js 'return app.data.arUser.name'}}{{/if}}" required validate>
+											{{#if arUser.name}}{{else}}<div class="item-input-error-message">Заполните это поле.</div>{{/if}}
+											<span class="input-clear-button"></span>
+											<div class="item-input-info"></div>
+										</div>
+									</div>
+								</li>
+								{{#if arUser.user}}
+								<li class="item-content item-input" @click="openConfirm()">
+									<div class="item-inner">
+										<div class="item-title item-floating-label">Телефон</div>
+										<div class="item-input-wrap">
+											<input  placeholder="" type="text" value="{{js 'return app.data.arUser.phone'}}"  readonly>
+											<span class="ephn"><i class="f7-icons" >edit</i></span>
+										</div>
+									</div>
+								</li>
+								{{else}}
+								<li class="item-content item-input item-input-with-error-message item-input-invalid">
+									<a class="item-inner" href="/login/" data-transition="f7-flip" >
+										<div class="item-title item-floating-label">Телефон</div>
+										<div class="item-input-wrap">
+											<input class="input-invalid" placeholder="+7 (___) ___ __ __" type="text"  readonly>
+											<div class="item-input-error-message js_phaddr">Телефон обязателен для заполнения</div>
+											<span class="ephn"><i class="f7-icons" >edit</i></span>
+										</div>
+									</a>
+								</li>
+								{{/if}}
+							</ul>
+						</div>
+						<div class="">
+							<div class="segmented segmented-strong">
+								<a class="button tab-link tab-link-active" href="#tab-delivery">Доставка</a> 
+								<a class="button tab-link js_bcn" href="#tab-samov" >Самовывоз</a>
+								<span class="segmented-highlight"></span>
+							</div>
+						</div>
+						<div class="tabs">
+							<div class="tab tab-active js_td" data-id="2" id="tab-delivery"></div>
+							<div class="tab js_td" data-id="3" id="tab-samov"></div>
+						</div>
+						{{#if isDelivery}}
+							<div >
+							
+								<div class="block-title" style="color:#000;">
+									Адрес доставки
+								</div>
+								{{#if arUser.isloc}}
+								<div class="list no-hairlines-md js_addin">
+									<ul>
+										<li class="item-content item-input" onclick="app.methods.showAddr()" >
+											<div class="item-inner">
+												<div class="item-title item-floating-label">{{js 'return app.data.arUser.addr.active.city'}}</div>
+												<div class="item-input-wrap">
+													<textarea class="resizable a_street" readonly>{{js 'return app.data.arUser.addr.active.street'}}</textarea>
+													<span class="ephn" ><i class="f7-icons" >edit</i></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+									<ul class="row p_8 address_elements">
+										<li class="item-input {{#if arUser.addr.active.kv}}item-input-with-value{{else}}item-input-with-error-message item-input-invalid{{/if}} col">
+											<div class="plr_8">
+												<div class="item-title item-floating-label">Кв/оф</div>
+												<div class="item-input-wrap">
+													<input placeholder="Кв/оф" type="text" name="kv" class="a_kv" id="_o_kv" value="{{js 'return app.data.arUser.addr.active.kv'}}" required validate>
+													
+												</div>
+											</div>
+										</li>
+										<li class="item-input item-input-with-value col">
+											<div class="plr_8">
+												<div class="item-title item-floating-label">Этаж</div>
+												<div class="item-input-wrap">
+													<input placeholder="Этаж" type="tel" name="flo" class="a_flo" id="_o_flo" value="{{js 'return app.data.arUser.addr.active.flo'}}" >
+													
+												</div>
+											</div>
+										</li>
+										<li class="item-input item-input-with-value col">
+											<div class="plr_8">
+												<div class="item-title item-floating-label">Подъезд</div>
+												<div class="item-input-wrap">
+													<input placeholder="Подъезд" type="text" name="par" class="a_par" id="_o_par" value="{{js 'return app.data.arUser.addr.active.par'}}">
+													
+												</div>
+											</div>
+										</li>
+										<li class=" item-input item-input-with-value col">
+											<div class="plr_8">
+												<div class="item-title item-floating-label">Домофон</div>
+												<div class="item-input-wrap">
+													<input placeholder="Домофон" type="text" name="dof" class="a_dof" id="_o_dof" value="{{js 'return app.data.arUser.addr.active.dof'}}" >
+													
+												</div>
+											</div>
+										</li>
+									</ul>
+									<ul>
+										<li class="item-content item-input" >
+											<div class="item-inner">
+												<div class="item-title item-floating-label">Комментарий</div>
+												<div class="item-input-wrap">
+													<textarea name="COMMENT" class="resizable" placeholder="Комментарий" ></textarea>
+													<span class="input-clear-button"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								{{else}}
+								<div class="list no-hairlines-md js_addin">
+									<ul>
+										<li class="item-content item-input item-input-with-error-message item-input-invalid" >
+											<a href="/map/0/" class="item-inner">
+												<div class="item-title item-floating-label">Укажите адрес доставки</div>
+												<div class="item-input-wrap">
+													<textarea class="resizable a_street" placeholder="Адрес не определен" readonly></textarea>
+													<div class="item-input-error-message js_phaddr">Адрес обязателен для заполнения</div>
+													<span class="ephn" ><i class="f7-icons" >edit</i></span>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+								{{/if}}
+							
+							</div>
+							
+						{{else}}
+							<div class="">
+							
+								<div class="block-title" style="color:#000;">
+									Пункты выдачи
+								</div>
+								 <div class="list media-list">
+									 <ul>
+									 {{#each stores}}
+										<li>
+										  <label class="item-radio item-content">
+												<input type="radio" name="radio-store" class="radio-store" value="{{ID}}" {{#if @first}}checked{{/if}} />
+												<i class="icon icon-radio" {{#if @first}}checked{{/if}}></i>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{{TITLE}}</div>
+													</div>
+													<div class="item-subtitle" style="margin-left:0px;" ><i style="font-size:11px;" class="icon material-icons">location_on</i> {{ADDRESS}}</div>
+													<div class="item-text">{{SCHEDULE}}</div>
+												</div>
+										  </label>
+										</li>
+									{{/each}}
+									</ul>
+									<ul>
+										<li class="item-content item-input" >
+											<div class="item-inner">
+												<div class="item-title item-floating-label">Комментарий</div>
+												<div class="item-input-wrap">
+													<textarea class="resizable" name="COMMENT" placeholder="Комментарий" ></textarea>
+													<span class="input-clear-button"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+									</div>
+							
+							</div>
+						{{/if}}
+						<div class="block-title" style="color:#000;">
+							Время доставки
+						</div>
+						<div class="list">
+							<ul>
+								<li>
+									<label class="item-radio item-content">
+										<input type="radio" name="time-radio" value="now" checked class="time-radio"/>
+										<i class="icon icon-radio"></i>
+										<div class="item-inner">
+										  <div class="item-title">Как можно скорее</div>
+										</div>
+									</label>
+								</li>
+								<li>
+									<label class="item-radio item-content">
+										<input type="radio" name="time-radio" value="time" class="time-radio"/>
+										<i class="icon icon-radio"></i>
+										<div class="item-inner">
+											<input style="height: 30px;line-height: 30px;" type="text" placeholder="Выберите дату и время..." readonly="readonly" id="timeord" class="icto" />
+											<div class="item-title cto">Ко времени</div>
+										</div>
+									</label>
+								</li>
+							</ul>
+						</div>
+						<div class="block-title" style="color:#000;">
+							Оплата
+						</div>
+						<div class="list m_0 media-list">
+							<ul>
+								<li>
+									<label class="item-radio item-content">
+										<input type="radio" name="pay-radio" value="pcard" checked class="pay-radio"/>
+										<i class="icon icon-radio"></i>
+										<div class="item-inner">
+											<div class="item-title">Картой курьеру</div>
+										</div>
+									</label>
+								</li>
+								<li>
+									<label class="item-radio item-content">
+										<input type="radio" name="pay-radio" value="pcash" class="pay-radio"/>
+										<i class="icon icon-radio"></i>
+										<div class="item-inner">
+											<input style="height: 30px;line-height: 30px;" type="text" placeholder="С какой суммы Сдача" readonly="readonly" id="payZd" class="icto" />
+											<div class="item-title cto">Наличными</div>
+										</div>
+									</label>
+								</li>
+								<li class="pballsl">
+									{{#if isBalls}}
+									{{else}}
+									<div class="pballsd"></div>
+									{{/if}}
+									<label class="item-radio item-content">
+										{{#if isBalls}}
+										<input type="radio" name="pay-radio" value="pballs" class="pay-radio" />
+										{{else}}
+										<input type="radio" name="pay-radio" value="pballs" class="pay-radio" disabled />
+										{{/if}}
+										<i class="icon icon-radio"></i>
+										<div class="item-inner">
+											<div class="item-title">Оплатить Баллами <span class="pballsdd">Баллы - <span class="pballsc">564</span></span></div>
+										</div>
+									</label>
+								</li>
+							</ul>
+						</div>
+						<div class="display-flex padding justify-content-space-between align-items-center" style="margin-bottom:30px;" >
+							<div style="font-size: 22px">
+								<b class="">Итого:</b>
+							</div>
+							<div style="font-size: 22px"><b>{{sum}}</b></div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+<script>
+	export default {
+		data: function () 
+		{
+			return {
+				arUser: app.data.arUser,
+				sum: app.data.cartSum,
+				stores: [],
+				count: app.data.cartCount,
+				cartSumN: app.data.cartSumN,
+				isDelivery: true,
+				isBalls: false,
+				balls: 0,
+			};
+		},
+		 methods: {
+			setOrder: function() 
+			{
+				var self = this;
+				$$(".js_bc").addClass("loading");
+				if($$(".item-input-with-error-message").length === 0)
+				{
+					var DELIVERY_ID = $$(".js_td.tab-active").data("id");
+					if($$(".time-radio:checked").val() == 'now'){
+						var ORDER_PROP_12 = "";
+						var DELIVERY_TIME_VARIANT = 1;
+					}else{
+						var ORDER_PROP_12 = $$("#timeord").attr("data-date");
+						var DELIVERY_TIME_VARIANT = 2;
+					}
+					if($$(".pay-radio:checked").val() == 'pcash'){
+						var PAY_SYSTEM_ID = 2;
+					}else{
+						var PAY_SYSTEM_ID = 3;
+					}
+					
+					if($$(".pay-radio:checked").val() == 'pballs') var PAY_SYSTEM_ID = 8;
+					
+					if(DELIVERY_ID == 3)
+					{
+						var STORE_ID = $$(".radio-store").val();
+					}else{
+						var STORE_ID = '';
+					}
+					var ADDR_ID = app.data.arUser.addr.active.ID;
+					var ORDER_PROP_13 = $$("#payZd").val();
+					var addrComponents = {};
+					$$(".address_elements input").each(function(){
+						addrComponents[this.name] = this.value;
+						if(this.value != ""){
+							app.data.arUser.addr.active[this.name] = this.value;
+							localStorage.setItem('addressData', JSON.stringify(app.data.arUser.addr.active));
+							
+							for(var i in app.data.arUser.addr.list){
+								if(app.data.arUser.addr.list[i]["ID"] == ADDR_ID){
+									app.data.arUser.addr.list[i][this.name] = this.value;
+								}
+							}
+						}
+					})
+					
+					var orderData = {
+						USER_NAME: $$("#o_user").val(),
+						USER_PHONE: app.data.arUser.phone,
+						DELIVERY_ID: DELIVERY_ID,
+						PAY_SYSTEM_ID: PAY_SYSTEM_ID,
+						ADDR_ID: ADDR_ID,
+						STORE_ID: $$(".radio-store").val(),
+						ORDER_PROP_12: ORDER_PROP_12,
+						ORDER_PROP_13: ORDER_PROP_13,
+						ORDER_PROP_10: "Y",
+						DELIVERY_TIME_VARIANT: DELIVERY_TIME_VARIANT,
+						COMMENT: $$("textarea[name=COMMENT]").val(),
+						addrComponents: addrComponents
+					}
+					
+					app.request.post(app.data.baseUrl + 'set_order.php', orderData, function (data){
+						if(data != "er_p"){
+							$$(".js_bc").removeClass("loading");
+							app.data.cart = false;
+							app.data.cartGoods = [];
+							app.data.cartCount = 0;
+							app.data.cartSum = 0;
+							app.views.main.router.navigate('/fanks/'+data+'/', { transition: 'f7-dive' });
+						}else{
+							app.dialog.alert('Плохое соединение','Заказ');
+						}
+					});
+					
+				}else{
+					var t='';
+					var e=$$(".item-input-with-error-message .item-input-error-message.js_phaddr");
+					for (var i = 0; i < e.length; i++) 
+					{
+						t += e[i].innerHTML+'<br>';
+					}
+					if (self.notifError){self.notifError.close(); self.notifError.destroy();}
+					self.notifError = self.$app.notification.create({
+						icon: '<i class="material-icons color-white">warning</i>',
+						title: 'Заполните обязательные поля',
+						subtitle: '<span class="color-white">Для оформения заказа</span>',
+						text: t,
+						cssClass: 'red',
+						closeButton: true,
+					});
+					self.notifError.open();
+					$$(".js_bc").removeClass("loading");
+				}
+			},
+			openConfirm: function () 
+			{
+				var text = 'При смене аккаунта корзина и личные данные будут удалены';
+				var title = 'Сменить аккаунт?';
+				app.methods.logout(text, title);
+			},
+		},
+		on: {
+			pageBeforeOut: function(e, page) 
+			{
+				var self = this;
+				if (self.pickerDescribe) self.pickerDescribe.destroy();
+				if (self.notifError){self.notifError.close(); self.notifError.destroy();}
+			},
+			pageInit: function(e, page) 
+			{
+				if(!app.data.cart)
+				{
+					app.views.main.router.navigate('/');
+				}
+				var self = this; 
+				var nd=[],td=[];
+				var today = new Date();
+				for (var i = 10; i <= 23; i++) { nd.push(i); }
+				for (var i = new Date().getHours(); i <= 23; i++) { td.push(i); }
+				var tdt = new Date( today.getFullYear(), today.getMonth(), today.getDate() + 1 );
+				var tdd = new Date( today.getFullYear(), today.getMonth(), today.getDate() + 2 );
+				
+				var arDatesObjects = [today, tdt, tdd];
+				
+				var z = [];
+				var zd = parseInt(self.sum.replace(/[^0-9]/g, ''));
+				var zdr = parseInt(self.sum.replace(/[^0-9]/g, '').substr(-3));
+				z.push('Без здачи');
+				if(zd>1000)
+				{
+					if(zdr>0 && zdr<500)
+					{
+						z.push('Сдача с '+(zd-zdr+500));
+					}
+					z.push('Сдача с '+(zd-zdr+1000));
+				}else{
+					if(zdr<500)
+					{
+						z.push('Сдача с 500');
+					}
+					z.push('Сдача с 1 000');
+					z.push('Сдача с 2 000');
+				}
+				z.push('Сдача с 5 000');
+				var m = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'];
+				var dayValues = [ 'сегодня', 'завтра', tdd.getDate() + ' ' + m[tdd.getMonth()]];
+				
+				self.pickerDescribe = app.picker.create({
+					inputEl: '#timeord',
+					backdrop: true,
+					rotateEffect: true,
+					formatValue: function (values, displayValues) {
+						if(dayValues.indexOf(values[0]) >= 0){
+							var arDateObj = arDatesObjects[dayValues.indexOf(values[0])];
+							var dateStr = ("0" + arDateObj.getDate()).slice(("0" + arDateObj.getDate()).length - 2) + ".";
+								dateStr += ("0" + arDateObj.getMonth()).slice(("0" + arDateObj.getMonth()).length - 2) + ".";
+								dateStr += arDateObj.getFullYear() + " ";
+								dateStr += displayValues[1] + ':' + displayValues[2];
+							$$("#timeord").attr("data-date", dateStr);
+						}
+						return 'Доставить ' + values[0] + ' к ' + displayValues[1] + ':' + displayValues[2];
+					},
+					cols: [
+						{
+							displayValues: [
+								'Сегодня (' + today.getDate() + ' ' + m[today.getMonth()] + ')', 
+								'Завтра (' + tdt.getDate() + ' ' + m[tdt.getMonth()]+')', 
+								tdd.getDate() + ' '+m[tdd.getMonth()]
+							],
+							values: dayValues,
+							textAlign: 'left',
+							onChange:function(picker, value, displayValue){
+								if(picker.cols[1].replaceValues)
+								{
+									if(value == 'сегодня')
+									{
+										picker.cols[1].replaceValues(td);
+									}else{
+										picker.cols[1].replaceValues(nd);
+										picker.cols[1].setValue(15);
+									}
+								}
+							}
+						},
+						{
+							values: td,
+						},
+						{
+						  divider: true,
+						  content: ':'
+						},						
+						{
+							values: (function () {
+								var arr = [];
+								for (var i = 0; i <= 50; i+=10) { arr.push(i < 10 ? '0' + i : i); }
+								  return arr;
+							  })(),
+						}
+					],
+					 on: {
+						open: function (picker) {
+							picker.setValue([picker.cols[0].values[1],today.getHours(),30]);
+						},
+					},
+					toolbarCloseText: 'Выбрать',
+				});
+				self.pickerZd = app.picker.create({
+					inputEl: '#payZd',
+					backdrop: true,
+					rotateEffect: false,
+					toolbarCloseText: 'Выбрать',
+					cssClass: 'picOnce',
+					cols: [
+						{
+							values: z,							
+						},
+					]
+				});
+				$$(".time-radio").change(function()
+				{
+					if(this.value == 'time')
+					{
+						self.pickerDescribe.open();
+					}
+				});
+				$$(".pay-radio").change(function()
+				{
+					if(this.value == 'pcash')
+					{
+						self.pickerZd.open();
+					}
+				});
+			},
+			pageAfterIn: function(e, page)
+			{
+				var self = this; 
+				$$("#tab-samov").on("tab:show",function()
+				{
+					if(Object.keys(self.stores).length === 0)
+					{
+						var hb = $$(".js_bcn").html();
+						$$(".js_bcn").html('<div class="laoderhorizontal" style="height: 36px;"><div class="bg-green" style="top:13px;"></div><div class="bg-green" style="top:13px;"></div><div class="bg-green" style="top:13px;"></div><div class="bg-green" style="top:13px;"></div></div>');
+						app.request.getJSON(app.data.baseUrl + 'get_stores.php', { p:'' }, function (data)
+						{
+							self.stores = data;
+							self.$setState(
+							{
+								stores:data,
+								isDelivery: false,
+							});
+							setTimeout(() => { $$(".js_bcn").html(hb);}, 300);
+						});
+					}else{
+						self.$setState(
+						{
+							isDelivery: false,
+						});
+						setTimeout(() => { $$(".js_bcn").html(hb);}, 300);
+					}
+				});
+				$$("#tab-delivery").on("tab:show",function()
+				{
+					self.$setState(
+					{
+						isDelivery: true,
+					});
+				});
+				app.request.getJSON(app.data.baseUrlSite + '/ajax/get_ballsjs.php', { act: 'cart' }, function (data)
+				{
+					//data.balls = 3000;
+					self.balls = data.balls;
+					$$(".pballsc").html(self.balls);
+					if(self.balls >= self.cartSumN)
+					{
+						self.isBalls = true;
+						self.$setState(
+						{
+							isBalls: true,
+						});
+					}
+				});
+				$$(".loader-screen").hide();
+				$$(".btdt").removeClass("hide");
+			},
+		}
+	}
+</script>

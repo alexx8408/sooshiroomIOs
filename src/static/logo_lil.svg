@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #00a84a;
+      }
+
+      .cls-3 {
+        fill: #ff1520;
+      }
+
+      .cls-4 {
+        fill: #ff760f;
+      }
+    </style>
+  </defs>
+  <path id="Фигура_8" data-name="Фигура 8" class="cls-1" d="M21,23l2-2V7L21,5H7L5,7V21l2,2H21Z"/>
+  <path id="Фигура_8_копия" data-name="Фигура 8 копия" class="cls-1" d="M21,46l2-2V30l-2-2H7L5,30V44l2,2H21Z"/>
+  <path id="Фигура_8_копия_2" data-name="Фигура 8 копия 2" class="cls-1" d="M44,46l2-2V30l-2-2H30l-2,2V44l2,2H44Z"/>
+  <path id="Фигура_11" data-name="Фигура 11" class="cls-2" d="M11,32h6l2,2v6l-2,2H11L9,40V34Zm6,10,2-2v1l-1,1S17.156,42.031,17,42Zm-6,0L9,40v1l1,1h1ZM9,34l2-2H10L9,33v1H9Zm8-2s2.039,2.1,2,2a8.483,8.483,0,0,1,0-1l-1-1H17Z"/>
+  <path id="Фигура_10" data-name="Фигура 10" class="cls-3" d="M32,34l2-2h6l2,2v6l-2,2H34l-2-2V34Zm2-2-2,2V33l1-1h1Zm6,0,2,2V33l-1-1H40Zm2,8-2,2h1l1-1V40Zm-8,2-2-2v1l1,1h1Z"/>
+  <path id="Фигура_12" data-name="Фигура 12" class="cls-4" d="M17,9l2,2v6l-2,2H11L9,17V11l2-2h6ZM9,11V10l1-1h1Zm0,6,2,2H10L9,18V17H9Zm8,2s2.086-1.992,2-2a3.9,3.9,0,0,0,0,1l-1,1H17Zm2-8L17,9h1l1,1v1Z"/>
+  <path id="Фигура_13" data-name="Фигура 13" class="cls-4" d="M13-3"/>
+</svg>

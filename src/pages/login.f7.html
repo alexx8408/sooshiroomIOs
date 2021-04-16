@@ -1,0 +1,278 @@
+<template>
+	<div class="page page-forgotpassword o-hidden light" data-name="login" >
+		<div class="navbar navbar-transparent">
+			<div class="navbar-inner">
+				<div class="left">
+					<a class="link back col tn button color-white text-color-black bg-white button-raised button-round" href="#"><i class="icon icon-back"></i></a>
+				</div>
+				<div class="title">
+					
+				</div>
+				<div class="right">
+				
+				</div>
+			</div>
+		</div>
+		<div class="page-content lgpage ">
+			<div class="row h-100 ">
+				<div class="col px-3 text-align-center padding-horizontal-half">
+					<img src="static/logo.svg" alt="logo" class="logo-small">
+					<h3 class=" fcdc">Введите КОД СМС</h3>
+					<h3 class=" fndc">Укажите телефон</h3>
+					<div class="form-signin shadow text-dark" >
+					
+						<p class=" text-secondary small no-margin-top fcdc">подтвердив КОД-СМС, вы даете согласие <br><a href="/info/politika-konfidentsialnosti/?i=Политика конфиденциальности" class="color-green">на обработку персональных данных</a></p>
+					
+						<p class=" text-secondary small no-margin-top fndc">подтвердив номер телефона, вы даете согласие <br><a href="/info/politika-konfidentsialnosti/?i=Политика конфиденциальности" class="color-green">на обработку персональных данных</a></p>
+					
+						<div class="list no-margin">
+							<ul class="no-border fcdc">
+								<li class="item-content item-input no-padding-horizontal">
+									<div class="item-inner no-padding-horizontal">
+										<div class="item-title item-floating-label">Введите КОД-СМС</div>
+										<div class="item-input-wrap">
+											<input type="tel" name="u_code" id="u_code" maxlength="4" style="font-size: 32px;letter-spacing: 30px;">
+											<span class="input-clear-button"></span>
+										</div>
+									</div>
+								</li> 
+							</ul>
+							<ul class="no-border fndc">
+								<li class="item-content item-input no-padding-horizontal">
+									<div class="item-inner no-padding-horizontal">
+										<div class="item-title item-floating-label">Введите номер телефона</div>
+										<div class="item-input-wrap">
+											<input type="tel" name="u_phone" id="u_phone" class="mask_phone">
+											<span class="input-clear-button"></span>
+										</div>
+									</div>
+								</li>                            
+							</ul>
+						</div>                   
+						<br>    
+					
+						<div class="row fcdc">
+							<div class="col-50">
+								<button @click="newPhone()"  class="button button-raised button-fill button-large button-round"><i class="material-icons">arrow_back</i><span>Назад</span></button>
+							</div>
+							<div class="col-50 align-self-center text-right pl-0">
+								<a  href="#" @click="sendAgane()" >Новое СМС</a>
+							</div>
+						</div>
+					
+						<div class="row fndc">
+							<div class="col-100">
+								<button @click="sendPhone()" class="sendPh button disabled button-raised button-fill button-large button-round"><span>Подтвердить</span><i class="material-icons">arrow_forward</i></button>                     
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	export default {
+		data: function () {
+			return {
+				elPhone: [],
+				vaitC: false,
+				time: 0,
+				code: 0,
+				authApiDir: "api"
+			}
+		},
+		methods:{
+			maskPhone: function(selector, masked = '+7 (___) ___-__-__') 
+			{				
+				var self = this; 
+				self.elPhone = document.querySelectorAll(selector);
+				for (const elem of self.elPhone) {
+					elem.addEventListener("input", self.mask);
+					elem.addEventListener("focus", self.mask);
+					elem.addEventListener("blur", self.mask);
+				}
+			
+			},
+			mask: function(event) 
+			{
+				const keyCode = event.keyCode;
+				const template = '+7 (___) ___-__-__',
+					def = template.replace(/\D/g, ""),
+					val = $$('.mask_phone').val().replace(/\D/g, "");
+				let i = 0,
+					newValue = template.replace(/[_\d]/g, function (a) {
+						return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
+					});
+				i = newValue.indexOf("_");
+				if (i !== -1) {
+					newValue = newValue.slice(0, i);
+				}
+				let reg = template.substr(0, $$('.mask_phone').val().length).replace(/_+/g,
+					function (a) {
+						return "\\d{1," + a.length + "}";
+					}).replace(/[+()]/g, "\\$&");
+				reg = new RegExp("^" + reg + "$");
+				if (!reg.test($$('.mask_phone').val()) || $$('.mask_phone').val().length < 5 || keyCode > 47 && keyCode < 58) {
+					$$('.mask_phone').val(newValue);
+				}
+				if (event.type === "blur" && $$('.mask_phone').val().length < 5) {
+					$$('.mask_phone').val("");
+				}
+				if($$('.mask_phone').val().length == 18)
+				{
+					$$('.sendPh').removeClass('disabled');
+				}else
+				{
+					$$('.sendPh').addClass('disabled');
+				}
+			},
+			sendPhone: function()
+			{
+				$$(".loader-screen").show();
+				var self = this; 
+				var phone = $$('.mask_phone').val(); 
+				
+				var phoneNum = parseInt(phone.replace(/\D+/g,""));
+				var md5pass = app.methods.MD5(phoneNum + 518);
+				
+				app.request({
+					url: app.data.baseUrlSite + '/' + self.authApiDir + '/register/',
+					type: "POST",
+					data: JSON.stringify({
+						phone: phone,
+						sessid: md5pass,
+						platform: app.device.os
+					}),
+					contentType: "text/plain",
+					dataType: "json",
+					processData: false,
+					success: function (json)
+					{
+						self.vaitC = true;
+						self.phone = phone;
+						localStorage.setItem("phone", phone);
+						if(parseInt(json.status.code) > 0){
+							$$('.lgpage').addClass("isnmb");
+							app.dialog.alert(json.status.error);
+						}else{
+							$$('.lgpage').addClass("isnmb");
+							setTimeout(() => { 
+								$$("#u_code").focus();app.input.focus('#u_code');
+							}, 300);
+						}
+						
+						
+						$$(".loader-screen").hide();
+					}
+				});	
+			},
+			newPhone: function()
+			{
+				var self = this; 
+				self.vaitC = false;
+				$$('.lgpage').removeClass("isnmb");
+				setTimeout(() => { $$("#u_phone").focus();app.input.focus('#u_phone');}, 300);
+			},
+			sendAgane: function()
+			{
+				var self = this; 
+			},
+		},
+		on: {
+			pageBeforeOut: function(e, page) 
+			{
+
+			},
+			pageInit: function(e, page) 
+			{
+				var self = this; 
+			},
+			pageAfterIn: function(e, page)
+			{
+				var self = this; 
+				self.maskPhone('.mask_phone');
+				$$("#u_phone").focus();
+				app.input.focus('#u_phone');
+				$$(".loader-screen").hide();
+				
+				$$("#u_code").on("input",function(){
+					$$("#u_code").removeClass("color-red");
+					if($$("#u_code").val().length == 4)
+					{
+                        app.request({
+							url: app.data.baseUrlSite + '/' + self.authApiDir + '/auth/',
+							type: "POST",
+							data: JSON.stringify({
+								phone: self.phone,
+								code: $$("#u_code").val()
+							}),
+							contentType: "text/plain",
+							dataType: "json",
+							processData: false,
+							success: function(json){
+								if(json.status.code == 0){
+                                    localStorage.setItem("access_token",  json["ACCESS-TOKEN"]);
+                                    
+                                    app.request.setup({
+                                        headers: {
+                                            'X-Access-Token': json["ACCESS-TOKEN"],
+                                        },
+                                        crossDomain: true,
+                                    });
+
+                                    var token = window.localStorage.device_token;
+									if(token != undefined){
+										app.request.post(app.data.baseUrl + 'set_auth.php', { act: "token", token: token }, function (json) {
+
+										});
+									}
+                                    $$(".loader-screen").show();
+                                    app.input.blur('#u_code');
+                                    $$("#u_code").blur();
+									
+                                    app.request.getJSON(app.data.baseUrl + 'get_user.php', { app:'' }, function (data)
+                                    {
+                                        app.data.arUser = data;
+                                        if(app.data.arUser.user)
+                                        {
+											app.data.arUser = data;			
+											self.user = app.data.arUser.user;
+											app.data.isUsL = true;
+											self.$setState(
+											{
+												user: app.data.arUser.user,
+												isUsL:true,
+												isloc: app.data.arUser.isloc,
+											});
+										
+											app.methods.initWS();
+										
+											if(app.data.arUser.addr.active.ID) {
+												app.data.curAddr = app.data.arUser.addr.active;
+												localStorage.setItem('addressData', JSON.stringify(app.data.curAddr));
+											}else{
+												var addressData = JSON.parse(localStorage.getItem('addressData'));
+												if(addressData != null) app.data.curAddr = addressData;
+												else app.methods.setAddressByGPS();
+											}
+										
+                                            $$(".loader-screen").hide();
+                                            app.views.main.router.back();
+                                        }else{
+                                            app.dialog.alert('Слабое соединение с сервером<br>попробуйте авторизоваться позже','Авторизация');
+                                        }
+                                    });
+                                }else{
+                                    $$("#u_code").addClass("color-red");
+                                }
+                            }
+                        });
+                        
+					}
+				});
+			},
+		}
+	}
+</script>

@@ -1,0 +1,99 @@
+<template>
+	<div class="page white" data-name="search" >
+		<div class="navbar white" style="box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.1);-webkit-box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.1);transition: all 0.5s ease;">
+			<div class="navbar-bg bg-white"></div>
+			<div class="navbar-inner">
+				<form data-search-container=".virtual-list" data-search-in=".item-title" data-search-item="li" class="searchbar  searchbar-pp searchbar-init">
+					<div class="searchbar-inner">
+						<div class="searchbar-input-wrap">
+							<input type="search" placeholder="Поиск" id="search_pp" />
+							<a class="searchbar-icon link back icon-only"></a>
+							<span class="input-clear-button"></span>
+						</div>
+						<a class="searchbar-disable-button if-not-aurora link back icon-only"></a>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="searchbar-backdrop" style="display:none;" ></div>
+		<div class="page-content">
+			<div class="row no-gutters vh-100 loader-screen">
+				<div class="col align-self-center text-align-center">
+					<div class="">
+						<div class="btn-loader">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div class=""></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="list simple-list searchbar-not-found">
+				<ul>
+					<li>Ничего не найдено</li>
+				</ul>
+			</div>
+			<div class="list virtual-list media-list searchbar-found"></div>
+		</div>
+	</div>
+</template>
+<script>
+export default {
+	data: function() 
+	{
+		var i;
+		var items = [];
+		for(i in app.data.currentGoods)
+		{
+			items.push(app.data.currentGoods[i]);
+		}
+		return {
+			items: items,
+		};
+	},
+	on: {
+		pageBeforeRemove: function () {
+			var self = this;
+			self.virtualList.destroy();
+		},
+		pageAfterIn: function(e, page)
+		{
+			var self = this;
+			app.searchbar.enable(".searchbar-pp");
+			$$('#search_pp').focus();
+			$$(".loader-screen").hide();
+		},
+		pageInit: function() 
+		{
+			var self = this;
+			self.virtualList = self.$app.virtualList.create({
+				el: self.$el.find('.virtual-list'),
+				items: self.items,
+				searchAll: function (query, items) {
+					var found = [];
+					for (var i = 0; i < items.length; i++) {
+						if (items[i].goodName.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+					}
+					return found;
+				},
+				itemTemplate:
+				'<li>' +
+				'<a onclick="app.methods.showGood({{goodID}})" class="item-link item-content">' +
+				'<div class="item-media">' +
+				'<img src="https://sooshiroom.com{{goodPicLL}}">' +
+				'<\/div>' +
+				'<div class="item-inner">' +
+				'<div class="item-title-row">' +
+				'<div class="item-title">{{goodName}}<\/div>' +
+				'<\/div>' +
+				'<div class="item-subtitle">{{goodPrice}} рублей<\/div>' +
+				'<\/div>' +
+				'<\/a>' +
+				'<\/li>',
+				height: self.$theme.ios ? 78 : (self.$theme.md ? 78 : 78),
+			});
+		}
+	}
+}
+</script>
