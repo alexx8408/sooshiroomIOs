@@ -113,13 +113,12 @@ var cordovaApp = {
     window.addEventListener('keyboardHeightWillChange', (event) => {
       var keyboardHeight = event.keyboardHeight;
       if (keyboardHeight > 0) {
-            if (!$("body").hasClass("skip-body-resize")) document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
-            $('html').addClass('device-with-keyboard');
+        document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
+        $('html').addClass('device-with-keyboard');
       } else {
         // Keyboard is going to be closed
-
-            document.body.style.height = '';
-            $('html').removeClass('device-with-keyboard');
+        document.body.style.height = '';
+        $('html').removeClass('device-with-keyboard');
       }
 
     });

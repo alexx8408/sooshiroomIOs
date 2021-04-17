@@ -270,7 +270,7 @@ export default {
 			setTimeout(() => {$$("#t_add").focus();app.input.focus("#t_add");}, 150);
 			
             $$(".map-container").addClass("_sheet_open");
-            $$("body").addClass("skip-body-resize");
+            //$$("body").addClass("skip-body-resize");
 		},
 		closeStep: function () {
 			var self = this;
@@ -283,7 +283,6 @@ export default {
 				}, 150
 			);
             $$(".map-container").removeClass("_sheet_open");
-            $$("body").removeClass("skip-body-resize");
 		},
 		showSaveAddr: function()
 		{
@@ -384,7 +383,7 @@ export default {
                 camera:{
                     'target': {lat:55.752623, lng:37.619827},
                     'zoom': 12,
-                    'tilt': 60
+                    'tilt': 30
                 },
                 preferences: { building: false}
             }
@@ -393,7 +392,7 @@ export default {
                     camera:{
                         'target': {lat:parseFloat(addressData.lat).toFixed(6), lng:parseFloat(addressData.lon).toFixed(6)},
                         'zoom': 16,
-                        'tilt': 60
+                        'tilt': 30
                     },
                     preferences: { building: false}
                 };
@@ -458,7 +457,6 @@ export default {
 						setTimeout(() => {$$("#t_add").focus();app.input.focus("#t_add");}, 150);
 						
                         $$(".map-container").addClass("_sheet_open");
-                        $$("body").addClass("skip-body-resize");
 					},
 					stepClose: function (sheet) {
 						self.setAddrByLS();
@@ -471,11 +469,15 @@ export default {
                         $$("body").removeClass("skip-body-resize");
 					},
 					sheetStepProgress: function (app) {
-						// $$(".map-container").addClass("_sheet_drag");
+						/* $$(".map-container").addClass("_sheet_drag"); */
 					},
 				}
 			});
-			
+
+			$$("#t_add").blur(function () {
+                $$("body").removeClass("skip-body-resize");
+			});
+            
 			self.autocompleteDropdownAjax = app.autocomplete.create({
 				inputEl: '#t_add',
 				openIn: 'dropdown',
