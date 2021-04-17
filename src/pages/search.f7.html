@@ -1,99 +1,139 @@
 <template>
-	<div class="page white" data-name="search" >
-		<div class="navbar white" style="box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.1);-webkit-box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.1);transition: all 0.5s ease;">
-			<div class="navbar-bg bg-white"></div>
-			<div class="navbar-inner">
-				<form data-search-container=".virtual-list" data-search-in=".item-title" data-search-item="li" class="searchbar  searchbar-pp searchbar-init">
-					<div class="searchbar-inner">
-						<div class="searchbar-input-wrap">
-							<input type="search" placeholder="Поиск" id="search_pp" />
-							<a class="searchbar-icon link back icon-only"></a>
-							<span class="input-clear-button"></span>
-						</div>
-						<a class="searchbar-disable-button if-not-aurora link back icon-only"></a>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="searchbar-backdrop" style="display:none;" ></div>
-		<div class="page-content">
-			<div class="row no-gutters vh-100 loader-screen">
-				<div class="col align-self-center text-align-center">
-					<div class="">
-						<div class="btn-loader">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div class=""></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="list simple-list searchbar-not-found">
-				<ul>
-					<li>Ничего не найдено</li>
-				</ul>
-			</div>
-			<div class="list virtual-list media-list searchbar-found"></div>
-		</div>
-	</div>
+    <div class="page light" data-name="search">
+        <div class="navbar no-hairline" style="height:54px;">
+            <div class="navbar-bg " style="background-color: #3b3c40 !important;box-shadow: 0 8px 18px rgba(33, 32, 31, 0.30);backdrop-filter: none;"></div>
+            <div class="navbar-inner">
+                <div class="left" style="margin-right: 3px;width: 30px;">
+                    <a class="link back icon-only" href="#"><i class="icon f7-icons">arrow_left</i></a>
+                </div>
+                <div class="right theme-dark" style="width:100%;margin-left:0;overflow:hidden;">
+                    <form data-search-container=".virtual-list" data-search-in=".item-title" data-search-item="li" class="no-hairline searchbar  searchbar-pp searchbar-init">
+                        <div class="searchbar-inner p_0">
+                            <div class="searchbar-input-wrap">
+                                <input type="search" placeholder="Поиск" id="search_pp" />
+                                <i class="searchbar-icon"></i>
+                                <span class="input-clear-button"></span>
+                            </div>
+                            <span class="searchbar-disable-button if-not-aurora">Отмена</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="toolbar toolbar-bottom ftbd js_bc hide">
+            <div class="toolbar-inner">
+                <a class="bb button button-large button-raised button-fill bg-orange b_r8" data-transition="f7-cover-v" href="/cart/">
+                    <div class="bc_t fadeIn animated">
+                        <span>В корзине</span>
+                        <span class="js_cg cg_s">0</span>
+                        <span class="js_cp"></span>
+                    </div>
+                    <div class="bc_l">
+                        <div class="laoderhorizontal">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="searchbar-backdrop">
+            <div class="block-title" style="margin-top: 103px;">Часто ищут: </div>
+            <div class="block">
+                {{#each hrefs}}
+                <a {{#if isClick}} onclick="app.methods.{{onclick}}" {{else}} href="{{href}}" {{/if}} class="display-inline-block button button-round button-fill color-white text-color-black width-auto margin-bottom-half">{{hrefName}}</a>
+                {{/each}}
+            </div>
+            <div class="block">
+                <a style="background-color: #f0f1f2;" href="/catalogcat/7777/?pr_t=9" class="chip animated fadeIn"><div class="chip-media"><img src="static/9.svg"></div><div class="chip-label">Новинка</div></a>
+                <a style="background-color: #f0f1f2;" href="/catalogcat/7777/?pr_t=10" class="chip animated fadeIn"><div class="chip-media"><img src="static/10.svg"></div><div class="chip-label">Хиты продаж</div></a>
+                <a style="background-color: #f0f1f2;" href="/catalogcat/7777/?pr_t=11" class="chip animated fadeIn"><div class="chip-media"><img src="static/11.svg"></div><div class="chip-label">Острые</div></a>
+                <a style="background-color: #f0f1f2;" href="/catalogcat/7777/?pr_t=12" class="chip animated fadeIn"><div class="chip-media"><img src="static/12.svg"></div><div class="chip-label">Для веганов</div></a>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="row no-gutters vh-100 loader-screen">
+                <div class="col align-self-center text-align-center">
+                    <div class="">
+                        <div class="btn-loader ios">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div class=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list searchbar-not-found" style="text-align: center;">
+                <img src="static/empty.gif" style="opacity: 0.2;text-align: center;">
+            </div>
+            <div class="list virtual-list media-list searchbar-found"></div>
+        </div>
+    </div>
 </template>
 <script>
 export default {
-	data: function() 
-	{
-		var i;
-		var items = [];
-		for(i in app.data.currentGoods)
-		{
-			items.push(app.data.currentGoods[i]);
-		}
-		return {
-			items: items,
-		};
-	},
-	on: {
-		pageBeforeRemove: function () {
-			var self = this;
-			self.virtualList.destroy();
-		},
-		pageAfterIn: function(e, page)
-		{
-			var self = this;
-			app.searchbar.enable(".searchbar-pp");
-			$$('#search_pp').focus();
-			$$(".loader-screen").hide();
-		},
-		pageInit: function() 
-		{
-			var self = this;
-			self.virtualList = self.$app.virtualList.create({
-				el: self.$el.find('.virtual-list'),
-				items: self.items,
-				searchAll: function (query, items) {
-					var found = [];
-					for (var i = 0; i < items.length; i++) {
-						if (items[i].goodName.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
-					}
-					return found;
-				},
-				itemTemplate:
-				'<li>' +
-				'<a onclick="app.methods.showGood({{goodID}})" class="item-link item-content">' +
-				'<div class="item-media">' +
-				'<img src="https://sooshiroom.com{{goodPicLL}}">' +
-				'<\/div>' +
-				'<div class="item-inner">' +
-				'<div class="item-title-row">' +
-				'<div class="item-title">{{goodName}}<\/div>' +
-				'<\/div>' +
-				'<div class="item-subtitle">{{goodPrice}} рублей<\/div>' +
-				'<\/div>' +
-				'<\/a>' +
-				'<\/li>',
-				height: self.$theme.ios ? 78 : (self.$theme.md ? 78 : 78),
-			});
-		}
-	}
+    data: function () {
+        var items = [];
+        var i;
+        for (i in app.data.currentGoods) {
+            items.push(app.data.currentGoods[i]);
+        }
+        return {
+            items: items,
+            cart: app.data.cart,
+            hrefs: app.data.hrefs,
+        };
+    },
+    on: {
+        pageBeforeRemove: function () {
+            var self = this;
+            self.virtualList.destroy();
+        },
+        pageAfterIn: function (e, page) {
+            var self = this;
+            setTimeout(() => { $$('#search_pp').focus(); }, 300);
+            $$(".loader-screen").hide();
+            if (app.data.cart) {
+                $$(".js_bc").removeClass("loading hide");
+                app.methods.refreshCart();
+            } else {
+                $$(".in_cart").removeClass("in_cart");
+                $$(".js_bc").addClass("hide");
+            }
+        },
+        pageInit: function () {
+            var self = this;
+            self.virtualList = self.$app.virtualList.create({
+                el: self.$el.find('.virtual-list'),
+                items: self.items,
+                searchAll: function (query, items) {
+                    var found = [];
+                    for (var i = 0; i < items.length; i++) {
+                        if (items[i].goodName.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+                    }
+                    return found;
+                },
+                itemTemplate:
+                    '<li>' +
+                    '<a onclick="app.methods.showGood({{goodID}})" class="item-link item-content">' +
+                    '<div class="item-media">' +
+                    '<img src="https://sooshiroom.com{{goodPicLL}}">' +
+                    '<\/div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title-row">' +
+                    '<div class="item-title">{{goodName}}<\/div>' +
+                    '<\/div>' +
+                    '<div class="item-subtitle">{{goodPrice}} рублей<\/div>' +
+                    '<\/div>' +
+                    '<\/a>' +
+                    '<\/li>',
+                height: self.$theme.ios ? 70 : (self.$theme.md ? 70 : 70),
+            });
+        }
+    }
 }
 </script>

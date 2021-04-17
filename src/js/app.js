@@ -27,11 +27,11 @@ window.app = new Framework7({
         androidOverlaysWebView: false,
     },
     view: {
-        iosDynamicNavbar: false,
+        iosDynamicNavbar: true,
     },
     data: function () {
         return {
-            baseUrl: "https://sooshiroom.com/bitrix/templates/fn_md/el/",
+            baseUrl: "https://sooshiroom.com/bitrix/templates/fn_ios/el/",
             baseUrlSite: "https://sooshiroom.com",
             baseUrlAjax: "https://sooshiroom.com/ajaxJSON.php",
             scatsItems: [],
@@ -125,7 +125,6 @@ window.app = new Framework7({
                                 console.log(downloadProgress);
                             }
                         );
-
                     }
                 });
             }
@@ -149,7 +148,7 @@ window.app = new Framework7({
                         ChatList.methods.refreshChats();
                     } else {
                         app.messNotify = app.notification.create({
-                            icon: '<i class="material-icons">chat_bubble_outline</i>',
+                            icon: '<i class="f7-icons text-yellow">bubble_right_fill</i>',
                             title: data.title,
                             subtitle: data.subtitle,
                             closeTimeout: 4000,
@@ -186,9 +185,6 @@ window.app = new Framework7({
                 } else if (event.detail.command == "redirect") {
                     if (data.link) app.views.main.router.navigate(data.link);
                 }
-
-
-                console.log(event.detail);
             });
 
             if (typeof (FCMPlugin) == "object") {
@@ -204,10 +200,7 @@ window.app = new Framework7({
                     if (data.wasTapped) {
                         if (data.link) app.views.main.router.navigate(data.link);
 
-                    } else {
-
                     }
-
                     console.log(data);
                 });
                 // end FCM
@@ -218,27 +211,11 @@ window.app = new Framework7({
     methods: {
         logout: function (text, head) {
             if (text == "" || text == undefined)
-                text = "Ыы действительно хотите выйти из аккаунта?";
+                text = "Вы действительно хотите выйти из аккаунта?";
             if (head == "" || head == undefined)
                 head = app.name;
-
             app.dialog.confirm(text, head, function () {
-                app.request.post(app.data.baseUrlSite, { logout_app: "Y" }, function (data) {
-                    localStorage.removeItem("access_token");
-                    localStorage.removeItem("device_token");
-                    if (typeof (FCMPlugin) == "object") {
-                        //FCMPlugin.unsubscribeFromTopic("all", function (msg){}, function (err){})
-                    };
-                    app.request.setup({
-                        headers: {},
-                    });
-                    app.request.getJSON(app.data.baseUrl + 'get_user.php', { app: '' }, function (data) {
-                        app.data.arUser = data;
-                        app.views.main.router.navigate('/login/', { transition: 'f7-flip' });
-                        window.ws.close();
-                        app.methods.refreshCart();
-                    });
-                });
+                app.views.main.router.navigate('/login/', { transition: 'f7-flip' });
             }, function () { })
         },
         initWS: function () {
@@ -284,7 +261,8 @@ window.app = new Framework7({
                 else
                     result = (new Function("return " + data))();
             } catch (e) {
-
+                // else
+                result = data;
             }
 
             return result;
@@ -313,7 +291,7 @@ window.app = new Framework7({
                     });
                 }, 1000);
             } else {
-
+                //
             }
         },
         setActAddr: function (id) {
@@ -331,7 +309,7 @@ window.app = new Framework7({
             $$(".a_dof").val(app.data.arUser.addr.active.dof);
             app.data.curAddr = app.data.arUser.addr.active;
             app.notifAddr = app.notification.create({
-                icon: '<i class="material-icons color-green">location_fill</i>',
+                icon: '<i class="f7-icons text-yellow">location_fill</i>',
                 title: 'Адрес доставки изменен',
                 subtitle: 'Доставить на адрес:',
                 closeTimeout: 2000,
@@ -342,28 +320,17 @@ window.app = new Framework7({
             app.notifAddr.open();
         },
         showDMess: function () {
-            if (app.notifDMess) { app.notifDMess.close(); app.notifDMess.destroy(); }
             app.request.getJSON(app.data.baseUrl + 'get_messlist.php', { s: 'd' }, function (data) {
                 app.data.messages = data;
                 if (app.data.messages.fl) {
                     $$('.js_mfc').html(app.data.messages.count);
                     $$('body').addClass("is_mfo");
-                    app.notifDMess = app.notification.create({
-                        icon: '<i class="material-icons color-green">message</i>',
-                        titleRightText: app.data.messages.date,
-                        title: 'Новое сообщение',
-                        subtitle: app.data.messages.title,
-                        closeTimeout: 4000,
-                        text: app.data.messages.mess,
-                        closeButton: true,
-                        swipeToClose: true,
-                    });
-                    app.notifDMess.open();
                 } else {
                     $$('.js_mfc').html('0');
                     $$('body').removeClass("is_mfo");
                 }
             });
+
         },
         geocode: function (lat, lon) {
             var res = {};
@@ -391,11 +358,11 @@ window.app = new Framework7({
                     if (app.data.arUser.addr.list[i].ID == app.data.arUser.addr.active.ID) { l = 'checked'; } else { l = ''; }
                     html += '\
 								<li>\
-									<a href="/map/'+ app.data.arUser.addr.list[i].ID + '/" class="link sheet-close s_close"></a>\
-									<label class="item-radio item-content" onclick="app.methods.setActAddr('+ app.data.arUser.addr.list[i].ID + ')" >\
+									<a href="/map/'+ app.data.arUser.addr.list[i].ID + '/" data-transition="f7-cover-v" class="link sheet-close s_close"></a>\
+									<label class="item-radio item-radio-icon-start item-content" onclick="app.methods.setActAddr('+ app.data.arUser.addr.list[i].ID + ')" >\
 										<input type="radio" name="addr-radio" value="'+ app.data.arUser.addr.list[i].ID + '" ' + l + '  >\
-										<i class="icon icon-radio mr_8"><\/i>\
-										<div class="item-inner">\
+										<i class="icon icon-radio"><\/i>\
+										<div class="item-inner" style="font-size:14px;">\
 											<div class="item-title">'+ app.data.arUser.addr.list[i].addr + '<\/div>\
 										<\/div>\
 									<\/label>\
@@ -404,23 +371,23 @@ window.app = new Framework7({
                 }
                 app.sheetA = app.sheet.create({
                     content: '\
-					<div class="sheet-modal demo-sheet-swipe-to-close sh_gad" style="height:auto">\
-						<div class="sheet-modal-inner">\
+					<div class="sheet-modal demo-sheet-swipe-to-close md sh_gad" style="height:auto">\
+						<div class="sheet-modal-inner inner-white">\
 							<div class="swipe-handler"></div>\
 							<div class="page-content">\
-								<div class="block-title block-title-large">Адреса доставки<\/div>\
-									<div class="list">\
-									<ul>\
+								<div class="block-title block-title-large" style="font-size: 25px;color: #000;">Адреса доставки<\/div>\
+									<div class="list no-hairlines-between no-hairlines">\
+									<ul style="background:transparent">\
 										'+ html +
-                        '<\/ul>\
+                                    '<\/ul>\
 								<\/div>\
 								<div class="padding-horizontal padding">\
-									<a href="/map/0/" class="actions-close sheet-close popover-close button button-large button-fill">Добавить адрес</a>\
+									<a href="/map/0/" data-transition="f7-cover-v" class="b_r8 actions-close sheet-close popover-close button button-large button-fill">Добавить адрес</a>\
 								</div>\
 							<\/div>\
 						<\/div>\
 					<\/div>\
-				   ',
+                    ',
                     swipeToClose: true,
                     backdrop: true,
                     on: {
@@ -588,6 +555,7 @@ window.app = new Framework7({
         },
         removeCart: function (id, pid) {
             app.request.getJSON(app.data.baseUrlAjax + '?act=del', { product_id: id }, function (data) {
+                var i;
                 for (i in data.deleted) {
                     var item = data.deleted[i];
                     $$(".b_mqh_" + item.pid).val('');
@@ -620,7 +588,7 @@ window.app = new Framework7({
             var gridButtons = [];
             gridButtons.push([
                 {
-                    text: '<i class="icon material-icons">close</i> Готово',
+                    text: '<i class="icon f7-icons">checkmark_alt</i> Готово',
                 },
             ]);
             for (var i = obj.length - 1; i > 9; i = i - 3) {
@@ -724,10 +692,9 @@ window.app = new Framework7({
 									<span>'+ app.data.currentGoods[id].goodName + ' <div class="display-inline-block button button-round button-fill color-white text-color-black width-auto tn">' + app.data.currentGoods[id].weight + ' гр</div><\/span>\
 								<\/div>\
 								<div class="bigf" style="margin-bottom:80px;">\
-									<div class="tigfimgs"><\/div>\
-									<h3 class="bigfrh">Роллы в наборе<\/h3>\
-									<div class="list media-list an"><ul class="bigfrr g_list"><\/ul><\/div>\
-									<div>'+ app.data.currentGoods[id].goodDesc + '<\/div>\
+									<div style="height:32px;" class="slideInRight hinge animated  tigfimgs"><\/div>\
+									<h3 class="slideInLeft w_fast animated  bigfrh">Роллы в наборе<\/h3>\
+									<div class="fadeInUp m_0 hinge animated  list media-list"><ul class="bigfrr g_list"><\/ul><\/div>\
 								<\/div>\
 							<\/div>\
 						<\/div>\
@@ -846,7 +813,6 @@ window.app = new Framework7({
                             nam[10] = 'Хит продаж';
                             nam[11] = 'Острое';
                             nam[12] = 'Веганам';
-
                             for (var i = 0; i < app.data.currentGoods[id].goodYit.length; i++) {
                                 imgs += '<div class="chip animated fadeIn"><div class="chip-media"><img src="static/' + app.data.currentGoods[id].goodYit[i] + '.svg"/></div><div class="chip-label">' + nam[app.data.currentGoods[id].goodYit[i]] + '</div></div>';
                             }

@@ -1,57 +1,55 @@
 <template>
-	<div class="page white" data-name="chat">
-		<div class="navbar">
-			<div class="navbar-bg"></div>
-			<div class="navbar-inner sliding">
-				<div class="left">
-					<a href="#" class="link back">
-					<i class="icon icon-back"></i>
-					<span class="if-not-md">Back</span>
-					</a>
-				</div>
-				<div class="title">Чат<span class="subtitle js_chn">{{#if mess.fl}}{{mess.sub}}{{/if}}</span></div>
-			</div>
-		</div>
-		<div class="toolbar messagebar" @messagebar:attachmentdelete="deleteAttachment" style="background-color: #f4f4f4 !important;">
-			<div class="toolbar-inner">
-				<a class="link icon-only" @click="sheetToggle">
-					<i class="icon f7-icons if-not-md">camera_fill</i>
-					<i class="icon material-icons md-only">playlist_add_check</i>
-				</a>
-				<div class="messagebar-area">
-					<textarea class="resizable" placeholder="Введите сообщение"></textarea>
-				</div>
-				<a class="link icon-only demo-send-message-link" @click="sendMessage">
-				<i class="icon f7-icons if-not-md">arrow_up_circle_fill</i>
-				<i class="icon material-icons md-only">send</i>
-				</a>
-			</div>
-			<div class="messagebar-sheet">
-				{{#each images}}
-				<label class="checkbox messagebar-sheet-image" style="background-image:url({{this}})" @change="handleAttachment">
-				<input type="checkbox">
-				<i class="icon icon-checkbox"></i>
-				</label>
-				{{/each}}
-			</div>
-		</div>
-		<div class="row no-gutters vh-100 loader-screen">
-			<div class="col align-self-center text-align-center">
-				<div class="">
-					<div class="btn-loader">
-						<div></div>
-						<div></div>
-						<div></div>
-						<div class=""></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="page-content messages-content">
-			<div class="messages btdt fadeIn animated hinge hide">
-			</div>
-		</div>
-	</div>
+    <div class="page white" data-name="chat">
+        <div class="white navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a class="link back icon-only" href="#"><i class="icon f7-icons">arrow_left</i></a>
+                </div>
+                <div @click="refreshMess()" class="title">Чат<span class="subtitle js_chn">{{#if mess.fl}}{{mess.sub}}{{/if}}</span></div>
+            </div>
+        </div>
+        <div class="toolbar messagebar" @messagebar:attachmentdelete="deleteAttachment" style="background-color: #f4f4f4 !important;">
+            <div class="toolbar-inner">
+                <a class="link icon-only" @click="sheetToggle">
+                    <i class="icon f7-icons" style="font-size: 30px;">square_list_fill</i>
+                </a>
+                <div class="messagebar-area">
+                    <textarea class="resizable" placeholder="Введите сообщение"></textarea>
+                </div>
+                <a class="link icon-only demo-send-message-link" @click="sendMessage">
+                    <i class="icon f7-icons" style="font-size: 30px;">arrow_up_circle_fill</i>
+                </a>
+            </div>
+            <div class="messagebar-sheet">
+                {{#each images}}
+                <label class="checkbox messagebar-sheet-image" style="background-image:url({{this}})" @change="handleAttachment">
+                    <input type="checkbox">
+                    <i class="icon icon-checkbox"></i>
+                </label>
+                {{/each}}
+            </div>
+        </div>
+        <div class="row no-gutters vh-100 loader-screen">
+            <div class="col align-self-center text-align-center">
+                <div class="">
+                    <div class="btn-loader ios bios">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-content messages-content">
+            <div class="messages btdt fadeIn animated hinge hide">
+
+
+
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 export default {
@@ -72,7 +70,7 @@ export default {
 				},
 				{
 					name: 'Менеджер склада',
-					avatar: 'static/a.jpg',
+					avatar: 'static/a.png',
 				},
 			],
 			subID: this.$route.params.id,
@@ -261,13 +259,12 @@ export default {
 		},
 		pageAfterIn: function(e, page) 
 		{
-			var self = this;
-			if($$(".message-received.js_read")[0])
-			{
-				self.messages.scroll(500,$$(".message-received.js_read")[0].offsetTop);
-			}else{
-				self.messages.scroll(500,1400);
-			}
+            var self = this;
+            if ($$(".message-received.js_read")[0]) {
+                self.messages.scroll(500, $$(".message-received.js_read")[0].offsetTop);
+            } else {
+                self.messages.scroll(500, 1400);
+            }
 		},
 		pageInit: function (e, page) 
 		{

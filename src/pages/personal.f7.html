@@ -1,26 +1,24 @@
 <template>
 	<div class="page white" data-name="personal">
-		<div class="white navbar navbar-large">
-			<div class="navbar-bg"></div>
-			<div class="navbar-inner">
-				<div class="left">
-					<a class="link back" href="#"><i class="icon icon-back"></i></a>
-				</div>
-				<div class="title sliding">
-					Личные данные
-				</div>
-				<div class="right">
-					<a class="link" data-transition="f7-flip" {{#if user}}onclick="app.methods.logout()"{{else}}href="/login/"{{/if}}>
-					<button class="col tn button color-white text-color-black bg-white button-raised button-round">{{#if user}}Выйти{{else}}Войти{{/if}}</button>
-					</a>
-				</div>
-				<div class="title-large">
-					<div class="title-large-text">
-						Личные данные
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="white navbar navbar-large">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a class="link back icon-only" href="#"><i class="icon f7-icons">arrow_left</i></a>
+                </div>
+                <div class="title sliding">
+                    Личные данные
+                </div>
+                <div class="right">
+                    <a class="link" data-transition="f7-flip" href="/login/"><button class="col tn button color-white text-color-black bg-white button-raised button-round">{{#if user}}Выйти{{else}}Войти{{/if}}</button></a>
+                </div>
+                <div class="title-large">
+                    <div class="title-large-text">
+                        Личные данные
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div class="toolbar toolbar-bottom ftb js_save">
 			<div class="toolbar-inner">
 				<a class="bb button button-large button-raised button-fill color-green" @click="saveData()" href="#">Сохранить изменения</a> 
@@ -118,12 +116,11 @@
 				{
 					app.request.getJSON(app.data.baseUrl + 'set_user.php', { n:$$('#n_user').val(),e:$$('#n_email').val(),b:$$('#n_date').val() }, function (data)
 					{
-						if(data.status)
-						{
-							var i = '<i class="material-icons color-green">verified_user</i>'
-						}else{
-							var i = '<i class="material-icons color-red">error</i>'
-						}
+                        if (data.status) {
+                            var i = '<i class="f7-icons color-green">personal</i>'
+                        } else {
+                            var i = '<i class="f7-icons color-red">exclamationmark_circle_fill</i>'
+                        }
 						self.notificationWithButton = self.$app.notification.create({
 							icon: i,
 							title: data.title,

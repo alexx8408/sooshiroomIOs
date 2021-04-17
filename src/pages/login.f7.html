@@ -52,18 +52,18 @@
 						<br>    
 					
 						<div class="row fcdc">
-							<div class="col-50">
-								<button @click="newPhone()"  class="button button-raised button-fill button-large button-round"><i class="material-icons">arrow_back</i><span>Назад</span></button>
-							</div>
+                            <div class="col-50">
+                                <button @click="newPhone()" class="button button-raised button-fill button-large button-round"><i class="f7-icons">arrow_left</i><span>Назад</span></button>
+                            </div>
 							<div class="col-50 align-self-center text-right pl-0">
 								<a  href="#" @click="sendAgane()" >Новое СМС</a>
 							</div>
 						</div>
 					
 						<div class="row fndc">
-							<div class="col-100">
-								<button @click="sendPhone()" class="sendPh button disabled button-raised button-fill button-large button-round"><span>Подтвердить</span><i class="material-icons">arrow_forward</i></button>                     
-							</div>
+                            <div class="col-100">
+                                <button @click="sendPhone()" class="sendPh button disabled button-raised button-fill button-large button-round"><span>Подтвердить</span><i class="f7-icons">arrow_right</i></button>
+                            </div>
 						</div>
 					
 					</div>
@@ -73,148 +73,161 @@
 	</div>
 </template>
 <script>
-	export default {
-		data: function () {
-			return {
-				elPhone: [],
-				vaitC: false,
-				time: 0,
-				code: 0,
-				authApiDir: "api"
-			}
-		},
-		methods:{
-			maskPhone: function(selector, masked = '+7 (___) ___-__-__') 
-			{				
-				var self = this; 
-				self.elPhone = document.querySelectorAll(selector);
-				for (const elem of self.elPhone) {
-					elem.addEventListener("input", self.mask);
-					elem.addEventListener("focus", self.mask);
-					elem.addEventListener("blur", self.mask);
-				}
-			
-			},
-			mask: function(event) 
-			{
-				const keyCode = event.keyCode;
-				const template = '+7 (___) ___-__-__',
-					def = template.replace(/\D/g, ""),
-					val = $$('.mask_phone').val().replace(/\D/g, "");
-				let i = 0,
-					newValue = template.replace(/[_\d]/g, function (a) {
-						return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
-					});
-				i = newValue.indexOf("_");
-				if (i !== -1) {
-					newValue = newValue.slice(0, i);
-				}
-				let reg = template.substr(0, $$('.mask_phone').val().length).replace(/_+/g,
-					function (a) {
-						return "\\d{1," + a.length + "}";
-					}).replace(/[+()]/g, "\\$&");
-				reg = new RegExp("^" + reg + "$");
-				if (!reg.test($$('.mask_phone').val()) || $$('.mask_phone').val().length < 5 || keyCode > 47 && keyCode < 58) {
-					$$('.mask_phone').val(newValue);
-				}
-				if (event.type === "blur" && $$('.mask_phone').val().length < 5) {
-					$$('.mask_phone').val("");
-				}
-				if($$('.mask_phone').val().length == 18)
-				{
-					$$('.sendPh').removeClass('disabled');
-				}else
-				{
-					$$('.sendPh').addClass('disabled');
-				}
-			},
-			sendPhone: function()
-			{
-				$$(".loader-screen").show();
-				var self = this; 
-				var phone = $$('.mask_phone').val(); 
-				
-				var phoneNum = parseInt(phone.replace(/\D+/g,""));
-				var md5pass = app.methods.MD5(phoneNum + 518);
-				
-				app.request({
-					url: app.data.baseUrlSite + '/' + self.authApiDir + '/register/',
-					type: "POST",
-					data: JSON.stringify({
-						phone: phone,
-						sessid: md5pass,
-						platform: app.device.os
-					}),
-					contentType: "text/plain",
-					dataType: "json",
-					processData: false,
-					success: function (json)
-					{
-						self.vaitC = true;
-						self.phone = phone;
-						localStorage.setItem("phone", phone);
-						if(parseInt(json.status.code) > 0){
-							$$('.lgpage').addClass("isnmb");
-							app.dialog.alert(json.status.error);
-						}else{
-							$$('.lgpage').addClass("isnmb");
-							setTimeout(() => { 
-								$$("#u_code").focus();app.input.focus('#u_code');
-							}, 300);
-						}
-						
-						
-						$$(".loader-screen").hide();
-					}
-				});	
-			},
-			newPhone: function()
-			{
-				var self = this; 
-				self.vaitC = false;
-				$$('.lgpage').removeClass("isnmb");
-				setTimeout(() => { $$("#u_phone").focus();app.input.focus('#u_phone');}, 300);
-			},
-			sendAgane: function()
-			{
-				var self = this; 
-			},
-		},
-		on: {
-			pageBeforeOut: function(e, page) 
-			{
+    export default {
+        data: function () {
+            return {
+                elPhone: [],
+                vaitC: false,
+                time: 0,
+                user: false,
+                code: 0,
+                authApiDir: "api"
+            }
+        },
+        methods: {
+            maskPhone: function (selector, masked = '+7 (___) ___-__-__') {
+                var self = this;
+                self.elPhone = document.querySelectorAll(selector);
+                for (const elem of self.elPhone) {
+                    elem.addEventListener("input", self.mask);
+                    elem.addEventListener("focus", self.mask);
+                    elem.addEventListener("blur", self.mask);
+                }
 
-			},
-			pageInit: function(e, page) 
-			{
-				var self = this; 
-			},
-			pageAfterIn: function(e, page)
-			{
-				var self = this; 
-				self.maskPhone('.mask_phone');
-				$$("#u_phone").focus();
-				app.input.focus('#u_phone');
-				$$(".loader-screen").hide();
-				
-				$$("#u_code").on("input",function(){
-					$$("#u_code").removeClass("color-red");
-					if($$("#u_code").val().length == 4)
-					{
+            },
+            mask: function (event) {
+                const keyCode = event.keyCode;
+                const template = '+7 (___) ___-__-__',
+                    def = template.replace(/\D/g, ""),
+                    val = $$('.mask_phone').val().replace(/\D/g, "");
+                let i = 0,
+                    newValue = template.replace(/[_\d]/g, function (a) {
+                        return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
+                    });
+                i = newValue.indexOf("_");
+                if (i !== -1) {
+                    newValue = newValue.slice(0, i);
+                }
+                let reg = template.substr(0, $$('.mask_phone').val().length).replace(/_+/g,
+                    function (a) {
+                        return "\\d{1," + a.length + "}";
+                    }).replace(/[+()]/g, "\\$&");
+                reg = new RegExp("^" + reg + "$");
+                if (!reg.test($$('.mask_phone').val()) || $$('.mask_phone').val().length < 5 || keyCode > 47 && keyCode < 58) {
+                    $$('.mask_phone').val(newValue);
+                }
+                if (event.type === "blur" && $$('.mask_phone').val().length < 5) {
+                    $$('.mask_phone').val("");
+                }
+                if ($$('.mask_phone').val().length == 18) {
+                    $$('.sendPh').removeClass('disabled');
+                } else {
+                    $$('.sendPh').addClass('disabled');
+                }
+            },
+            sendPhone: function () {
+                $$(".loader-screen").show();
+                var self = this;
+                var phone = $$('.mask_phone').val();
+
+                var phoneNum = parseInt(phone.replace(/\D+/g, ""));
+                var md5pass = app.methods.MD5(phoneNum + 518);
+
+                app.request({
+                    url: app.data.baseUrlSite + '/' + self.authApiDir + '/register/',
+                    type: "POST",
+                    data: JSON.stringify({
+                        phone: phone,
+                        sessid: md5pass,
+                        platform: app.device.os,
+                        debug: "app v" + app.version
+                    }),
+                    contentType: "text/plain",
+                    dataType: "json",
+                    processData: false,
+                    success: function (json) {
+                        self.vaitC = true;
+                        self.phone = phone;
+                        localStorage.setItem("phone", phone);
+                        if (parseInt(json.status.code) > 0) {
+                            $$('.lgpage').addClass("isnmb");
+                            app.dialog.alert(json.status.error);
+                        } else {
+                            $$('.lgpage').addClass("isnmb");
+                            setTimeout(() => {
+                                $$("#u_code").focus(); app.input.focus('#u_code');
+                            }, 300);
+                        }
+
+
+                        $$(".loader-screen").hide();
+                    }
+                });
+            },
+            newPhone: function () {
+                var self = this;
+                self.vaitC = false;
+                $$('.lgpage').removeClass("isnmb");
+                setTimeout(() => { $$("#u_phone").focus(); app.input.focus('#u_phone'); }, 300);
+            },
+            sendAgane: function () {
+                var self = this;
+            },
+        },
+        on: {
+            pageBeforeOut: function (e, page) {
+
+            },
+            pageInit: function (e, page) {
+                var self = this;
+                app.request.post(app.data.baseUrlSite, { logout_app: "Y" }, function (data) {
+                    localStorage.removeItem("access_token");
+                    localStorage.removeItem("device_token");
+                    if (typeof (FCMPlugin) == "object") {
+                        //FCMPlugin.unsubscribeFromTopic("all", function (msg){}, function (err){})
+                    };
+                    app.request.setup({
+                        headers: null
+                    });
+                    app.request.getJSON(app.data.baseUrl + 'get_user.php', { app: '' }, function (data) {
+                        app.data.arUser = data;
+
+                        self.$setState(
+                            {
+                                user: app.data.arUser.user,
+                                isUsL: false,
+                                isloc: app.data.arUser.isloc,
+                            });
+
+                        if (window.ws != undefined) window.ws.close();
+                        app.methods.refreshCart();
+                    });
+                });
+            },
+            pageAfterIn: function (e, page) {
+                var self = this;
+                self.maskPhone('.mask_phone');
+                $$("#u_phone").focus();
+                app.input.focus('#u_phone');
+                $$(".loader-screen").hide();
+
+                $$("#u_code").on("input", function () {
+                    $$("#u_code").removeClass("color-red");
+                    if ($$("#u_code").val().length == 4) {
                         app.request({
-							url: app.data.baseUrlSite + '/' + self.authApiDir + '/auth/',
-							type: "POST",
-							data: JSON.stringify({
-								phone: self.phone,
-								code: $$("#u_code").val()
-							}),
-							contentType: "text/plain",
-							dataType: "json",
-							processData: false,
-							success: function(json){
-								if(json.status.code == 0){
-                                    localStorage.setItem("access_token",  json["ACCESS-TOKEN"]);
-                                    
+                            url: app.data.baseUrlSite + '/' + self.authApiDir + '/auth/',
+                            type: "POST",
+                            data: JSON.stringify({
+                                phone: self.phone,
+                                code: $$("#u_code").val()
+                            }),
+                            contentType: "text/plain",
+                            dataType: "json",
+                            processData: false,
+                            success: function (json) {
+                                if (json.status.code == 0) {
+                                    localStorage.setItem("access_token", json["ACCESS-TOKEN"]);
+
                                     app.request.setup({
                                         headers: {
                                             'X-Access-Token': json["ACCESS-TOKEN"],
@@ -223,56 +236,55 @@
                                     });
 
                                     var token = window.localStorage.device_token;
-									if(token != undefined){
-										app.request.post(app.data.baseUrl + 'set_auth.php', { act: "token", token: token }, function (json) {
+                                    if (token != undefined) {
+                                        app.request.post(app.data.baseUrl + 'set_auth.php', { act: "token", token: token }, function (json) {
 
-										});
-									}
+                                        });
+                                    }
                                     $$(".loader-screen").show();
                                     app.input.blur('#u_code');
                                     $$("#u_code").blur();
-									
-                                    app.request.getJSON(app.data.baseUrl + 'get_user.php', { app:'' }, function (data)
-                                    {
+
+                                    app.request.getJSON(app.data.baseUrl + 'get_user.php', { app: '' }, function (data) {
                                         app.data.arUser = data;
-                                        if(app.data.arUser.user)
-                                        {
-											app.data.arUser = data;			
-											self.user = app.data.arUser.user;
-											app.data.isUsL = true;
-											self.$setState(
-											{
-												user: app.data.arUser.user,
-												isUsL:true,
-												isloc: app.data.arUser.isloc,
-											});
-										
-											app.methods.initWS();
-										
-											if(app.data.arUser.addr.active.ID) {
-												app.data.curAddr = app.data.arUser.addr.active;
-												localStorage.setItem('addressData', JSON.stringify(app.data.curAddr));
-											}else{
-												var addressData = JSON.parse(localStorage.getItem('addressData'));
-												if(addressData != null) app.data.curAddr = addressData;
-												else app.methods.setAddressByGPS();
-											}
-										
+                                        if (app.data.arUser.user) {
+                                            app.data.arUser = data;
+                                            self.user = app.data.arUser.user;
+                                            app.data.isUsL = true;
+                                            self.$setState(
+                                                {
+                                                    user: app.data.arUser.user,
+                                                    isUsL: true,
+                                                    isloc: app.data.arUser.isloc,
+                                                });
+
+                                            app.methods.initWS();
+                                            app.methods.refreshCart();
+
+                                            if (app.data.arUser.addr.active.ID) {
+                                                app.data.curAddr = app.data.arUser.addr.active;
+                                                localStorage.setItem('addressData', JSON.stringify(app.data.curAddr));
+                                            } else {
+                                                var addressData = JSON.parse(localStorage.getItem('addressData'));
+                                                if (addressData != null) app.data.curAddr = addressData;
+                                                else app.methods.setAddressByGPS();
+                                            }
+
                                             $$(".loader-screen").hide();
                                             app.views.main.router.back();
-                                        }else{
-                                            app.dialog.alert('Слабое соединение с сервером<br>попробуйте авторизоваться позже','Авторизация');
+                                        } else {
+                                            app.dialog.alert('Слабое соединение с сервером<br>попробуйте авторизоваться позже', 'Авторизация');
                                         }
                                     });
-                                }else{
+                                } else {
                                     $$("#u_code").addClass("color-red");
                                 }
                             }
                         });
-                        
-					}
-				});
-			},
-		}
-	}
+
+                    }
+                });
+            },
+        }
+    }
 </script>

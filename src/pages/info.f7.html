@@ -1,64 +1,60 @@
 <template>
-	<div class="page light" data-name="info" >
-		<div class="navbar">
-			<div class="navbar-bg"></div>
-			<div class="navbar-inner">
-				<div class="left">
-					<a class="link back" href="#"><i class="icon icon-back"></i></a>
-				</div>
-				<div class="title sliding">
-					{{js 'return this.$route.query.i'}}
-				</div>
-			</div>
-		</div>
-		<div class="page-content">
-			<div class="row no-gutters vh-100 loader-screen">
-				<div class="col align-self-center text-align-center">
-					<div class="">
-						<div class="btn-loader">
-							<div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
-							<div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
-							<div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
-							<div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="">
-				<div class="btdt fadeIn animated hinge hide">
-					<div class="">
-					  <div class="card-header">{{js 'return this.$route.query.i'}}</div>
-					  <div class="card-content card-content-padding btd"></div>
-					  <div class="card-footer"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="page light" data-name="info">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a class="link back icon-only" href="#"><i class="icon f7-icons">arrow_left</i></a>
+                </div>
+                <div class="title sliding">
+                    {{js 'return this.$route.query.i'}}
+                </div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="row no-gutters vh-100 loader-screen">
+                <div class="col align-self-center text-align-center">
+                    <div class="">
+                        <div class="btn-loader ios">
+                            <div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
+                            <div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
+                            <div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
+                            <div style="border-color: #d2d4d7 transparent transparent transparent;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="btdt fadeIn animated hinge hide">
+                    <div class="">
+                        <div class="card-header">{{js 'return this.$route.query.i'}}</div>
+                        <div class="card-content card-content-padding btd"></div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
-export default {
-	data: function () {
-		
-	},
-	on: {
-		pageBeforeOut: function(e, page) 
-		{
+    export default {
+        data: function () {
 
-		},
-		pageInit: function(e, page) 
-		{
-			
-		},
-		pageAfterIn: function(e, page)
-		{
-			app.request.post(app.data.baseUrl+'get_cinfo.php', { info:page.route.params.id }, function (data)
-			{
-				$$(".loader-screen").hide();
-				$$(".btd").html(data);
-				$$(".btdt").removeClass("hide");
-			});
-		},
-	}
-}
+        },
+        on: {
+            pageBeforeOut: function (e, page) {
+
+            },
+            pageInit: function (e, page) {
+
+            },
+            pageAfterIn: function (e, page) {
+                app.request.post(app.data.baseUrl + 'get_cinfo.php', { info: page.route.params.id }, function (data) {
+                    $$(".loader-screen").hide();
+                    $$(".btd").html(data);
+                    $$(".btdt").removeClass("hide");
+                });
+            },
+        }
+    }
 </script>

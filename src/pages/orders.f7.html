@@ -1,29 +1,29 @@
 <template>
 	<div class="page white" data-name="orders" >
-		<div class="navbar white">
-			<div class="navbar-bg"></div>
-			<div class="navbar-inner">
-				<div class="left">
-					<a class="link back" href="#"><i class="icon icon-back"></i></a>
-				</div>
-				<div class="title sliding">
-					Мои заказы
-				</div>
-			</div>
-		</div>
+        <div class="navbar white">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+                <div class="left">
+                    <a class="link back icon-only" href="#"><i class="icon f7-icons">arrow_left</i></a>
+                </div>
+                <div class="title sliding">
+                    Мои заказы
+                </div>
+            </div>
+        </div>
 		<div class="page-content">
-			<div class="row no-gutters vh-100 loader-screen">
-				<div class="col align-self-center text-align-center">
-					<div class="">
-						<div class="btn-loader">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div class=""></div>
-						</div>
-					</div>
-				</div>
-			</div>
+            <div class="row no-gutters vh-100 loader-screen">
+                <div class="col align-self-center text-align-center">
+                    <div class="">
+                        <div class="btn-loader ios bios">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div class=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			<div class="">
 				<div class="btdt fadeIn animated hinge hide">
 					<div class="">
@@ -43,8 +43,8 @@
 										<a href="#" class="item-link item-content">
 											<div class="item-inner">
 												<div class="item-title">
-													<div class="item-header"><span class="badge bg-green">{{this.status_txt}}</span> Заказ №{{ID}}</div>
-													<div class="item-footer">{{date}}</div>
+													<div class="item-header" style="font-size: 16px;"><span class="badge bg-green">{{this.status_txt}}</span> Заказ №{{ID}}</div>
+													<div class="item-footer" style="padding-top:5px;">{{date}}</div>
 												 </div>
 												<div class="item-after text-dark">{{price}}р</div>
 											</div>
@@ -228,15 +228,18 @@ export default {
 	 methods: {
 		replayOrder: function(id) 
 		{
-			app.dialog.confirm('Dсе товары из корзины будут удалены. Продолжить?', function () {
+            app.dialog.confirm('Все товары из корзины будут удалены. Продолжить?', function () {
+                $$(".loader-screen").show();
 				app.request.getJSON(app.data.baseUrlAjax, { act: 'ccart' }, function (data){
 					app.request.get(app.data.baseUrlSite + '/personal/orders/?COPY_ORDER=Y&ID=' + id, function (data){
 						$$(".gl_item").removeClass("in_cart");
-						app.methods.refreshCart();
-						app.views.main.router.back();
-						setTimeout(function(){
-							app.views.main.router.navigate('/cart/');
-						}, 300);
+                        app.methods.refreshCart();
+                        setTimeout(function () {
+                            app.views.main.router.navigate('/cart/', { transition: "f7-cover-v" });
+                        }, 300);
+                        /*
+                        app.views.main.router.back();
+                        */
 					})
 				});
 			});
@@ -244,13 +247,15 @@ export default {
 		cancelOrder: function(id) 
 		{
 			var self = this; 
-			app.dialog.prompt("По какой причине Вы хотите отменить заказ?", "Отмена заказа", function(value){
+            app.dialog.prompt("По какой причине Вы хотите отменить заказ?", "Отмена заказа", function (value) {
+                $$(".loader-screen").show();
 				app.request.json(app.data.baseUrl + 'set_order.php?CANCEL_ORDER=Y&ID=' + id, {description: value}, function (json){
 					if(json.STATUS == "OK"){
 						self.refreshOrders();
 					}else{
 						app.dialog.alert(json.TEXT,'Ошибка!');
-					}
+                    }
+                    $$(".loader-screen").hide();
 				})
 			});
 		},

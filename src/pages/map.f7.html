@@ -2,11 +2,9 @@
 	<div class="page white" data-name="map">
 
 		<div class="navbar navbar-transparent">
-			<div class="navbar-inner" @click="closeStep" style="overflow: visible;">
-				<div class="fab fab-left-top">
-					<a href="#" class="link back sheet-close bg-white">
-						<i class="material-icons">close</i>
-					</a>
+			<div class="navbar-inner" @click="closeStep">
+				<div class="left">
+					<a style="top: 4px;left: 0px;position: relative;" href="#" class="link back sheet-close s_close icon-only"></a>
 				</div>
 				<div class="title">
 					
@@ -45,12 +43,13 @@
 		
 		<div class="fab fab-right-top">
 			<a href="#" class="bg-white">
-				<i class="material-icons" @click="getGpsLocation" style="color: #000;">my_location</i>
+                <i class="icon f7-icons" style="color: #000;">location_fill</i>
 			</a>
 		</div>
 		<div class="page-content">
 		
 		</div>
+
 		<div class="sheet-modal demo-sheet-swipe-to-step" style="height:auto">
 			<div class="sheet-modal-inner js_bc">
 				<div class="swipe-handler"></div>
@@ -170,7 +169,7 @@ export default {
 						localStorage.setItem('addressData', JSON.stringify(tmpAddressData));
 						
 						app.notifAddr = app.notification.create({
-							icon: '<i class="material-icons color-green">location_on</i>',
+                            icon: '<i class="f7-icons text-yellow">location_fill</i>',
 							title: 'Адрес доставки сохранен',
 							subtitle: 'Доставить на адрес:',
 							closeTimeout: 3000,
@@ -207,7 +206,7 @@ export default {
 								app.data.arUser = data;
 								$$(".js_bc").removeClass("loading");
 								app.notifAddr = app.notification.create({
-									icon: '<i class="f7-icons color-white">location_fill</i>',
+                                    icon: '<i class="f7-icons text-yellow">location_fill</i>',
 									title: 'Адрес доставки удален',
 									closeTimeout: 2000,
 									closeButton: true,
@@ -420,9 +419,16 @@ export default {
 						self.setAddressData(geocodeResult);
 					}, 1000);
 				});
-            }else{
-				
-				onMapInit();
+            } else {
+                onMapInit();
+                $$(".map-container").touchstart(function () {
+                    $$(".map-container").addClass("_gmaps_drag");
+                    $$("#addr_map_marker").removeClass("bounceMarker");
+                });
+                $$(".map-container").touchend(function () {
+                    $$(".map-container").removeClass("_gmaps_drag");
+                    $$("#addr_map_marker").addClass("bounceMarker");
+                });
 			}
 			
 			
