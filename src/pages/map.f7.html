@@ -269,7 +269,8 @@ export default {
 			$$(".custom-modal-backdrop").addClass('backdrop-in');
 			setTimeout(() => {$$("#t_add").focus();app.input.focus("#t_add");}, 150);
 			
-			$$(".map-container").addClass("_sheet_open");
+            $$(".map-container").addClass("_sheet_open");
+            $$("body").addClass("skip-body-resize");
 		},
 		closeStep: function () {
 			var self = this;
@@ -281,7 +282,8 @@ export default {
 					$$(".tgbs").addClass('show');
 				}, 150
 			);
-			$$(".map-container").removeClass("_sheet_open");
+            $$(".map-container").removeClass("_sheet_open");
+            $$("body").removeClass("skip-body-resize");
 		},
 		showSaveAddr: function()
 		{
@@ -344,7 +346,7 @@ export default {
 			var self = this;
             var addrId = parseInt(page.route.params.id), isNew = false;
             if(addrId == 0) isNew = true;
-            
+
 			var locProcess = false;
 			
             var mapObj,
@@ -455,7 +457,8 @@ export default {
 						console.log("stepOpen");
 						setTimeout(() => {$$("#t_add").focus();app.input.focus("#t_add");}, 150);
 						
-						$$(".map-container").addClass("_sheet_open");
+                        $$(".map-container").addClass("_sheet_open");
+                        $$("body").addClass("skip-body-resize");
 					},
 					stepClose: function (sheet) {
 						self.setAddrByLS();
@@ -464,7 +467,8 @@ export default {
 						self.autocompleteDropdownAjax.close();
 						$$("#t_add").blur();
 						
-						$$(".map-container").removeClass("_sheet_open");
+                        $$(".map-container").removeClass("_sheet_open");
+                        $$("body").removeClass("skip-body-resize");
 					},
 					sheetStepProgress: function (app) {
 						// $$(".map-container").addClass("_sheet_drag");
@@ -552,7 +556,6 @@ export default {
 			//self.setActBut(true);
 		},
 		pageBeforeOut: function () {
-			
 			$$("._gmaps_inited").removeClass("_gmaps_inited");
 			if(typeof(plugin) == "object"){
 				var mapDiv = document.getElementById("__map");
