@@ -82,8 +82,29 @@ window.app = new Framework7({
                     } else {
                         console.log("An update is available! Should we download it?");
 
+                        var downloadingProgress;
+
                         codePush.sync(
-                            syncStatus,
+                            function (status) {
+                                switch (status) {
+                                    case SyncStatus.DOWNLOADING_PACKAGE:
+                                        downloadingProgress = app.dialog.progress("Загрузка обновлений...", 0);
+                                        break;
+                                    case SyncStatus.INSTALLING_UPDATE:
+                                        downloadingProgress.setTitle("Установка обновлений...");
+                                        downloadingProgress.setProgress(50);
+                                        break;
+                                    case SyncStatus.UPDATE_INSTALLED:
+                                        downloadingProgress.setTitle("Установка завершена.");
+                                        downloadingProgress.setProgress(100);
+
+                                        setTimeout(function () {
+                                            navigator.splashscreen.show();
+                                            codePush.restartApplication();
+                                        }, 300);
+                                        break;
+                                }
+                            },
                             {
                                 updateDialog: {
                                     updateTitle: "Доступно обновление!",
@@ -94,41 +115,17 @@ window.app = new Framework7({
                                 },
                                 installMode: InstallMode.IMMEDIATE
                             },
-                            downloadProgress
+                            function (downloadProgress) {
+                                if (downloadProgress) {
+                                    // Update "downloading" modal with current download %
+                                    var progress = parseInt(downloadProgress.receivedBytes * 100 / downloadProgress.totalBytes);
+                                    downloadingProgress.setProgress(progress);
+                                    console.log("Downloading " + downloadProgress.receivedBytes + " of " + downloadProgress.totalBytes);
+                                }
+                                console.log(downloadProgress);
+                            }
                         );
 
-                        var downloadingProgress;
-
-                        function syncStatus(status) {
-                            switch (status) {
-                                case SyncStatus.DOWNLOADING_PACKAGE:
-                                    downloadingProgress = app.dialog.progress("Загрузка обновлений...", 0);
-                                    break;
-                                case SyncStatus.INSTALLING_UPDATE:
-                                    downloadingProgress.setTitle("Установка обновлений...");
-                                    downloadingProgress.setProgress(50);
-                                    break;
-                                case SyncStatus.UPDATE_INSTALLED:
-                                    downloadingProgress.setTitle("Установка завершена.");
-                                    downloadingProgress.setProgress(100);
-
-                                    setTimeout(function () {
-                                        navigator.splashscreen.show();
-                                        codePush.restartApplication();
-                                    }, 300);
-                                    break;
-                            }
-                        }
-
-                        function downloadProgress(downloadProgress) {
-                            if (downloadProgress) {
-                                // Update "downloading" modal with current download %
-                                var progress = parseInt(downloadProgress.receivedBytes * 100 / downloadProgress.totalBytes);
-                                downloadingProgress.setProgress(progress);
-                                console.log("Downloading " + downloadProgress.receivedBytes + " of " + downloadProgress.totalBytes);
-                            }
-                            console.log(downloadProgress);
-                        }
                     }
                 });
             }

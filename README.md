@@ -1,51 +1,5 @@
-# ReStory
+# SooshiRoom
 
-## Framework7 CLI Options
-
-Framework7 app created with following options:
-
-```
-{
-  "cwd": "C:\\VProjects\\ReStory",
-  "type": [
-    "cordova"
-  ],
-  "name": "ReStory",
-  "framework": "core",
-  "template": "blank",
-  "bundler": "webpack",
-  "cssPreProcessor": false,
-  "theming": {
-    "customColor": false,
-    "color": "#007aff",
-    "darkTheme": false,
-    "iconFonts": true,
-    "fillBars": false
-  },
-  "customBuild": false,
-  "webpack": {
-    "developmentSourceMap": true,
-    "productionSourceMap": true,
-    "hashAssets": false,
-    "preserveAssetsPaths": false,
-    "inlineAssets": true
-  },
-  "pkg": "com.mediacomerz.restory",
-  "cordova": {
-    "folder": "cordova",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "plugins": [
-      "cordova-plugin-statusbar",
-      "cordova-plugin-keyboard",
-      "cordova-plugin-splashscreen",
-      "cordova-plugin-device"
-    ]
-  }
-}
-```
 
 ## NPM Scripts
 
