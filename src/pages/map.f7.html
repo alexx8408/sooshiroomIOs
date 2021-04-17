@@ -381,17 +381,19 @@ export default {
             var mapParams = {
                 camera:{
                     'target': {lat:55.752623, lng:37.619827},
-                    'zoom': 12
+                    'zoom': 12,
+                    'tilt': 60
                 },
-                preferences: {building: true}
+                preferences: { building: false}
             }
             if(addressData != null && addressData.lat){
                 mapParams = {
                     camera:{
                         'target': {lat:parseFloat(addressData.lat).toFixed(6), lng:parseFloat(addressData.lon).toFixed(6)},
-                        'zoom': 17
+                        'zoom': 16,
+                        'tilt': 60
                     },
-                    preferences: {building: true}
+                    preferences: { building: false}
                 };
             }
 			
