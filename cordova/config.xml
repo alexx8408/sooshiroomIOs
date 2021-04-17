@@ -35,6 +35,7 @@
         <preference name="scheme" value="app" />
         <preference name="hostname" value="localhost" />
         <preference name="StatusBarOverlaysWebView" value="true" />
+        <preference name="KeyboardDisplayRequiresUserAction" value="false" />
         <splash src="res/screens/ios/default@2x~iphone~anyany.png" />
         <splash src="res/screens/ios/default@2x~iphone~comany.png" />
         <splash src="res/screens/ios/default@2x~iphone~comcom.png" />
