@@ -92,7 +92,7 @@ window.app = new Framework7({
                                     optionalUpdateMessage: "Обновление доступно. Вы хотели бы установить его?",
                                     mandatoryUpdateMessage: "Обновление доступно. Вы хотели бы установить его?",
                                 },
-                                installMode: InstallMode.ON_NEXT_RESUME
+                                installMode: InstallMode.IMMEDIATE
                             },
                             downloadProgress
                         );
