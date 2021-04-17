@@ -113,7 +113,6 @@ var cordovaApp = {
     window.addEventListener('keyboardHeightWillChange', (event) => {
       var keyboardHeight = event.keyboardHeight;
       if (keyboardHeight > 0) {
-        // Keyboard is going to be opened
         document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
         $('html').addClass('device-with-keyboard');
       } else {
