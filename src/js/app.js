@@ -26,6 +26,9 @@ window.app = new Framework7({
         iosOverlaysWebView: true,
         androidOverlaysWebView: false,
     },
+    view: {
+        iosDynamicNavbar: false,
+    },
     data: function () {
         return {
             baseUrl: "https://sooshiroom.com/bitrix/templates/fn_md/el/",
@@ -236,6 +239,7 @@ window.app = new Framework7({
                         app.data.arUser = data;
                         app.views.main.router.navigate('/login/', { transition: 'f7-flip' });
                         window.ws.close();
+                        app.methods.refreshCart();
                     });
                 });
             }, function () { })

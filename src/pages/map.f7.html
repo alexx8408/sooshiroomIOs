@@ -1,5 +1,6 @@
 <template>
 	<div class="page white" data-name="map">
+
 		<div class="navbar navbar-transparent">
 			<div class="navbar-inner" @click="closeStep" style="overflow: visible;">
 				<div class="fab fab-left-top">
@@ -388,7 +389,7 @@ export default {
                 mapParams = {
                     camera:{
                         'target': {lat:parseFloat(addressData.lat).toFixed(6), lng:parseFloat(addressData.lon).toFixed(6)},
-                        'zoom': 18
+                        'zoom': 17
                     },
                     preferences: {building: true}
                 };
@@ -401,15 +402,17 @@ export default {
 				mapObj.one(plugin.google.maps.event.MAP_READY, onMapInit);
 				mapObj.on(plugin.google.maps.event.MAP_DRAG_START, function () {
 					$$("#t_add").val("Определяем...");
-					//$$(".map-container").addClass("_gmaps_drag");
+                    $$(".map-container").addClass("_gmaps_drag");
+                    $$("#addr_map_marker").removeClass("bounceMarker");
 					clearTimeout(mapTimetId);
 				})
-				mapObj.on(plugin.google.maps.event.MAP_DRAG_END, function () {
+                mapObj.on(plugin.google.maps.event.MAP_DRAG_END, function () {
+                    $$(".map-container").removeClass("_gmaps_drag");
+                    $$("#addr_map_marker").addClass("bounceMarker");
 					mapTimetId = setTimeout(function(){
 						var cameraPosition = mapObj.getCameraPosition();
 						var geocodeResult = app.methods.geocode(cameraPosition.target.lat.toFixed(6), cameraPosition.target.lng.toFixed(6));
 						geocodeResult.ID = addrId;
-						//$$(".map-container").removeClass("_gmaps_drag");
 						localStorage.setItem('tmpAddressData', JSON.stringify(geocodeResult));
 						self.setAddressData(geocodeResult);
 					}, 1000);
@@ -425,16 +428,8 @@ export default {
 				$$("#__map").parents().addClass("_gmaps_inited");
 				$$(".map-container .loader-screen").animate(
 					{opacity: 0}, 
-					{duration: 1000, complete: function (elements) {elements.remove()}}
+					{duration: 500, complete: function (elements) {elements.remove()}}
 				)
-                $$(".map-container").touchstart(function () {
-                    $$(".map-container").addClass("_gmaps_drag");
-                    //$$("#addr_map_marker_circle").removeClass("bounceOut");
-                });
-                $$(".map-container").touchend(function () {
-                    $$(".map-container").removeClass("_gmaps_drag");
-                    //$$("#addr_map_marker_circle").addClass("bounceOut");
-                });
             }
 			
 			self.sheetSwipeToStep = self.$app.sheet.create({

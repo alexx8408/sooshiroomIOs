@@ -1,44 +1,29 @@
 <template>
-	<div class="page page-homepage light" data-name="homepage" >
+	<div class="page page-homepage light" data-name="homepage">
 		<div class="navbar">
 			<div class="navbar-bg"></div>
-			<div class="navbar-inner sliding">
+			<div class="navbar-inner">
 				<div class="left">
-					<a onclick="app.methods.showAddr()" href="#"  class="link" >
+					<a onclick="app.methods.showAddr()" href="#" class="link">
 						<i class="icon material-icons">location_on</i>
 						{{#if isloc}}{{else}}<span class="new-notification"></span>{{/if}}
 					</a>
 				</div>
-				<div class="title" onclick="app.methods.showAddr()" >
+				<div class="title" onclick="app.methods.showAddr()">
 					<span class="adr_info">Адрес доставки</span>
 					<span class="subtitle ah_street">{{#if isUsL}}{{js 'app.data.curAddr.addr'}}{{/if}}</span>
 				</div>
 				<div class="right">
-					<a href="/search/"  class="link icon-only" >
+					<a href="/search/" class="link icon-only">
 						<i class="icon material-icons">search</i>
 					</a>
 				</div>
 			</div>
 		</div>
-		
-		<div class="toolbar tabbar toolbar-bottom o-visible">
-			<div class="toolbar-inner o-visible tabs-max-width">
-				<a href="#tab-1" class="tab-link tab-link-active"><i class="material-icons">home</i></a>
-				<a href="#tab-2" class="tab-link"><i class="material-icons">view_module</i></a>
-				<a href="/cart/" class="tab-link o-visible js_bc">
-					<span class="centerbutton button button-fill color-pink">
-						<i class="material-icons bc_t">local_mall</i><span class="cart_counter js_cg bc_t">{{cartCount}}</span>
-						<div class="btn-loader bc_l lw"><div></div><div></div><div></div><div></div></div>
-					</span>
-				</a>
-				<a href="#tabfavorits" class="tab-link"><i class="material-icons">favorite</i></a>
-				<a href="#tab-5" class="tab-link"><i class="icon material-icons md-only">account_circle<span class="badge color-pink js_mfc animated bounceIn">0</span></i></a>
-			</div>
-		</div>
-			
+
 		<div class="tabs">
 			<div id="tab-1" class="page-content tab tab-active tab_home">
-			{{#if loadedHT}}
+				{{#if loadedHT}}
 				<div class="block">
 					<div class="list no-hairlines-md search-rounded">
 						<a href="/search/">
@@ -71,7 +56,7 @@
 				</div>
 				{{else}}
 				<div style="margin: 30px 16px 52px 16px;width: calc(100% - 32px);" class="card_sb shadow border-0 skeleton-block skeleton-effect-blink">
-					<img src="static/load_fon.jpg" style="width:100%;height:auto;" >
+					<img src="static/load_fon.jpg" style="width:100%;height:auto;">
 				</div>
 				{{/if}}
 				<div class="block-title">Меню</div>
@@ -84,7 +69,7 @@
 								<div class="swiper-slide">
 									<div style="width:115px;height:110px;">
 										<div class="card demo-card-header-pic bg_cr_">
-											<a  href="{{href}}" class="button bffr" ></a>
+											<a href="{{href}}" class="button bffr"></a>
 											<div style="background-image:url('https://sooshiroom.com{{picAPP}}')" valign="top" class="card-header"><span>{{scatsName}}</span></div>
 										</div>
 									</div>
@@ -96,91 +81,91 @@
 					{{else}}
 					<div class="row">
 						<div class="col-33">
-							<div  style="height:110px!important;" class="wh_150 card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink"></div>
-						</div>	
-						<div class="col-33">
-							<div  style="height:110px!important;" class="wh_150 card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink"></div>
-						</div>	
+							<div style="height:110px!important;" class="wh_150 card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink"></div>
+						</div>
 						<div class="col-33">
 							<div style="height:110px!important;" class="wh_150 card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink"></div>
-						</div>	
-					</div>			
+						</div>
+						<div class="col-33">
+							<div style="height:110px!important;" class="wh_150 card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink"></div>
+						</div>
+					</div>
 					{{/if}}
 				</div>
 				<div class="block-title">Популярные товары <a href="/catalogcat/7777/?pr_t=10" class="float-right ">См. все</a></div>
 				<div class="block">
 					<div class="row">
-					{{#if loadedG}}
+						{{#if loadedG}}
 						{{#each topItems}}
-								<div class="col-50 medium-33 large-25 fadeIn animated">
-									<div class="animated fadeIn card shadow-sm border-0 gl_item_{{this}} {{js 'app.data.currentGoods[this].goodYitStr'}} gl_item {{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].goodFL:1' }}" >
-										<div class="button bffr" onclick="app.methods.showGood({{this}})"></div>
-										<div class="card-content">
-											<div class="row pr_gc pt_4">
-												<div class="col">
-													<button class="ml_4 button bf color-pink width-auto elevation-1 fav fav_{{this}} {{js '(app.data.favGoods[this] !== undefined)?app.data.favGoods[this].status:1' }}" onclick="app.methods.setFavorit({{this}})" >
-														<i class="f7-icons md-18 f2">heart_fill</i>
-													</button>
-												</div>
+						<div class="col-50 medium-33 large-25 fadeIn animated">
+							<div class="animated fadeIn card shadow-sm border-0 gl_item_{{this}} {{js 'app.data.currentGoods[this].goodYitStr'}} gl_item {{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].goodFL:1' }}">
+								<div class="button bffr" onclick="app.methods.showGood({{this}})"></div>
+								<div class="card-content">
+									<div class="row pr_gc pt_4">
+										<div class="col">
+											<button class="ml_4 button bf color-pink width-auto elevation-1 fav fav_{{this}} {{js '(app.data.favGoods[this] !== undefined)?app.data.favGoods[this].status:1' }}" onclick="app.methods.setFavorit({{this}})">
+												<i class="f7-icons md-18 f2">heart_fill</i>
+											</button>
+										</div>
+									</div>
+									<figure class="product-image {{js 'app.data.currentGoods[this].bg'}}">
+										<div class="row pr_gc ml_4" style="bottom:4px;">
+											<div class="col" style="display:flex;">
+												<img class="gll gll_9" src="static/9.svg">
+												<img class="gll gll_10" src="static/10.svg">
+												<img class="gll gll_11" src="static/11.svg">
+												<img class="gll gll_12" src="static/12.svg">
 											</div>
-											<figure class="product-image {{js 'app.data.currentGoods[this].bg'}}">
-												<div class="row pr_gc ml_4" style="bottom:4px;">
-													<div class="col" style="display:flex;">
-														<img class="gll gll_9" src="static/9.svg">
-														<img class="gll gll_10" src="static/10.svg">
-														<img class="gll gll_11" src="static/11.svg">
-														<img class="gll gll_12" src="static/12.svg">
+										</div>
+										<img src="https://sooshiroom.com{{js 'app.data.currentGoods[this].goodPicM'}}" alt="" class="animated bh_r fadeIn hinge pdelay imf bg_cr">
+										<img src="static/1.png" alt="" style="width:100%;height:auto;">
+									</figure>
+									<div class="ttcnc" style="padding:0 10px 10px 10px;">
+										<div class="tcnc"><div class="tcn">{{js 'app.data.currentGoods[this].goodName'}}</div></div>
+										<div class="glgg">
+											<h6 class="text-yellow font-weight-normal no-margin glgg1">{{js 'app.data.currentGoods[this].goodPrice'}}р</h6>
+											<p style="color:#a6a3a3 !important;" class="text-secondary small no-margin glgg2">{{js 'app.data.currentGoods[this].weight'}} гр.</p>
+										</div>
+										<div class="glg">
+											<button onclick="app.methods.addCart({{this}})" class="gl_item_b button button-fill bg-pink button-fab button-round"><i class="f7-icons md-18">cart_fill</i></button>
+											<div class="gl_item_st lil">
+												<div style="margin-bottom:1px;text-align:center;font-size:11px;color:#a6a3a3" class="isum isum_{{this}}" data-id="{{this}}">{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].cartPrice:app.data.currentGoods[this].goodPrice+" р."' }}</div>
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<button class="b_r8 button no-padding bg-pink c1{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }} js_cbc_{{this}}" onclick="app.methods.minus({{this}})" type="button"><i style="font-size: 18px;" class="f7-icons">minus</i></button>
 													</div>
-												</div>
-												<img src="https://sooshiroom.com{{js 'app.data.currentGoods[this].goodPicM'}}" alt="" class="animated bh_r fadeIn hinge pdelay imf bg_cr">
-												<img src="static/1.png" alt="" style="width:100%;height:auto;">
-											</figure>
-											<div class="ttcnc" style="padding:0 10px 10px 10px;" >
-												<div class="tcnc" ><div class="tcn">{{js 'app.data.currentGoods[this].goodName'}}</div></div>
-												<div class="glgg">											
-													<h6 class="text-yellow font-weight-normal no-margin glgg1">{{js 'app.data.currentGoods[this].goodPrice'}}р</h6>
-													<p style="color:#a6a3a3 !important;" class="text-secondary small no-margin glgg2">{{js 'app.data.currentGoods[this].weight'}} гр.</p>
-												</div>
-												<div class="glg">
-													<button onclick="app.methods.addCart({{this}})" class="gl_item_b button button-fill bg-pink button-fab button-round"><i class="f7-icons md-18">cart_fill</i></button>
-													<div class="gl_item_st lil">
-														<div style="margin-bottom:1px;text-align:center;font-size:11px;color:#a6a3a3" class="isum isum_{{this}}" data-id="{{this}}">{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].cartPrice:app.data.currentGoods[this].goodPrice+" р."' }}</div>
-														<div class="input-group input-group-sm">
-															<div class="input-group-prepend">
-																<button class="b_r8 button no-padding bg-pink c1{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }} js_cbc_{{this}}" onclick="app.methods.minus({{this}})" type="button"><i style="font-size: 18px;" class="f7-icons">minus</i></button>
-															</div>
-															<input style="width:23px !important;padding:4px 0;" class="b_mq_{{this}} form-control text-align-center width-35" readonly type="text" value="{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }}">
-															<input class="b_mqh_{{this}}" readonly type="hidden" value="{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].ID:1' }}">
-															<div class="input-group-append">
-																<button class="b_r8 button no-padding bg-pink c2{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }} js_cbcc_{{this}}" onclick="app.methods.plus({{this}})" type="button"><i style="font-size: 18px;" class="f7-icons">plus</i></button>
-															</div>
-														</div>
+													<input style="width:23px !important;padding:4px 0;" class="b_mq_{{this}} form-control text-align-center width-35" readonly type="text" value="{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }}">
+													<input class="b_mqh_{{this}}" readonly type="hidden" value="{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].ID:1' }}">
+													<div class="input-group-append">
+														<button class="b_r8 button no-padding bg-pink c2{{js '(app.data.cartGoods[this] !== undefined)?app.data.cartGoods[this].q:0' }} js_cbcc_{{this}}" onclick="app.methods.plus({{this}})" type="button"><i style="font-size: 18px;" class="f7-icons">plus</i></button>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>	
+								</div>
+							</div>
+						</div>
 						{{/each}}
-					{{else}}
+						{{else}}
 						<div class="col-50 medium-33 large-25">
 							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
 							</div>
-						</div>	
+						</div>
 						<div class="col-50 medium-33 large-25">
 							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
 							</div>
-						</div>	
-					{{/if}}
-							
+						</div>
+						{{/if}}
+
 					</div>
-				
+
 				</div>
-				
+
 				<div class="block text-align-center bltg">
-					<div class="row">                    
+					<div class="row">
 						<div class="col-100">
-							<div class="button button-fill color-pink button-round button-large elevation-1" @click="addGoods()" >
+							<div class="button button-fill color-pink button-round button-large elevation-1" @click="addGoods()">
 								<div class="btn-loader lw animated zoomIn">
 									<div></div>
 									<div></div>
@@ -192,20 +177,20 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<div class="block-title">Часто ищут: </div>
 				<div class="block">
-				{{#each hrefs}}
-					<a {{#if isClick}}onclick="app.methods.{{onclick}}"{{else}}href="{{href}}"{{/if}} class="display-inline-block button button-round button-fill color-white text-color-black width-auto margin-bottom-half">{{hrefName}}</a>
-				{{/each}}
+					{{#each hrefs}}
+					<a {{#if isClick}} onclick="app.methods.{{onclick}}" {{else}} href="{{href}}" {{/if}} class="display-inline-block button button-round button-fill color-white text-color-black width-auto margin-bottom-half">{{hrefName}}</a>
+					{{/each}}
 				</div>
-				
-			{{/if}}
+
+				{{/if}}
 			</div>
-			
+
 			<div id="tab-2" class="page-content tab tab_home">
-			{{#if loadedCT}}
+				{{#if loadedCT}}
 				<div class="block" style="white-space: nowrap;overflow: scroll;scroll-behavior: smooth;margin-bottom:0px">
 					<a style="background-color: #f0f1f2;margin-right:8px;" href="/catalogcat/7777/?pr_t=9" class="chip animated fadeIn"><div class="chip-media"><img src="static/9.svg"></div><div class="chip-label">Новинка</div></a>
 					<a style="background-color: #f0f1f2;margin-right:8px;" href="/catalogcat/7777/?pr_t=10" class="chip animated fadeIn"><div class="chip-media"><img src="static/10.svg"></div><div class="chip-label">Хиты продаж</div></a>
@@ -214,110 +199,110 @@
 				</div>
 				<div class="block animated fadeIn hinge" style="margin-top:10px">
 					<div class="row">
-					{{#if loadedG}}
-					
+						{{#if loadedG}}
+
 						{{#each scatsItems}}
 						<div class="col-33 medium-50">
 							<div class="card demo-card-header-pic bg_cr_">
-								<a  href="{{href}}" class="button bffr" ></a>
+								<a href="{{href}}" class="button bffr"></a>
 								<div style="background-image:url('https://sooshiroom.com{{picAPP}}')" valign="top" class="card-header"><span>{{scatsName}}</span></div>
 							</div>
 						</div>
 						{{/each}}
-					{{else}}
-								
-					{{/if}}
-						
+						{{else}}
+
+						{{/if}}
+
 					</div>
-					
+
 				</div>
 				<div class="block-title">Часто ищут: </div>
-					<div class="block">
+				<div class="block">
 					{{#each hrefs}}
-						<a {{#if isClick}}onclick="app.methods.{{onclick}}"{{else}}href="{{href}}"{{/if}} class="display-inline-block button button-round button-fill color-white text-color-black width-auto margin-bottom-half">{{hrefName}}</a>
+					<a {{#if isClick}} onclick="app.methods.{{onclick}}" {{else}} href="{{href}}" {{/if}} class="display-inline-block button button-round button-fill color-white text-color-black width-auto margin-bottom-half">{{hrefName}}</a>
 					{{/each}}
-					</div>
-			{{/if}}
+				</div>
+				{{/if}}
 			</div>
-			
+
 			<div id="tabfavorits" class="page-content tab tab_home">
 				<div class="block">
 					<h1>Избранное</h1>
 					<div class="row">
-					{{#if loadedFT}}
+						{{#if loadedFT}}
 						{{#if loadedF}}
-							{{#if loadedG}}
-								{{#each favGoods}}
-									<div class="col-50 medium-33 large-25 fadeIn animated">
-										<div class="animated fadeIn card shadow-sm border-0 gl_item_{{this.ID}} {{js 'app.data.currentGoods[this.ID].goodYitStr'}} gl_item {{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].goodFL:1' }}" >
-											<div class="button bffr" onclick="app.methods.showGood({{this.ID}})"></div>
-											<div class="card-content">
-												<div class="row pr_gc pt_4">
-													<div class="col">
-														<button class="ml_4 button bf color-pink width-auto elevation-1 fav fav_{{this.ID}} {{js '(app.data.favGoods[this.ID] !== undefined)?app.data.favGoods[this.ID].status:1' }}" onclick="app.methods.setFavorit({{this.ID}})" >
-															<i class="f7-icons md-18 f2">heart_fill</i>
-														</button>
+						{{#if loadedG}}
+						{{#each favGoods}}
+						<div class="col-50 medium-33 large-25 fadeIn animated">
+							<div class="animated fadeIn card shadow-sm border-0 gl_item_{{this.ID}} {{js 'app.data.currentGoods[this.ID].goodYitStr'}} gl_item {{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].goodFL:1' }}">
+								<div class="button bffr" onclick="app.methods.showGood({{this.ID}})"></div>
+								<div class="card-content">
+									<div class="row pr_gc pt_4">
+										<div class="col">
+											<button class="ml_4 button bf color-pink width-auto elevation-1 fav fav_{{this.ID}} {{js '(app.data.favGoods[this.ID] !== undefined)?app.data.favGoods[this.ID].status:1' }}" onclick="app.methods.setFavorit({{this.ID}})">
+												<i class="f7-icons md-18 f2">heart_fill</i>
+											</button>
+										</div>
+									</div>
+									<figure class="product-image {{js 'app.data.currentGoods[this.ID].bg'}}">
+										<div class="row pr_gc ml_4" style="bottom:4px;">
+											<div class="col" style="display:flex;">
+												<img class="gll gll_9" src="static/9.svg">
+												<img class="gll gll_10" src="static/10.svg">
+												<img class="gll gll_11" src="static/11.svg">
+												<img class="gll gll_12" src="static/12.svg">
+											</div>
+										</div>
+										<img src="https://sooshiroom.com{{js 'app.data.currentGoods[this.ID].goodPicM'}}" alt="" class="animated bh_r fadeIn hinge pdelay imf bg_cr">
+										<img src="static/1.png" alt="" style="width:100%;height:auto;">
+									</figure>
+									<div class="ttcnc" style="padding:0 10px 10px 10px;">
+										<div class="tcnc"><div class="tcn">{{js 'app.data.currentGoods[this.ID].goodName'}}</div></div>
+										<div class="glgg">
+											<h6 class="text-yellow font-weight-normal no-margin glgg1">{{js 'app.data.currentGoods[this.ID].goodPrice'}}р</h6>
+											<p style="color:#a6a3a3 !important;" class="text-secondary small no-margin glgg2">{{js 'app.data.currentGoods[this.ID].weight'}} гр.</p>
+										</div>
+										<div class="glg">
+											<button onclick="app.methods.addCart({{this.ID}})" class="gl_item_b button button-fill bg-pink button-fab button-round"><i class="f7-icons md-18">cart_fill</i></button>
+											<div class="gl_item_st lil">
+												<div style="margin-bottom:1px;text-align:center;font-size:11px;color:#a6a3a3" class="isum isum_{{this.ID}}" data-id="{{this.ID}}">{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].cartPrice:app.data.currentGoods[this.ID].goodPrice+" р."' }}</div>
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<button class="b_r8 button no-padding bg-pink c1{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].q:0' }} js_cbc_{{this.ID}}" onclick="app.methods.minus({{this.ID}})" type="button"><i style="font-size: 18px;" class="f7-icons">minus</i></button>
 													</div>
-												</div>
-												<figure class="product-image {{js 'app.data.currentGoods[this.ID].bg'}}">
-													<div class="row pr_gc ml_4" style="bottom:4px;">
-														<div class="col" style="display:flex;">
-															<img class="gll gll_9" src="static/9.svg">
-															<img class="gll gll_10" src="static/10.svg">
-															<img class="gll gll_11" src="static/11.svg">
-															<img class="gll gll_12" src="static/12.svg">
-														</div>
-													</div>
-													<img src="https://sooshiroom.com{{js 'app.data.currentGoods[this.ID].goodPicM'}}" alt="" class="animated bh_r fadeIn hinge pdelay imf bg_cr">
-													<img src="static/1.png" alt="" style="width:100%;height:auto;">
-												</figure>
-												<div class="ttcnc" style="padding:0 10px 10px 10px;" >
-													<div class="tcnc" ><div class="tcn">{{js 'app.data.currentGoods[this.ID].goodName'}}</div></div>
-													<div class="glgg">											
-														<h6 class="text-yellow font-weight-normal no-margin glgg1">{{js 'app.data.currentGoods[this.ID].goodPrice'}}р</h6>
-														<p style="color:#a6a3a3 !important;" class="text-secondary small no-margin glgg2">{{js 'app.data.currentGoods[this.ID].weight'}} гр.</p>
-													</div>
-													<div class="glg">
-														<button onclick="app.methods.addCart({{this.ID}})" class="gl_item_b button button-fill bg-pink button-fab button-round"><i class="f7-icons md-18">cart_fill</i></button>
-														<div class="gl_item_st lil">
-															<div style="margin-bottom:1px;text-align:center;font-size:11px;color:#a6a3a3" class="isum isum_{{this.ID}}" data-id="{{this.ID}}">{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].cartPrice:app.data.currentGoods[this.ID].goodPrice+" р."' }}</div>
-															<div class="input-group input-group-sm">
-																<div class="input-group-prepend">
-																	<button class="b_r8 button no-padding bg-pink c1{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].q:0' }} js_cbc_{{this.ID}}" onclick="app.methods.minus({{this.ID}})" type="button"><i style="font-size: 18px;" class="f7-icons">minus</i></button>
-																</div>
-																<input style="width:23px !important;padding:4px 0;" class="b_mq_{{this.ID}} form-control text-align-center width-35" readonly type="text" value="{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].q:0' }}">
-																<input class="b_mqh_{{this.ID}}" readonly type="hidden" value="{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].ID:1' }}">
-																<div class="input-group-append">
-																	<button class="b_r8 button no-padding bg-pink c2{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].q:0' }} js_cbcc_{{this.ID}}" onclick="app.methods.plus({{this.ID}})" type="button"><i style="font-size: 18px;" class="f7-icons">plus</i></button>
-																</div>
-															</div>
-														</div>
+													<input style="width:23px !important;padding:4px 0;" class="b_mq_{{this.ID}} form-control text-align-center width-35" readonly type="text" value="{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].q:0' }}">
+													<input class="b_mqh_{{this.ID}}" readonly type="hidden" value="{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].ID:1' }}">
+													<div class="input-group-append">
+														<button class="b_r8 button no-padding bg-pink c2{{js '(app.data.cartGoods[this.ID] !== undefined)?app.data.cartGoods[this.ID].q:0' }} js_cbcc_{{this.ID}}" onclick="app.methods.plus({{this.ID}})" type="button"><i style="font-size: 18px;" class="f7-icons">plus</i></button>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>	
-								{{/each}}
-							{{else}}
-								<div class="col-50 medium-33 large-25">
-									<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
 									</div>
-								</div>	
-								<div class="col-50 medium-33 large-25">
-									<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
-									</div>
-								</div>	
-							{{/if}}	
+								</div>
+							</div>
+						</div>
+						{{/each}}
 						{{else}}
-							<h4>В избранном пусто</h4>
-						{{/if}}	
-					{{/if}}	
+						<div class="col-50 medium-33 large-25">
+							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
+							</div>
+						</div>
+						<div class="col-50 medium-33 large-25">
+							<div class="card_sb shadow-sm border-0 skeleton-block skeleton-effect-blink">
+							</div>
+						</div>
+						{{/if}}
+						{{else}}
+						<h4>В избранном пусто</h4>
+						{{/if}}
+						{{/if}}
 					</div>
 				</div>
 			</div>
-			
+
 			<div id="tab-5" class="page-content tab tab_home">
-			{{#if loadedLT}}
+				{{#if loadedLT}}
 				<div class="list links-list inset accordion-list">
 					<ul style="background: #4b4c50;color: #a6a7ab;">
 						{{#if user}}
@@ -326,7 +311,7 @@
 						<li><a href="/orders/"><i class="material-icons mr_4 color-pink">local_mall</i> Заказы<div class="item-after"></div></a></li>
 						<li><a onclick="app.methods.showAddr()" href="#"><i class="material-icons mr_4 color-pink">location_on</i> Адреса доставки<div class="item-after"></div></a></li>
 						<li><a href="/chatlist/"><i class="material-icons mr_4 color-pink">message</i> Чат<div class="item-after"><span class="badge color-pink js_mfc animated bounceIn">{{js 'app.data.messages.count'}}</span></div></a></li>
-						{{/if}}	
+						{{/if}}
 						<li class="accordion-item">
 							<a href="#" class="">
 								<i class="material-icons mr_4 color-pink">info</i> Правовая информация<div class="item-after"></div>
@@ -355,7 +340,7 @@
 								</div>
 							</div>
 						</li>
-						<li><a  style="background:#a6a7ab!important;color:#fff!important;" data-transition="f7-flip" {{#if user}}onclick="app.methods.logout()"{{else}}href="/login/"{{/if}} class="col tn button color-white text-color-black bg-white button-raised button-round">{{#if user}}Выйти{{else}}Войти{{/if}}</a></li>
+						<li><a style="background:#a6a7ab!important;color:#fff!important;" data-transition="f7-flip" {{#if user}} onclick="app.methods.logout()" {{else}} href="/login/" {{/if}} class="col tn button color-white text-color-black bg-white button-raised button-round">{{#if user}}Выйти{{else}}Войти{{/if}}</a></li>
 					</ul>
 				</div>
 				{{#if user}}
@@ -366,14 +351,14 @@
 						<li>
 							<span>{{this.name}}</span>
 							<label class="toggle toggle-init">
-								<input @change="savePushSet()" type="checkbox" {{#if this.checked}}checked{{/if}} name="{{@key}}">
+								<input @change="savePushSet()" type="checkbox" {{#if this.checked}} checked{{/if}} name="{{@key}}">
 								<span class="toggle-icon"></span>
 							</label>
 						</li>
 						{{/each}}
 					</ul>
 				</div>
-				{{/if}}	
+				{{/if}}
 				<div class="block-title">Контактная информация</div>
 				<div class="block">
 					<div class="row">
@@ -383,7 +368,7 @@
 						<div class="col-70"><a href="tel:84994505152"><i class="f7-icons">phonelink_ring</i> 8 (499) 450 51 52</a></div>
 					</div>
 				</div>
-			{{/if}}	
+				{{/if}}
 				<div class="row no-gutters vh-100 loader-screen hide">
 					<div class="col align-self-center text-align-center">
 						<div class="">
@@ -398,6 +383,24 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="toolbar tabbar toolbar-bottom o-visible">
+			<div class="toolbar-inner o-visible tabs-max-width">
+				<a href="#tab-1" class="tab-link tab-link-active"><i class="material-icons">home</i></a>
+				<a href="#tab-2" class="tab-link"><i class="material-icons">view_module</i></a>
+				<a href="/cart/" class="tab-link o-visible js_bc">
+					<span class="centerbutton button button-fill color-pink">
+						<i class="material-icons bc_t">local_mall</i><span class="cart_counter js_cg bc_t">{{cartCount}}</span>
+						<div class="btn-loader bc_l lw"><div></div><div></div><div></div><div></div></div>
+					</span>
+				</a>
+				<a href="#tabfavorits" class="tab-link"><i class="material-icons">favorite</i></a>
+				<a href="#tab-5" class="tab-link"><i class="icon material-icons md-only">account_circle<span class="badge color-pink js_mfc animated bounceIn">0</span></i></a>
+			</div>
+		</div>
+
+
 	</div>
 </template>	
 <script>
