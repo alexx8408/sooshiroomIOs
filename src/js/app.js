@@ -3,7 +3,7 @@ import Framework7 from 'framework7/framework7.esm.bundle.js';
 
 // import 'framework7/css/framework7.bundle.css';
 
-import '../css/framework7.bundle.min.css';
+import '../css/framework7.bundle.min_2.css';
 import cordovaApp from './cordova-app.js';
 import routes from './routes.js';
 

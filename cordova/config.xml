@@ -35,7 +35,7 @@
         <preference name="scheme" value="app" />
         <preference name="hostname" value="localhost" />
         <preference name="StatusBarOverlaysWebView" value="true" />
-        <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+        <preference name="KeyboardDisplayRequiresUserAction" value="true" />
         <splash src="res/screens/ios/default@2x~iphone~anyany.png" />
         <splash src="res/screens/ios/default@2x~iphone~comany.png" />
         <splash src="res/screens/ios/default@2x~iphone~comcom.png" />
@@ -125,5 +125,4 @@
     <plugin name="cordova-plugin-code-push" spec="^2.0.0" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.4" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
-    <plugin name="cordova-plugin-keyboard" spec="^1.2.0" />
 </widget>
