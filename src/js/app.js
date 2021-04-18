@@ -2,6 +2,7 @@ import $$ from 'dom7';
 import Framework7 from 'framework7/framework7.esm.bundle.js';
 
 // import 'framework7/css/framework7.bundle.css';
+
 import '../css/framework7.bundle.min.css';
 import cordovaApp from './cordova-app.js';
 import routes from './routes.js';
@@ -13,6 +14,7 @@ import '../css/custom.css';
 
 import App from '../app.f7.html';
 window.$$ = $$;
+window.cordovaApp = cordovaApp;
 
 window.app = new Framework7({
     component: App,

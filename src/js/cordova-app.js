@@ -112,13 +112,15 @@ var cordovaApp = {
     });
     window.addEventListener('keyboardHeightWillChange', (event) => {
       var keyboardHeight = event.keyboardHeight;
-      if (keyboardHeight > 0) {
-        document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
-        $('html').addClass('device-with-keyboard');
-      } else {
-        // Keyboard is going to be closed
-        document.body.style.height = '';
-        $('html').removeClass('device-with-keyboard');
+        if (keyboardHeight > 0) {
+
+            document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
+            $('html').addClass('device-with-keyboard');
+
+        } else {
+
+            document.body.style.height = '';
+            $('html').removeClass('device-with-keyboard');
       }
 
     });
@@ -140,10 +142,8 @@ var cordovaApp = {
     // Handle Android back button
     cordovaApp.handleAndroidBackButton();
 
-    // Handle Splash Screen
     cordovaApp.handleSplashscreen();
 
-    // Handle Keyboard
     cordovaApp.handleKeyboard();
   },
 };
