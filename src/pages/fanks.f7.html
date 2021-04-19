@@ -1,28 +1,28 @@
 <template>
-	<div class="page page-forgotpassword o-hidden light" data-name="fanks" >
-		<div class="page-content lgpage ">
-			<div class="row h-100 ">
-				<div class="col align-self-center px-3 text-align-center align-self-center padding-horizontal-half">
-					<img src="static/logo.svg" alt="logo" class="logo-small">
-					<div class="form-signin shadow text-dark" >
-						<h3>Ваш заказ № {{$f7route.params.id}} успешно оформлен</h3>
-						<p class=" text-secondary small no-margin-top ">Благодарим вас за ваш выбор</p>
- 
-						<div class="row">
+    <div class="page page-forgotpassword o-hidden white" data-name="fanks">
+        <div class="page-content lgpage ">
+            <div class="row h-100 ">
+                <div class="col align-self-center px-3 text-align-center align-self-center padding-horizontal-half">
+                    <img src="static/logo.svg" alt="logo" class="logo-small">
+                    <div class="form-signin shadow text-dark">
+                        <h3>Ваш заказ № {{$f7route.params.id}} успешно оформлен</h3>
+                        <p class=" text-secondary small no-margin-top ">Благодарим вас за ваш выбор</p>
+
+                        <div class="row">
                             <div class="col-100">
                                 <a href="/" class="button button-raised button-large button-round"><i class="f7-icons">arrow_left</i><span>Назад</span></a>
                             </div>
-							{{#if sub}}
-							<div class="col-100 align-self-center text-right pl-0 animated fadeIn hinge" style="padding-top:10px;">
-								<a class="button button-raised button-fill button-large button-round js_bgo" href="/chat/{{subID}}/?id={{admin}}">Задать вопрос по заказу</a>
-							</div>
-							{{/if}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                            {{#if sub}}
+                            <div class="col-100 align-self-center text-right pl-0 animated fadeIn hinge" style="padding-top:10px;">
+                                <a class="button button-raised button-fill button-large button-round js_bgo" href="/chat/{{subID}}/?id={{admin}}">Задать вопрос по заказу</a>
+                            </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 	export default {
