@@ -1,76 +1,76 @@
 <template>
-	<div class="page page-forgotpassword o-hidden light" data-name="login" >
-		<div class="navbar navbar-transparent">
-			<div class="navbar-inner">
-				<div class="left">
-					<a class="link back col tn button color-white text-color-black bg-white button-raised button-round" href="#"><i class="icon icon-back"></i></a>
-				</div>
-				<div class="title">
-					
-				</div>
-				<div class="right">
-				
-				</div>
-			</div>
-		</div>
-		<div class="page-content lgpage ">
-			<div class="row h-100 ">
-				<div class="col px-3 text-align-center padding-horizontal-half">
-					<img src="static/logo.svg" alt="logo" class="logo-small">
-					<h3 class=" fcdc">Введите КОД СМС</h3>
-					<h3 class=" fndc">Укажите телефон</h3>
-					<div class="form-signin shadow text-dark" >
-					
-						<p class=" text-secondary small no-margin-top fcdc">подтвердив КОД-СМС, вы даете согласие <br><a href="/info/politika-konfidentsialnosti/?i=Политика конфиденциальности" class="color-green">на обработку персональных данных</a></p>
-					
-						<p class=" text-secondary small no-margin-top fndc">подтвердив номер телефона, вы даете согласие <br><a href="/info/politika-konfidentsialnosti/?i=Политика конфиденциальности" class="color-green">на обработку персональных данных</a></p>
-					
-						<div class="list no-margin">
-							<ul class="no-border fcdc">
-								<li class="item-content item-input no-padding-horizontal">
-									<div class="item-inner no-padding-horizontal">
-										<div class="item-title item-floating-label">Введите КОД-СМС</div>
-										<div class="item-input-wrap">
-											<input type="tel" name="u_code" id="u_code" maxlength="4" style="font-size: 32px;letter-spacing: 30px;">
-											<span class="input-clear-button"></span>
-										</div>
-									</div>
-								</li> 
-							</ul>
-							<ul class="no-border fndc">
-								<li class="item-content item-input no-padding-horizontal">
-									<div class="item-inner no-padding-horizontal">
-										<div class="item-title item-floating-label">Введите номер телефона</div>
-										<div class="item-input-wrap">
-											<input type="tel" name="u_phone" id="u_phone" class="mask_phone">
-											<span class="input-clear-button"></span>
-										</div>
-									</div>
-								</li>                            
-							</ul>
-						</div>                   
-						<br>    
-					
-						<div class="row fcdc">
+    <div class="page page-forgotpassword o-hidden white" data-name="login">
+        <div class="navbar  navbar-transparent">
+            <div class="navbar-inner">
+                <div class="left">
+                    <a style="top: 4px;left: 0px;position: relative;" href="#" class="link back sheet-close s_close icon-only"></a>
+                </div>
+                <div class="title">
+
+                </div>
+                <div class="right">
+
+                </div>
+            </div>
+        </div>
+        <div class="page-content lgpage  isnmb">
+            <div class="row h-100 ">
+                <div class="col px-3 text-align-center padding-horizontal-half">
+                    <img src="static/logo.svg" alt="logo" class="logo-small">
+                    <h3 class=" fcdc">Введите КОД СМС</h3>
+                    <h3 class=" fndc">Укажите телефон</h3>
+                    <div class="form-signin shadow text-dark">
+
+                        <p class=" text-secondary small no-margin-top fcdc">подтвердив КОД-СМС, вы даете согласие <br><a href="/info/politika-konfidentsialnosti/?i=Политика конфиденциальности" class="color-green">на обработку персональных данных</a></p>
+
+                        <p class=" text-secondary small no-margin-top fndc">подтвердив номер телефона, вы даете согласие <br><a href="/info/politika-konfidentsialnosti/?i=Политика конфиденциальности" class="color-green">на обработку персональных данных</a></p>
+
+                        <div class="list no-margin">
+                            <ul class="no-border fcdc">
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <div class="item-title item-floating-label">Введите КОД-СМС</div>
+                                        <div class="item-input-wrap">
+                                            <input type="tel" name="u_code" id="u_code" maxlength="4" style="font-size: 32px;letter-spacing: 30px;">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="no-border fndc">
+                                <li class="item-content item-input no-padding-horizontal">
+                                    <div class="item-inner no-padding-horizontal">
+                                        <div class="item-title item-floating-label">Введите номер телефона</div>
+                                        <div class="item-input-wrap">
+                                            <input type="tel" name="u_phone" id="u_phone" class="mask_phone">
+                                            <span class="input-clear-button"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+
+                        <div class="row fcdc">
                             <div class="col-50">
                                 <button @click="newPhone()" class="button button-raised button-fill button-large button-round"><i class="f7-icons">arrow_left</i><span>Назад</span></button>
                             </div>
-							<div class="col-50 align-self-center text-right pl-0">
-								<a  href="#" @click="sendAgane()" >Новое СМС</a>
-							</div>
-						</div>
-					
-						<div class="row fndc">
+                            <div class="col-50 align-self-center text-right pl-0">
+                                <a href="#" @click="sendAgane()">Новое СМС</a>
+                            </div>
+                        </div>
+
+                        <div class="row fndc">
                             <div class="col-100">
                                 <button @click="sendPhone()" class="sendPh button disabled button-raised button-fill button-large button-round"><span>Подтвердить</span><i class="f7-icons">arrow_right</i></button>
                             </div>
-						</div>
-					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
     export default {
