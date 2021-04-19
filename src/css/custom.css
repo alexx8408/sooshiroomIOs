@@ -61,10 +61,102 @@
 ._gmaps_inited #addr_map_marker_circle {
     display: block;
 }
+
+
+._gmaps_drag #addr_map_marker {
+    opacity: 0.7;
+    width: 60px;
+    height: 60px;
+    margin-top: -80px;
+    margin-left: -30px;
+}
+
+._gmaps_drag #addr_map_marker_circle {
+    opacity: 0.2;
+    width: 100px;
+    height: 100px;
+    margin-top: -90px;
+    margin-left: -50px;
+}
+
+.map-container._sheet_open #addr_map_marker_circle,
+.map-container._sheet_open #addr_map_marker {
+    opacity: 0;
+}
+
+
 ._gmaps_inited .framework7-root .page-previous {
     display: none !important;
 }
 
 ._gmaps_inited {
     background-color: rgba(0,0,0,0) !important;
+}
+
+
+@-webkit-keyframes bounce {
+    from, 20%, to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    40% {
+        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        -webkit-transform: translate3d(0, -10px, 0) scaleY(1);
+        transform: translate3d(0, -10px, 0) scaleY(1);
+    }
+
+    70% {
+        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        -webkit-transform: translate3d(0, -5px, 0) scaleY(1.05);
+        transform: translate3d(0, -5px, 0) scaleY(1.05);
+    }
+
+    80% {
+        -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        -webkit-transform: translate3d(0, 0, 0) scaleY(0.95);
+        transform: translate3d(0, 0, 0) scaleY(0.95);
+    }
+}
+
+@keyframes bounceMarker {
+    from, 20%, to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    40% {
+        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        -webkit-transform: translate3d(0, -10px, 0) scaleY(1);
+        transform: translate3d(0, -10px, 0) scaleY(1);
+    }
+
+    70% {
+        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        -webkit-transform: translate3d(0, -5px, 0) scaleY(1.05);
+        transform: translate3d(0, -5px, 0) scaleY(1.05);
+    }
+
+    80% {
+        -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        -webkit-transform: translate3d(0, 0, 0) scaleY(0.95);
+        transform: translate3d(0, 0, 0) scaleY(0.95);
+    }
+}
+
+.bounceMarker {
+    -webkit-animation-name: bounceMarker;
+    animation-name: bounceMarker;
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
 }
