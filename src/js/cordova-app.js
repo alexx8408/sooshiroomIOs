@@ -92,10 +92,12 @@ var cordovaApp = {
     - hides keyboard accessory bar for all inputs except where it required
   */
   handleKeyboard: function () {
-    var f7 = cordovaApp.f7;
-    if (!window.Keyboard || !window.Keyboard.shrinkView || f7.device.electron) return;
+      var f7 = cordovaApp.f7;
+
+     // if (!window.Keyboard || !window.Keyboard.shrinkView || f7.device.electron) return;
+
     var $ = f7.$;
-    window.Keyboard.shrinkView(false);
+    //window.Keyboard.shrinkView(false);
     window.Keyboard.disableScrollingInShrinkView(true);
     window.Keyboard.hideFormAccessoryBar(true);
     window.addEventListener('keyboardWillShow', () => {
@@ -110,20 +112,21 @@ var cordovaApp = {
       }
       window.Keyboard.hideFormAccessoryBar(false);
     });
-    window.addEventListener('keyboardHeightWillChange', (event) => {
-      var keyboardHeight = event.keyboardHeight;
-        if (keyboardHeight > 0) {
+      window.addEventListener('keyboardHeightWillChange', (event) => {
+          var keyboardHeight = event.keyboardHeight;
+          if (keyboardHeight > 0) {
 
-            document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
-            $('html').addClass('device-with-keyboard');
+              //document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
+              $$("html").scrollTop(0);
+              $$('html').addClass('device-with-keyboard');
 
-        } else {
+          } else {
 
-            document.body.style.height = '';
-            $('html').removeClass('device-with-keyboard');
-      }
+              document.body.style.height = '';
+              $('html').removeClass('device-with-keyboard');
+          }
 
-    });
+      });
     $(document).on('touchstart', 'input, textarea, select', function (e) {
       var nodeName = e.target.nodeName.toLowerCase();
       var type = e.target.type;

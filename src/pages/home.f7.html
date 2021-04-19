@@ -473,7 +473,8 @@
 				
 			},
 			pageAfterIn: function(e, page) 
-			{
+            {
+                navigator.splashscreen.hide();
 				var self = this; 
 				
 				$$(".js_bc").removeClass("loading");

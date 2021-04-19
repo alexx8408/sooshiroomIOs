@@ -30,6 +30,7 @@
 				</div>
 				<div id="addr_map_marker" class="animated"></div>
 				<div id="addr_map_marker_circle" class="animated"></div>
+
 				<div class="row no-gutters vh-100 loader-screen">
 					<div class="col align-self-center text-align-center">
 						<div class="">
@@ -223,8 +224,10 @@
 				var self = this;
 
 				$$(".js_bc").addClass("loading");
-				$$("#t_add").val("Определяем...");
-
+                $$("#t_add").val("Определяем...");
+                $$(".map-container").addClass("_gmaps_drag");
+                $$("#addr_map_marker").removeClass("bounceMarker");
+				
 				plugin.google.maps.LocationService.getMyLocation({}, function (location) {
 
 					var geocodeResult = app.methods.geocode(parseFloat(location.latLng.lat).toFixed(6), parseFloat(location.latLng.lng).toFixed(6));
@@ -246,13 +249,17 @@
 								lng: parseFloat(location.latLng.lng).toFixed(6)
 							},
 							duration: 1000,
+                        }, function () {
+                            $$(".map-container").removeClass("_gmaps_drag");
+                            $$("#addr_map_marker").addClass("bounceMarker");
 						});
 					}
 					$$(".js_bc").removeClass("loading");
 
 				}, function (error) {
 					console.log(error);
-					$$(".js_bc").removeClass("loading");
+                    $$(".js_bc").removeClass("loading");
+                    $$(".map-container").addClass("_gmaps_drag");
 					self.setAddrByLS();
 				});
 			},
@@ -263,8 +270,13 @@
 				$$(".custom-modal-backdrop").addClass('backdrop-in');
 				setTimeout(() => { $$("#t_add").focus(); app.input.focus("#t_add"); }, 150);
 
-				$$(".map-container").addClass("_sheet_open");
-				//$$("body").addClass("skip-body-resize");
+                $$(".map-container").addClass("_sheet_open");
+                $$("#addr_map_marker").removeClass("bounceMarker");
+                $$(".map-container .loader-screen").show()
+                $$(".map-container .loader-screen").animate(
+                    { opacity: 1 },
+                    { duration: 500, complete: function (elements) {  } }
+                )
 			},
 			closeStep: function () {
 				var self = this;
@@ -276,7 +288,11 @@
 					$$(".tgbs").addClass('show');
 				}, 150
 				);
-				$$(".map-container").removeClass("_sheet_open");
+                setTimeout(function () {
+                    $$(".map-container").removeClass("_sheet_open");
+                    $$("#addr_map_marker").addClass("bounceMarker");
+                    $$(".map-container .loader-screen").hide()
+				}, 500);
 			},
 			showSaveAddr: function () {
 				var self = this;
@@ -428,9 +444,10 @@
 				function onMapInit() {
 					console.log("MAP_READY");
 					$$("#__map").parents().addClass("_gmaps_inited");
+
 					$$(".map-container .loader-screen").animate(
 						{ opacity: 0 },
-						{ duration: 500, complete: function (elements) { elements.remove() } }
+						{ duration: 500, complete: function (elements) { elements.hide() } }
 					)
 				}
 
@@ -441,10 +458,10 @@
 					backdrop: false,
 					on: {
 						close: function (sheet) {
-							console.log("close");
+							
 						},
 						opened: function (sheet) {
-							console.log("opened");
+							
 						},
 						sheetStepOpen: function (sheet) {
 
@@ -455,7 +472,13 @@
 							console.log("stepOpen");
 							setTimeout(() => { $$("#t_add").focus(); app.input.focus("#t_add"); }, 150);
 
-							$$(".map-container").addClass("_sheet_open");
+                            $$(".map-container").addClass("_sheet_open");
+                            $$("#addr_map_marker").removeClass("bounceMarker");
+							$$(".map-container .loader-screen").show();
+                            $$(".map-container .loader-screen").animate(
+                                { opacity: 1 },
+                                { duration: 500, complete: function (elements) { } }
+                            )
 						},
 						stepClose: function (sheet) {
 							self.setAddrByLS();
@@ -464,14 +487,36 @@
 							self.autocompleteDropdownAjax.close();
 							$$("#t_add").blur();
 
-							$$(".map-container").removeClass("_sheet_open");
-							$$("body").removeClass("skip-body-resize");
+                            setTimeout(function () {
+                                $$(".map-container").removeClass("_sheet_open");
+                                $$(".map-container .loader-screen").hide()
+                                $$("#addr_map_marker").addClass("bounceMarker");
+                            }, 500);
 						},
 						sheetStepProgress: function (app) {
-							/* $$(".map-container").addClass("_sheet_drag"); */
+							
 						},
 					}
 				});
+
+                window.addEventListener('keyboardHeightWillChange', (event) => {
+                    var keyboardHeight = event.keyboardHeight;
+                    if (keyboardHeight > 0) {
+                        $$("#addr_map_marker").removeClass("bounceMarker");
+                        $$(".map-container .loader-screen").show();
+                        $$(".map-container .loader-screen").animate(
+                            { opacity: 1 },
+                            { duration: 500, complete: function (elements) { } }
+                        )
+                    } else {
+                        setTimeout(function () {
+                            $$(".map-container").removeClass("_sheet_open");
+                            $$(".map-container .loader-screen").hide()
+                            $$("#addr_map_marker").addClass("bounceMarker");
+                        }, 500);
+                    }
+
+                });
 
 				$$("#t_add").blur(function () {
 					$$("body").removeClass("skip-body-resize");
