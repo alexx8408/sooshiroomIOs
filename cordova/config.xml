@@ -125,4 +125,5 @@
     <plugin name="cordova-plugin-code-push" spec="^2.0.0" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.4" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
+    <plugin name="cordova-plugin-keyboard" spec="^1.2.0" />
 </widget>
