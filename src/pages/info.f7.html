@@ -49,6 +49,7 @@
 
             },
             pageAfterIn: function (e, page) {
+                StatusBar.styleLightContent();
                 app.request.post(app.data.baseUrl + 'get_cinfo.php', { info: page.route.params.id }, function (data) {
                     $$(".loader-screen").hide();
                     $$(".btd").html(data);

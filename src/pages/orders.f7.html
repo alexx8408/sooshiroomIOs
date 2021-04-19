@@ -298,7 +298,8 @@ export default {
 			
 		},
 		pageAfterIn: function(e, page)
-		{
+        {
+            StatusBar.styleDefault();
 			var self = this; 
 			self.refreshOrders();
 			if (page.route.query.id > 0)

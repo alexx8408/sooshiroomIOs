@@ -347,7 +347,8 @@
 			}
 		},
 		on: {
-			pageAfterIn: function (e, page) {
+            pageAfterIn: function (e, page) {
+                StatusBar.styleDefault();
 				var self = this;
 				var addrId = parseInt(page.route.params.id), isNew = false;
 				if (addrId == 0) isNew = true;

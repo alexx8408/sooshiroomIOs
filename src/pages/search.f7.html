@@ -94,6 +94,7 @@ export default {
             self.virtualList.destroy();
         },
         pageAfterIn: function (e, page) {
+            StatusBar.styleLightContent();
             var self = this;
             setTimeout(() => { $$('#search_pp').focus(); }, 300);
             $$(".loader-screen").hide();

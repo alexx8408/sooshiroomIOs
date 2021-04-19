@@ -154,7 +154,8 @@
 					self.notificationWithButton.destroy();
 			},
 			pageAfterIn: function(e, page)
-			{
+            {
+                StatusBar.styleDefault();
 				$$(".loader-screen").hide();
 				$$("#u_code").on("change",function(){
 					$$(".loader-screen").hide();
