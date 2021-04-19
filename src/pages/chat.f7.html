@@ -322,7 +322,14 @@ export default {
 				
 				window.chatComponent = self;
 			});
-			
+
+            window.addEventListener('keyboardHeightWillChange', (event) => {
+                var keyboardHeight = event.keyboardHeight;
+                if (keyboardHeight > 0) {
+					chatComponent.messages.scroll(500);
+                } 
+            });
+
 		}
 	}
 }
