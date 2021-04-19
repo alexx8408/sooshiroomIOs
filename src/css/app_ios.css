@@ -1644,16 +1644,19 @@ html.with-panel-left-reveal .framework7-root > .view, html.with-panel-left-revea
     width: 30px;
     height: 30px;
 }
+.button .laoderhorizontal {
+    width: 65px;
+}
 
-    .laoderhorizontal div {
-        position: absolute;
-        top: 20px;
-        width: 11px;
-        height: 11px;
-        border-radius: 50%;
-        background: #fff;
-        animation-timing-function: cubic-bezier(0, 1, 1, 0);
-    }
+.laoderhorizontal div {
+    position: absolute;
+    top: 20px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #fff;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
 
         .laoderhorizontal div:nth-child(1) {
             left: 6px;

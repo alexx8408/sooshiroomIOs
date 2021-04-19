@@ -20,7 +20,7 @@ window.app = new Framework7({
     component: App,
     id: 'com.sooshiroom.ios.SooshiRoom',
     name: 'SooshiRoom',
-    version: "3.0.0",
+    version: "3.0.1",
     root: '#prapp',
     theme: 'ios',
     initOnDeviceReady: true,

@@ -18,17 +18,30 @@
 		</div>
 
 		<div class="fab fab-right-top">
-			<a href="#" class="bg-white">
+			<a href="#" class="bg-white" @click="getGpsLocation">
 				<i class="icon f7-icons" style="color: #000;">location_fill</i>
 			</a>
 		</div>
+
 		<div class="map_parent">
 			<div class="map-container">
 				<div id="__map">
 
 				</div>
 				<div id="addr_map_marker" class="animated"></div>
-
+				<div id="addr_map_marker_circle" class="animated"></div>
+				<div class="row no-gutters vh-100 loader-screen">
+					<div class="col align-self-center text-align-center">
+						<div class="">
+							<div class="btn-loader">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div class=""></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -63,7 +76,7 @@
 									<div class="plr_8">
 										<div class="item-title item-floating-label">Кв/оф</div>
 										<div class="item-input-wrap">
-											<input placeholder="Кв/оф" type="text" class="a_kv" id="o_kv" value="">
+											<input placeholder="Кв/оф" type="tel" class="a_kv" id="o_kv" value="">
 										</div>
 									</div>
 								</li>
@@ -79,7 +92,7 @@
 									<div class="plr_8">
 										<div class="item-title item-floating-label">Подъезд</div>
 										<div class="item-input-wrap">
-											<input placeholder="Подъезд" type="text" class="a_par" id="o_par" value="">
+											<input placeholder="Подъезд" type="tel" class="a_par" id="o_par" value="">
 										</div>
 									</div>
 								</li>
@@ -87,7 +100,7 @@
 									<div class="plr_8">
 										<div class="item-title item-floating-label">Домофон</div>
 										<div class="item-input-wrap">
-											<input placeholder="Домофон" type="text" class="a_dof" id="o_dof" value="">
+											<input placeholder="Домофон" type="tel" class="a_dof" id="o_dof" value="">
 										</div>
 									</div>
 								</li>
@@ -330,6 +343,8 @@
 					addressData = {},
 					curAddrData = {},
 					addrComponent;
+
+				$$(".navbars").css("height", "calc(var(--f7-navbar-height) + var(--f7-safe-area-top))");
 
 				addressData = JSON.parse(localStorage.getItem('addressData'));
 				if (!isNew) {
