@@ -169,6 +169,7 @@ export default {
 
         },
         pageAfterIn: function (e, page) {
+            StatusBar.styleLightContent();
             if (app.data.cart) {
                 $$(".js_bc").removeClass("loading hide");
                 app.methods.refreshCart();

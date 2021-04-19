@@ -240,6 +240,7 @@
 
             },
             pageAfterIn: function (e, page) {
+                StatusBar.styleDefault();
                 var self = this;
                 if (!app.data.cart) {
                     self.$setState(

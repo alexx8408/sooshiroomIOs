@@ -44,7 +44,8 @@
 				var self = this;
 			},
 			pageAfterIn: function(e, page)
-			{
+            {
+                StatusBar.styleDefault();
 				var self = this;
 				app.request.getJSON(app.data.baseUrl + 'set_messlist.php', { n:'Заказ №'+self.order, s:'d' }, function (data)
 				{

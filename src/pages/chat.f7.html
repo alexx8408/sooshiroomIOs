@@ -258,7 +258,8 @@ export default {
 			$$(".btdt").removeClass("hide");
 		},
 		pageAfterIn: function(e, page) 
-		{
+        {
+            StatusBar.styleDefault();
             var self = this;
             if ($$(".message-received.js_read")[0]) {
                 self.messages.scroll(500, $$(".message-received.js_read")[0].offsetTop);
