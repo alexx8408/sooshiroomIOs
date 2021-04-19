@@ -117,7 +117,6 @@ var cordovaApp = {
             if (keyboardHeight > 0) {
 
                 document.body.style.height = `calc(100% - ${keyboardHeight}px)`;
-                $$("html").scrollTop(0);
                 $$('html').addClass('device-with-keyboard');
 
             } else {

@@ -1,10 +1,14 @@
 .map_parent {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 175px);
     position: relative;
-    padding-bottom: 180px;
+    padding-top: 0;
     box-sizing: border-box;
+    transition: all 0.3s;
 }
+    .map_parent._keyboard_open {
+        top:100px;
+    }
 
 .map-container {
     width: 100%;
@@ -14,6 +18,15 @@
 
     .map-container .loader-screen {
         position: absolute;
+        opacity: 1;
+        transition: all 0.5s;
+    }
+
+    .map-container._gmaps_inited .loader-screen {
+        opacity: 0;
+    }
+    .map-container._gmaps_inited._sheet_open .loader-screen {
+        opacity: 1;
     }
 
 #__map {

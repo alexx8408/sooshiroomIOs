@@ -273,11 +273,7 @@
                 $$(".map-container").addClass("_sheet_open");
 				$$("#addr_map_marker").removeClass("bounceMarker");
 
-                $$(".map-container .loader-screen").show()
-                $$(".map-container .loader-screen").animate(
-                    { opacity: 1 },
-                    { duration: 500, complete: function (elements) {  } }
-                )
+                $$(".map-container .loader-screen").css("display", "block");
 			},
 			closeStep: function () {
 				var self = this;
@@ -293,11 +289,9 @@
                     $$(".map-container").removeClass("_sheet_open");
 					$$("#addr_map_marker").addClass("bounceMarker");
 
-                    $$(".map-container .loader-screen").animate(
-                        { opacity: 0 },
-                        { duration: 500, complete: function (elements) { $$(".map-container .loader-screen").hide() } }
-                    )
-                    
+					setTimeout(function () {
+						$$(".map-container .loader-screen").css("display", "none");
+					}, 500);
 				}, 500);
 			},
 			showSaveAddr: function () {
@@ -451,11 +445,9 @@
 				function onMapInit() {
 					console.log("MAP_READY");
 					$$("#__map").parents().addClass("_gmaps_inited");
-
-					$$(".map-container .loader-screen").animate(
-						{ opacity: 0 },
-						{ duration: 500, complete: function (elements) { elements.hide() } }
-					)
+					setTimeout(function () {
+                        $$(".map-container .loader-screen").css("display", "none");
+					}, 500);
 				}
 
 				self.sheetSwipeToStep = self.$app.sheet.create({
@@ -481,11 +473,7 @@
 
                             $$(".map-container").addClass("_sheet_open");
                             $$("#addr_map_marker").removeClass("bounceMarker");
-							$$(".map-container .loader-screen").show();
-                            $$(".map-container .loader-screen").animate(
-                                { opacity: 1 },
-                                { duration: 500, complete: function (elements) { } }
-                            )
+							$$(".map-container .loader-screen").css("display", "block");
 						},
 						stepClose: function (sheet) {
 							self.setAddrByLS();
@@ -496,12 +484,11 @@
 
                             setTimeout(function () {
                                 $$(".map-container").removeClass("_sheet_open");
-
-                                $$(".map-container .loader-screen").animate(
-                                    { opacity: 0 },
-                                    { duration: 500, complete: function (elements) { $$(".map-container .loader-screen").hide() } }
-                                )
-                                $$("#addr_map_marker").addClass("bounceMarker");
+                                setTimeout(function () {
+                                    $$(".map-container .loader-screen").css("display", "none");
+                                }, 500);
+								$$("#addr_map_marker").addClass("bounceMarker");
+                                $$(".sheet-modal-swipe-step input").blur()
                             }, 500);
 						},
 						sheetStepProgress: function (app) {
@@ -510,23 +497,26 @@
 					}
 				});
 
+                window.addEventListener('keyboardWillShow', () => {
+                    $$(".map-container .loader-screen").css("display", "block");
+					$$(".map-container").addClass("_sheet_open");
+                    $$(".map_parent").addClass("_keyboard_open");
+                });
+
+                window.addEventListener('keyboardWillHide', () => {
+                    $$(".map_parent").removeClass("_keyboard_open");
+				});
+
                 window.addEventListener('keyboardHeightWillChange', (event) => {
                     var keyboardHeight = event.keyboardHeight;
                     if (keyboardHeight > 0) {
                         $$("#addr_map_marker").removeClass("bounceMarker");
-                        $$(".map-container .loader-screen").show();
-                        $$(".map-container .loader-screen").animate(
-                            { opacity: 1 },
-                            { duration: 500, complete: function (elements) { } }
-                        )
-                    } else {
+					} else {
+                        $$(".map-container").removeClass("_sheet_open");
                         setTimeout(function () {
-                            $$(".map-container").removeClass("_sheet_open");
-
-                            $$(".map-container .loader-screen").animate(
-                                { opacity: 0 },
-                                { duration: 500, complete: function (elements) { $$(".map-container .loader-screen").hide() } }
-                            )
+                            $$(".map-container .loader-screen").css("display", "none");
+                        }, 500);
+                        setTimeout(function () {
                             $$("#addr_map_marker").addClass("bounceMarker");
                         }, 500);
                     }
