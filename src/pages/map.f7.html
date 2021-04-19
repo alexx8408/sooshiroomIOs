@@ -232,11 +232,12 @@
 
 					var geocodeResult = app.methods.geocode(parseFloat(location.latLng.lat).toFixed(6), parseFloat(location.latLng.lng).toFixed(6));
 					if (typeof (geocodeResult.lat) != undefined) {
+						/*
 						app.data.curAddr = geocodeResult;
 						app.data.arUser.addr.active = geocodeResult;
 						app.data.arUser.isloc = true;
 						localStorage.setItem('addressData', JSON.stringify(geocodeResult));
-
+						*/
 						self.setAddressData(geocodeResult);
 						$$(".au_testd").hide();
 

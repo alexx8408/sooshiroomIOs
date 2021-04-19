@@ -21,6 +21,7 @@
     "cordova-plugin-code-push": "^2.0.0",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-dialogs": "^2.0.2",
+    "cordova-plugin-fastclick": "^1.0.0",
     "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-googlemaps": "^2.7.1",
@@ -96,7 +97,8 @@
       "cordova-plugin-code-push": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-keyboard": {}
+      "cordova-plugin-keyboard": {},
+      "cordova-plugin-fastclick": {}
     },
     "platforms": []
   }

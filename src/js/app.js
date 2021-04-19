@@ -303,7 +303,8 @@ window.app = new Framework7({
                     app.data.arUser.addr.active = app.data.arUser.addr.list[i];
                 }
             }
-            $$(".a_street").val(app.data.arUser.addr.active.street);
+            app.data.curAddr = app.data.arUser.addr.active;
+            $$(".adr_info").html(app.data.arUser.addr.active.district);
             $$(".ah_street").html(app.data.arUser.addr.active.street);
             $$(".a_kv").val(app.data.arUser.addr.active.kv);
             $$(".a_flo").val(app.data.arUser.addr.active.flo);

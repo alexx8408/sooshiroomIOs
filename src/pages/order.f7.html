@@ -118,7 +118,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <ul class="row p_8 address_elements">
+                                <ul class="row p_8 address_elements" style="">
                                     <li class="item-input {{#if arUser.addr.active.kv}}item-input-with-value{{else}}item-input-with-error-message item-input-invalid{{/if}} col">
                                         <div class="plr_8">
                                             <div class="item-title item-floating-label">Кв/оф</div>
@@ -137,11 +137,11 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="item-input item-input-with-value tel">
+                                    <li class="item-input item-input-with-value col">
                                         <div class="plr_8">
                                             <div class="item-title item-floating-label">Подъезд</div>
                                             <div class="item-input-wrap">
-                                                <input placeholder="Подъезд" type="text" name="par" class="a_par" id="_o_par" value="{{js 'return app.data.arUser.addr.active.par'}}">
+                                                <input placeholder="Подъезд" type="tel" name="par" class="a_par" id="_o_par" value="{{js 'return app.data.arUser.addr.active.par'}}">
 
                                             </div>
                                         </div>
@@ -197,8 +197,8 @@
                                 <ul>
                                     {{#each stores}}
                                     <li>
-                                        <label class="item-radio item-radio-icon-start  item-content">
-                                            <input type="radio" name="radio-store" class="radio-store" value="{{ID}}" {{#if @first}} checked{{/if}} />
+                                        <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
+                                            <input type="radio" name="radio-store" class="radio-store needsclick needsfocus" value="{{ID}}" {{#if @first}} checked{{/if}} />
                                             <i class="icon icon-radio" {{#if @first}} checked{{/if}}></i>
                                             <div class="item-inner">
                                                 <div class="item-title-row">
@@ -232,8 +232,8 @@
                         <div class="list md">
                             <ul>
                                 <li>
-                                    <label class="item-radio item-radio-icon-start  item-content">
-                                        <input type="radio" name="time-radio" value="now" checked class="time-radio" />
+                                    <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
+                                        <input type="radio" name="time-radio" value="now" checked class="time-radio needsclick needsfocus" />
                                         <i class="icon icon-radio"></i>
                                         <div class="item-inner">
                                             <div class="item-title">Как можно скорее</div>
@@ -241,8 +241,8 @@
                                     </label>
                                 </li>
                                 <li>
-                                    <label class="item-radio item-radio-icon-start  item-content">
-                                        <input type="radio" name="time-radio" value="time" class="time-radio" />
+                                    <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
+                                        <input type="radio" name="time-radio" value="time" class="time-radio needsclick needsfocus" />
                                         <i class="icon icon-radio"></i>
                                         <div class="item-inner">
                                             <input style="height: 30px;line-height: 30px;" type="text" placeholder="Выберите дату и время..." readonly="readonly" id="timeord" class="icto" />
@@ -258,8 +258,8 @@
                         <div class="list m_0 media-list md">
                             <ul>
                                 <li>
-                                    <label class="item-radio item-radio-icon-start  item-content">
-                                        <input type="radio" name="pay-radio" value="pcard" checked class="pay-radio" />
+                                    <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
+                                        <input type="radio" name="pay-radio" value="pcard" checked class="pay-radio needsclick needsfocus" />
                                         <i class="icon icon-radio"></i>
                                         <div class="item-inner">
                                             <div class="item-title">Картой курьеру</div>
@@ -267,8 +267,8 @@
                                     </label>
                                 </li>
                                 <li>
-                                    <label class="item-radio item-radio-icon-start  item-content">
-                                        <input type="radio" name="pay-radio" value="pcash" class="pay-radio" />
+                                    <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
+                                        <input type="radio" name="pay-radio" value="pcash" class="pay-radio needsclick needsfocus" />
                                         <i class="icon icon-radio"></i>
                                         <div class="item-inner">
                                             <input style="height: 30px;line-height: 30px;" type="text" placeholder="С какой суммы здача" readonly="readonly" id="payZd" class="icto" />
@@ -281,11 +281,11 @@
                                     {{else}}
                                     <div class="pballsd"></div>
                                     {{/if}}
-                                    <label class="item-radio item-radio-icon-start  item-content">
+                                    <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
                                         {{#if isBalls}}
-                                        <input type="radio" name="pay-radio" value="pballs" class="pay-radio" />
+                                        <input type="radio" name="pay-radio" value="pballs" class="pay-radio needsclick needsfocus" />
                                         {{else}}
-                                        <input type="radio" name="pay-radio" value="pballs" class="pay-radio" disabled />
+                                        <input type="radio" name="pay-radio" value="pballs" class="pay-radio needsclick needsfocus" disabled />
                                         {{/if}}
                                         <i class="icon icon-radio"></i>
                                         <div class="item-inner">
