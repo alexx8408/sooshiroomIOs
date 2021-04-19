@@ -199,13 +199,13 @@
                                     <li>
                                         <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
                                             <input type="radio" name="radio-store" class="radio-store needsclick needsfocus" value="{{ID}}" {{#if @first}} checked{{/if}} />
-                                            <i class="icon icon-radio" {{#if @first}} checked{{/if}}></i>
+                                            <i class="icon icon-radio needsclick needsfocus" {{#if @first}} checked{{/if}}></i>
                                             <div class="item-inner">
                                                 <div class="item-title-row">
-                                                    <div class="item-title">{{TITLE}}</div>
+                                                    <div class="item-title needsclick needsfocus">{{TITLE}}</div>
                                                 </div>
-                                                <div class="item-subtitle" style="margin-left:0px;"><i style="font-size:11px;" class="icon f7-icons">location_on</i> {{ADDRESS}}</div>
-                                                <div class="item-text">{{SCHEDULE}}</div>
+                                                <div class="item-subtitle needsclick needsfocus" style="margin-left:0px;"><i style="font-size:11px;" class="icon f7-icons">location_on</i> {{ADDRESS}}</div>
+                                                <div class="item-text needsclick needsfocus">{{SCHEDULE}}</div>
                                             </div>
                                         </label>
                                     </li>
@@ -234,19 +234,19 @@
                                 <li>
                                     <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
                                         <input type="radio" name="time-radio" value="now" checked class="time-radio needsclick needsfocus" />
-                                        <i class="icon icon-radio"></i>
+                                        <i class="icon icon-radio needsclick needsfocus"></i>
                                         <div class="item-inner">
-                                            <div class="item-title">Как можно скорее</div>
+                                            <div class="item-title needsclick needsfocus">Как можно скорее</div>
                                         </div>
                                     </label>
                                 </li>
                                 <li>
                                     <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
                                         <input type="radio" name="time-radio" value="time" class="time-radio needsclick needsfocus" />
-                                        <i class="icon icon-radio"></i>
+                                        <i class="icon icon-radio needsclick needsfocus"></i>
                                         <div class="item-inner">
                                             <input style="height: 30px;line-height: 30px;" type="text" placeholder="Выберите дату и время..." readonly="readonly" id="timeord" class="icto" />
-                                            <div class="item-title cto">Ко времени</div>
+                                            <div class="item-title cto needsclick needsfocus">Ко времени</div>
                                         </div>
                                     </label>
                                 </li>
@@ -260,19 +260,19 @@
                                 <li>
                                     <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
                                         <input type="radio" name="pay-radio" value="pcard" checked class="pay-radio needsclick needsfocus" />
-                                        <i class="icon icon-radio"></i>
+                                        <i class="icon icon-radio needsclick needsfocus"></i>
                                         <div class="item-inner">
-                                            <div class="item-title">Картой курьеру</div>
+                                            <div class="item-title needsclick needsfocus">Картой курьеру</div>
                                         </div>
                                     </label>
                                 </li>
                                 <li>
                                     <label class="item-radio item-radio-icon-start  item-content needsclick needsfocus">
                                         <input type="radio" name="pay-radio" value="pcash" class="pay-radio needsclick needsfocus" />
-                                        <i class="icon icon-radio"></i>
+                                        <i class="icon icon-radio needsclick needsfocus"></i>
                                         <div class="item-inner">
                                             <input style="height: 30px;line-height: 30px;" type="text" placeholder="С какой суммы здача" readonly="readonly" id="payZd" class="icto" />
-                                            <div class="item-title cto">Наличными</div>
+                                            <div class="item-title cto needsclick needsfocus">Наличными</div>
                                         </div>
                                     </label>
                                 </li>
@@ -287,9 +287,9 @@
                                         {{else}}
                                         <input type="radio" name="pay-radio" value="pballs" class="pay-radio needsclick needsfocus" disabled />
                                         {{/if}}
-                                        <i class="icon icon-radio"></i>
+                                        <i class="icon icon-radio needsclick needsfocus"></i>
                                         <div class="item-inner">
-                                            <div class="item-title">Оплатить Баллами <span style="font-size: 14px;top: -1px;padding: 2px 10px 4px 10px;" class="pballsdd">Баллы - <span class="pballsc">564</span></span></div>
+                                            <div class="item-title needsclick needsfocus">Оплатить Баллами <span style="font-size: 14px;top: -1px;padding: 2px 10px 4px 10px;" class="pballsdd">Баллы - <span class="pballsc">564</span></span></div>
                                         </div>
                                     </label>
                                 </li>

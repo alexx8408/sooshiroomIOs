@@ -36,7 +36,7 @@
         <preference name="hostname" value="localhost" />
         <preference name="StatusBarOverlaysWebView" value="true" />
         <preference name="KeyboardDisplayRequiresUserAction" value="false" />
-        <preference name="KeyboardShrinksView" value="false" />
+        <preference name="KeyboardShrinksView" value="true" />
         <splash src="res/screens/ios/default@2x~iphone~anyany.png" />
         <splash src="res/screens/ios/default@2x~iphone~comany.png" />
         <splash src="res/screens/ios/default@2x~iphone~comcom.png" />
