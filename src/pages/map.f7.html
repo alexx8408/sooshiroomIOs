@@ -271,7 +271,8 @@
 				setTimeout(() => { $$("#t_add").focus(); app.input.focus("#t_add"); }, 150);
 
                 $$(".map-container").addClass("_sheet_open");
-                $$("#addr_map_marker").removeClass("bounceMarker");
+				$$("#addr_map_marker").removeClass("bounceMarker");
+
                 $$(".map-container .loader-screen").show()
                 $$(".map-container .loader-screen").animate(
                     { opacity: 1 },
@@ -290,8 +291,13 @@
 				);
                 setTimeout(function () {
                     $$(".map-container").removeClass("_sheet_open");
-                    $$("#addr_map_marker").addClass("bounceMarker");
-                    $$(".map-container .loader-screen").hide()
+					$$("#addr_map_marker").addClass("bounceMarker");
+
+                    $$(".map-container .loader-screen").animate(
+                        { opacity: 0 },
+                        { duration: 500, complete: function (elements) { $$(".map-container .loader-screen").hide() } }
+                    )
+                    
 				}, 500);
 			},
 			showSaveAddr: function () {
@@ -490,7 +496,11 @@
 
                             setTimeout(function () {
                                 $$(".map-container").removeClass("_sheet_open");
-                                $$(".map-container .loader-screen").hide()
+
+                                $$(".map-container .loader-screen").animate(
+                                    { opacity: 0 },
+                                    { duration: 500, complete: function (elements) { $$(".map-container .loader-screen").hide() } }
+                                )
                                 $$("#addr_map_marker").addClass("bounceMarker");
                             }, 500);
 						},
@@ -512,7 +522,11 @@
                     } else {
                         setTimeout(function () {
                             $$(".map-container").removeClass("_sheet_open");
-                            $$(".map-container .loader-screen").hide()
+
+                            $$(".map-container .loader-screen").animate(
+                                { opacity: 0 },
+                                { duration: 500, complete: function (elements) { $$(".map-container .loader-screen").hide() } }
+                            )
                             $$("#addr_map_marker").addClass("bounceMarker");
                         }, 500);
                     }
