@@ -141,6 +141,24 @@ window.app = new Framework7({
                 });
             }
 
+            if (typeof (FCMPlugin) == "object") {
+                FCMPlugin.onTokenRefresh(function (token) {
+                    localStorage.setItem('device_token', token);
+                    app.device_token = token;
+                    app.request.post(app.data.baseUrl + 'set_auth.php', { act: "token", token: token }, function (json) {
+
+                    });
+                });
+
+                FCMPlugin.onNotification(function (data) {
+                    if (data.wasTapped) {
+                        if (data.link) app.views.main.router.navigate(data.link);
+
+                    }
+                    console.log(data);
+                });
+            }
+
             document.addEventListener("wsCommand", function (event) {
                 var data = event.detail.params;
                 if (event.detail.command == "new_mess") {
@@ -189,25 +207,7 @@ window.app = new Framework7({
                 }
             });
 
-            if (typeof (FCMPlugin) == "object") {
-                FCMPlugin.getToken(function (token) {
-                    localStorage.setItem('device_token', token);
-                    app.device_token = token;
-                    app.request.post(app.data.baseUrl + 'set_auth.php', { act: "token", token: token }, function (json) {
-
-                    });
-                });
-
-                FCMPlugin.onNotification(function (data) {
-                    if (data.wasTapped) {
-                        if (data.link) app.views.main.router.navigate(data.link);
-
-                    }
-                    console.log(data);
-                });
-                // end FCM
-
-            }
+            
         }
     },
     methods: {
@@ -217,6 +217,7 @@ window.app = new Framework7({
             if (head == "" || head == undefined)
                 head = app.name;
             app.dialog.confirm(text, head, function () {
+
                 app.views.main.router.navigate('/login/', { transition: 'f7-flip' });
             }, function () { })
         },

@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-content lgpage  isnmb">
+        <div class="page-content lgpage">
             <div class="row h-100 ">
                 <div class="col px-3 text-align-center padding-horizontal-half">
                     <img src="static/logo.svg" alt="logo" class="logo-small">
@@ -180,29 +180,31 @@
             },
             pageInit: function (e, page) {
                 var self = this;
-                app.request.post(app.data.baseUrlSite, { logout_app: "Y" }, function (data) {
-                    localStorage.removeItem("access_token");
-                    localStorage.removeItem("device_token");
-                    if (typeof (FCMPlugin) == "object") {
-                        //FCMPlugin.unsubscribeFromTopic("all", function (msg){}, function (err){})
-                    };
-                    app.request.setup({
-                        headers: null
-                    });
-                    app.request.getJSON(app.data.baseUrl + 'get_user.php', { app: '' }, function (data) {
-                        app.data.arUser = data;
+                if (app.data.arUser.user) {
+                    app.request.post(app.data.baseUrlSite, { logout_app: "Y" }, function (data) {
+                        localStorage.removeItem("access_token");
+                        localStorage.removeItem("device_token");
+                        if (typeof (FCMPlugin) == "object") {
+                            //FCMPlugin.unsubscribeFromTopic("all", function (msg){}, function (err){})
+                        };
+                        app.request.setup({
+                            headers: null
+                        });
+                        app.request.getJSON(app.data.baseUrl + 'get_user.php', { app: '' }, function (data) {
+                            app.data.arUser = data;
 
-                        self.$setState(
-                            {
-                                user: app.data.arUser.user,
-                                isUsL: false,
-                                isloc: app.data.arUser.isloc,
-                            });
+                            self.$setState(
+                                {
+                                    user: app.data.arUser.user,
+                                    isUsL: false,
+                                    isloc: app.data.arUser.isloc,
+                                });
 
-                        if (window.ws != undefined) window.ws.close();
-                        app.methods.refreshCart();
+                            if (window.ws != undefined) window.ws.close();
+                            app.methods.refreshCart();
+                        });
                     });
-                });
+                }
             },
             pageAfterIn: function (e, page) {
                 StatusBar.styleDefault();
@@ -237,7 +239,7 @@
                                     });
 
                                     var token = window.localStorage.device_token;
-                                    if (token != undefined) {
+                                    if (token != undefined && token != null) {
                                         app.request.post(app.data.baseUrl + 'set_auth.php', { act: "token", token: token }, function (json) {
 
                                         });
@@ -270,7 +272,13 @@
                                                 if (addressData != null) app.data.curAddr = addressData;
                                                 else app.methods.setAddressByGPS();
                                             }
-
+                                            app.request.getJSON('https://sooshiroom.com/ajax/get_ballsjs.php', { act: 'cart' }, function (data) {
+                                                app.data.balls = data.balls;
+                                                self.$setState(
+                                                    {
+                                                        balls: app.data.balls,
+                                                    });
+                                            });
                                             $$(".loader-screen").hide();
                                             app.views.main.router.back();
                                         } else {
